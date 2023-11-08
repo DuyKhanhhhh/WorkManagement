@@ -10,6 +10,11 @@ public class Table {
     public Table() {
     }
 
+    public Table(int id, String name,String permission) {
+        this.id = id;
+        this.name = name;
+        this.permission = permission;
+    }
 
     public Table(int id, int idUser, String name, String permission) {
         this.id = id;

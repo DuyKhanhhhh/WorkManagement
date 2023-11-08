@@ -29,7 +29,7 @@ public class UserDAO implements IUserDAO {
     private static final String ADD_MEMBER_TO_TABLE = "INSERT INTO userToTable(idUser,idTable,role) VALUES (?,?,?)";
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT m.id,u.name,u.email,role FROM user u JOIN member m ON u.id = m.idUser JOIN groupWork g ON m.idGroup = g.id WHERE g.id = ?";
     private static final String SELECT_ALL_USER_TO_TABLE = "SELECT id,u.name,u.email,m.role,u.avatar FROM user u JOIN userToTable m ON u.id = m.idUser JOIN tableWork t ON m.idTable = t.id WHERE t.id = ?";
-    private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.idUser ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
+    private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
 
 
 
@@ -533,11 +533,10 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setInt(1, idGroup);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int idTable = resultSet.getInt("idTable");
-                int idUser = resultSet.getInt("idUser");
+                int idTable = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String permission = resultSet.getString("permission");
-                tableList.add(new Table(idTable, idUser, name, permission));
+                tableList.add(new Table(idTable, name, permission));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
