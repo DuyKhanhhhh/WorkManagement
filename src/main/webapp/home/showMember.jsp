@@ -291,7 +291,7 @@
                             function showConfirmation() {
                                 var result = confirm("Are you sure you want to remove this member from the group?");
                                 if (result) {
-                                    window.location.href = "/homeUser?action=deleteMember&idMember=${member.id}&groupId=${groups.id}";
+                                    window.location.href = "/homeUser?action=deleteMember&idMember=${member.idMember}&groupId=${groups.id}";
                                 }
                             }
                         </script>
