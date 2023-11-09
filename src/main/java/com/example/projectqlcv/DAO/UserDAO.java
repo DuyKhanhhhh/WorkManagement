@@ -23,7 +23,6 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_TABLE_BY_ID = "SELECT * FROM tableWork where id = ?";
     private static final String DELETE_GROUP_SQL = "DELETE FROM groupWork where id = ?";
     private static final String DELETE_MEMBER_OF_GROUP = "DELETE FROM member where id = ?";
-    private static final String DELETE_ID_MEMBER_OF_GROUP = "DELETE FROM groupWork where id = ?";
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
     private static final String SEARCH_NAME_PRODUCT = "SELECT * FROM user WHERE id NOT IN (select user.id  from member join user on idUser = user.id where idGroup = ? ) AND  name LIKE  ? || email LIKE ? ";
     private static final String ADD_MEMBER_TO_SQL = "INSERT INTO member(idGroup,idUser,role) VALUES (?,?,?)";
