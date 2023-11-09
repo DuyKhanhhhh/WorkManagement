@@ -30,7 +30,8 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT m.id,u.name,u.email,role FROM user u JOIN member m ON u.id = m.idUser JOIN groupWork g ON m.idGroup = g.id WHERE g.id = ?";
     private static final String SELECT_ALL_USER_TO_TABLE = "SELECT id,u.name,u.email,m.role,u.avatar FROM user u JOIN userToTable m ON u.id = m.idUser JOIN tableWork t ON m.idTable = t.id WHERE t.id = ?";
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
-
+    private static final String FIND_USER_TO_GROUP = "SELECT * FROM member WHERE idGroup = ? and idUser = ? ";
+    private static final String FIND_TABLE_BY_ID = "SELECT * FROM tableWork WHERE id= ?";
 
 
     @Override
@@ -48,9 +49,7 @@ public class UserDAO implements IUserDAO {
                 String passwordUser = resultSet.getString("password");
                 user = new User(emailUser, passwordUser);
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return user;
@@ -68,9 +67,7 @@ public class UserDAO implements IUserDAO {
                 String email = resultSet.getString("email");
                 user = new User(email);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return user;
@@ -92,9 +89,7 @@ public class UserDAO implements IUserDAO {
                 String avatar = resultSet.getString("avatar");
                 user = new User(iD, name, phoneNumber, address, avatar);
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return user;
@@ -126,9 +121,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(4, user.getAvatar());
             preparedStatement.setInt(5, id);
             rowUpdate = preparedStatement.executeUpdate() > 0;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return rowUpdate;
@@ -148,9 +141,7 @@ public class UserDAO implements IUserDAO {
                 String passWord = rs.getString("password");
                 user = new User(id, name, emailDB, passWord);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return user;
@@ -164,9 +155,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(3, phoneNumber);
             preparedStatement.setString(4, password);
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
@@ -183,9 +172,7 @@ public class UserDAO implements IUserDAO {
                 String password = rs.getString("password");
                 user = new User(id, emailDB, password);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return user;
@@ -207,9 +194,7 @@ public class UserDAO implements IUserDAO {
                 idGroup = resultSet.getInt(1);
             }
             group.setId(idGroup);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -229,9 +214,7 @@ public class UserDAO implements IUserDAO {
                 String information = resultSet.getString("information");
                 groups.add(new Group(id, name, groupType, permission, information));
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return groups;
@@ -252,9 +235,7 @@ public class UserDAO implements IUserDAO {
                 tableId = resultSet.getInt(1);
             }
             table.setId(tableId);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -273,9 +254,7 @@ public class UserDAO implements IUserDAO {
                 String permission = rs.getString("permission");
                 listTable.add(new Table(id, idGroup, name, permission));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return listTable;
@@ -293,9 +272,7 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setString(4, group.getInformation());
             preparedStatement.setInt(5, id);
             updateGroup = preparedStatement.executeUpdate() > 0;
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return updateGroup;
@@ -309,9 +286,7 @@ public class UserDAO implements IUserDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_GROUP_SQL);
             preparedStatement.setInt(1, id);
             rowDelete = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return rowDelete;
@@ -325,9 +300,7 @@ public class UserDAO implements IUserDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_MEMBER_OF_GROUP);
             preparedStatement.setInt(1, id);
             rowDelete = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return rowDelete;
@@ -348,9 +321,7 @@ public class UserDAO implements IUserDAO {
                 String information = rs.getString("information");
                 listGroup = new Group(id, name, group, permission, information);
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return listGroup;
@@ -367,14 +338,11 @@ public class UserDAO implements IUserDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 int idGroup = rs.getInt("idGroup");
-                int idUser = rs.getInt("idUser");
                 String name = rs.getString("name");
                 String permission = rs.getString("permission");
-                table = new Table(id, idGroup, idUser, name, permission);
+                table = new Table(id, idGroup, name, permission);
             }
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return table;
@@ -476,6 +444,34 @@ public class UserDAO implements IUserDAO {
         }
     }
 
+    @Override
+    public Member findUserToGroup(int idGroup , int idUser) {
+        Member member =null;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_TO_GROUP);
+            preparedStatement.setInt(1, idGroup);
+            preparedStatement.setInt(2, idUser);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int idGroupOb = resultSet.getInt("idGroup");
+                int idUserDb = resultSet.getInt("idUser");
+                String role = resultSet.getString("role");
+//                member.setIdMember(id);
+//                member.setGroupId(idGroup);
+//                member.setUserId(idUserDb);
+//                member.setRole(role);
+                member = new Member(id,idGroupOb,idUserDb,role);
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return member;
+    }
+
+
 
     @Override
     public List<Member> selectGroupMember(int idGroup) {
@@ -492,9 +488,7 @@ public class UserDAO implements IUserDAO {
                 String role = resultSet.getString("role");
                 memberList.add(new Member(idMember, nameUser, email, role));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return memberList;
@@ -516,9 +510,7 @@ public class UserDAO implements IUserDAO {
                 String avatar = resultSet.getString("avatar");
                 addUserToTables.add(new AddUserToTable(id, nameUser, email, role, avatar));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return addUserToTables;
@@ -538,9 +530,7 @@ public class UserDAO implements IUserDAO {
                 String permission = resultSet.getString("permission");
                 tableList.add(new Table(idTable, name, permission));
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return tableList;

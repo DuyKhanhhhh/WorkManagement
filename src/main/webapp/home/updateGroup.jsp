@@ -114,7 +114,7 @@
         margin: 10px;
     }
 
-    .col-10 {
+    .col-12 {
         text-align: center;
     }
 
