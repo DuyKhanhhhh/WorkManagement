@@ -193,9 +193,6 @@
             <a href="/homeUser?action=member&idGroup=<c:out value="${groups.id}"></c:out>">
                 <input type="submit" value="Back">
             </a>
-
-
-
             <div id="search">
                 <form class="d-flex" method="post" action="/homeUser?action=search&idGroup=<c:out value="${groups.id}"></c:out>">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"

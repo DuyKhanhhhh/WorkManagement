@@ -15,6 +15,16 @@
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
 </head>
 <style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    #header {
+        position: fixed;
+        background-color: #2f2f2f;
+        height: 50px;
+    }
+
     .headImg {
         margin-right: 20px;
     }
@@ -24,29 +34,56 @@
         padding-right: 10px;
     }
 
+    #fullLeft {
+        display: flex;
+    }
+
     #boxLeft {
-        background-color: #b4b4b4;
-        height: 900px;
+        max-height: 100%;
+        margin-top: 2.6%;
+        height: 100%;
+        position: fixed;
+        flex: 0 0 auto;
+        margin-bottom: 4%;
+        box-shadow: 2px 0 6px rgba(0, 0, 0, 1);
+        clip-path: inset(0px -10px -10px -10px);
+        background-color: #e9ecef;
+    }
+
+    #content {
+        margin-top: 3%;
+        margin-left: 16%;
+        padding-left: 3.5%;
+        margin-bottom: 9%;
+    }
+
+    #footer {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: fixed;
     }
 
     .textSpan {
-        font-size: 30px;
-        margin-left: 20px;
+        font-size: 28px;
+        margin-left: 14px;
+        font-weight: bold;
     }
 
-    #contentTitle {
-        margin: 36px;
+    i {
+        font-size: 25px;
     }
 
     .table {
         width: 100%;
         height: 3rem;
-        margin-top: 2rem;
+        margin-top: 1rem;
     }
 
     .group {
         width: 100%;
         height: 3rem;
+        flex: 1 1 auto;
     }
 
     .group_name {
@@ -55,63 +92,61 @@
     }
 
     .group_add {
-        width: 20%;
-        height: 3rem;
-        margin-left: 1rem;
-        margin-top: 1rem;
+        margin-left: 8%;
     }
 
-    .dropdown {
-        display: inline-block;
-        position: relative;
-    }
-
-    button {
-        border: none;
-        border-radius: 5px;
-        padding: 15px 20px;
-        font-size: 22px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #ddd;
-    }
-
-    .dropdown-options {
-        display: none;
-        position: absolute;
-        overflow: auto;
-        background-color: #646464;
-        border-radius: 5px;
-        box-shadow: 0px 10px 10px 0px rgba(255, 255, 255, 0.4);
-    }
-
-    .dropdown:hover .dropdown-options {
-        display: block;
-    }
-
-    .dropdown-options a {
-        float: left;
-        display: block;
-        color: #000000;
-        padding: 5px;
+    a {
         text-decoration: none;
-        padding: 20px 20px;
+        color: black;
     }
 
-    .dropdown-options a:hover {
-        color: #0a0a23;
-        background-color: #ddd;
-        border-radius: 5px;
+    span {
+        font-size: 23px;
     }
 
-    .main_input {
-        width: 75%;
-        height: 700px;
-        border: 5px solid black;
-        border-radius: 10px;
-        margin: 10px;
+    /* Style for dropdown content */
+    .dropdown-content {
+        display: none; /* Hidden by default */
+        position: absolute;
+        background-color: #000000;
+        min-width: 85px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        font-size: 18px;
+        color: white;
+    }
+
+    /* Style for each content div */
+    .dropdown-content div {
+        padding: 10px 5px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    /* Highlight dropdown options on hover */
+    .dropdown-content div:hover {
+        background-color: #cecece;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    #content {
+        margin-top: 10%;
+        margin-left: 25%;
+        border: 3px solid #9b9b9b;
+        width: 67%;
+        height: 608px;
+        padding-right: 4%;
+        border-radius: 2%;
+        background-color: #e9ecef;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+
     }
 
     .col-10 {
@@ -119,8 +154,8 @@
     }
 
     .select {
-        width: 450px;
-        height: 70px;
+        width: 70%;
+        height: 110px;
         margin: 0 auto;
     }
 
@@ -136,160 +171,154 @@
         float: left;
     }
 
-    .title_h2 {
-        margin-top: 40px;
+    #inputName {
+        padding-left: 15%;
+        padding-right: 15%;
     }
 
-    .information {
-        width: 470px;
-        height: 140px;
-        margin: 0 auto;
+    #content {
+        margin-top: 9%;
+        margin-left: 25%;
+        padding-left: 3.5%;
+        margin-bottom: 9%;
     }
-
-    .name {
-        width: 470px;
-        height: 70px;
-        margin: 0 auto;
-    }
-
-    .nameFloat {
-        float: left;
+    .delButton{
+        padding-left: 99%;
+        padding-top: 8px;
     }
 </style>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark" id="header">
             <div class="container-fluid">
                 <div class="headImg">
-                    <a href="/homeUser">
-                        <img src="https://png.pngtree.com/png-vector/20190624/ourlarge/pngtree-managementprocessproductiontaskwork-flat-color-icon-vect-png-image_1492738.jpg"
-                             width="70px"
-                             height="60px">
-                    </a>
+                    <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
+                         width="100" height="50">
                 </div>
-                <div class="collapse navbar-collapse">
-                    <div class="dropdown">
-                        <button>Group</button>
-                        <div class="dropdown-options">
-                            <a href="#">?</a>
-                            <a href="#">?</a>
-                            <a href="#">?</a>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="headRight">
                     <span class="group-text">
                     <div class="collapse navbar-collapse">
-                      <i class="fa-solid fa-bell" style="color: #ffffff;font-size: 34px; margin-right: 10px"></i>
-                         <div class="dropdown">
-                        <button>Name</button>
-                        <div class="dropdown-options">
-                            <a href="#">Setting</a>
-                            <a href="../editPassword.jsp">Change PassWord</a>
-                            <a href="../login.jsp">Logout</a>
-                        </div>
-                    </div>
+                      <i class="fa-solid fa-bell" style="color: #ffffff; margin-right: 15px"></i>
+                        <span class="dropdown">
+                            <button style="font-size: 15px" class="btn btn-light"><c:out value="${user.name}"/></button>
+                            <div class="dropdown-content">
+                                <div><a href="#">Setting</a></div>
+                                <div><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></div>
+                                <div><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></div>
+                                <div><a href="login.jsp">Logout</a></div>
+                            </div>
+                        </span>
                     </div>
                     </span>
                 </div>
             </div>
         </nav>
     </div>
-    <div class="row">
+    <div class="row" id="fullLeft">
         <div class="col-2" id="boxLeft">
             <div class="table">
                 <div class="d-flex align-items-center">
-                    <i class="fa-solid fa-table" style="color: #000000; font-size: 30px;"></i>
+                    <i class="fa-solid fa-table"></i>
                     <span class="textSpan">Table</span>
                 </div>
             </div>
             <div class="group">
                 <div class="d-flex  align-items-center">
                     <div class="group_name">
-                        <i class="fa-solid fa-user-group" style="color: #000000; font-size: 30px"></i>
+                        <i class="fa-solid fa-user-group"></i>
                         <span class="textSpan">Group</span>
                     </div>
-
+                    <div class="group_add">
+                        <a href="/homeUser?action=addGroup">
+                            <i class="fa-regular fa-square-plus"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="d-flex  align-items-center">
-
-            </div>
+            <c:forEach var="group" items="${groups}">
+                <div class="name_group">
+                    <span>${group.name}</span>
+                </div>
+            </c:forEach>
         </div>
-        <div class="main_input">
-            <button type="submit" class="btn btn-secondary" style="margin-top: 10px">
-                <a style="text-decoration: none;color: white" href="/homeUser">Back</a>
-            </button>
-            <div class="col-10">
-                <form method="post" action="/homeUser?action=updateGroup">
+        <div class="col-10" id="content">
+            <form method="post" action="/homeUser?action=updateGroup">
+                <div class="delButton">
+                    <button onclick="showConfirmation()" class="btn btn-danger">
+                        <a style="text-decoration: none;color: white"
+                           href="/homeUser?action=deleteGroup&id=${listGroup.id}">Delete</a>
+                    </button>
+                </div>
+                <div>
                     <div>
-                        <div class="title_h2">
-                            <h2>Show Group</h2>
-                        </div>
-                        <br>
-                        <br>
-                        <c:if test="${listGroup != null}">
-                            <input type="hidden" name="id" value="<c:out value='${listGroup.id}' />"/>
-                        </c:if>
-                        <div class="name">
-                            <label style="float: left;margin-left: 34px">Name(<span style="color:red;">*</span>)</label>
-                            <input type="text" name="name" style="width: 450px;height: 40px;margin-left: 32px"
-                                   value="<c:out value='${listGroup.name}'/>" required>
-                        </div>
-                        <br>
-                        <div class="select">
-                            <div class="group_type">
-                                <label style="float: left;margin-left: 24px">Group Type(<span style="color:red;">*</span>)</label>
-                                <select name="groupType" style="width: 210px; height: 40px;margin-left: 25px" required>
-                                    <option><c:out value='${listGroup.groupType}'/></option>
-                                    <option>Manage</option>
-                                    <option>Accountant</option>
-                                    <option>Plan</option>
-                                </select>
-                            </div>
-                            <div class="permission">
-                                <label style="float: left;margin-left: 36px">Permission(<span style="color:red;">*</span>)</label>
-                                <select name="permission" style="width: 210px;height: 40px;margin-left: 36px" required>
-                                    <option><c:out value='${listGroup.permission}'/></option>
-                                    <option>Public</option>
-                                    <option>Private</option>
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <br>
-                        <div class="information">
-                            <label style="float: left;margin-left: 34px">Information</label>
-                            <input type="text" name="information" style="width: 450px;height: 100px;margin-left: 32px"
-                                   value="<c:out value='${listGroup.information}'/>">
-                        </div>
-                        <br>
-                        <br>
-                        <div>
-                            <button type="submit" class="btn btn-secondary" style="width: 200px">Edit</button>
-                            <button onclick="showConfirmation()" class="btn btn-secondary" style="width: 200px">
-                                <a style="text-decoration: none;color: white"
-                                   href="/homeUser?action=deleteGroup&id=${listGroup.id}">Delete</a>
-                            </button>
-                            <script>
-                                function showConfirmation() {
-                                    var result = confirm("Are you sure you want to remove this member from the group?");
-                                    if (result) {
-                                        window.location.href = "/homeUser?action=deleteGroup&id=${group.id}";
-                                    } else {
+                        <h2>Show Group</h2>
+                    </div>
+                    <c:if test="${listGroup != null}">
+                        <input type="hidden" name="id" value="<c:out value='${listGroup.id}' />"/>
+                    </c:if>
 
-                                    }
-                                }
-                            </script>
+                    <div class="form-outline mb-4" id="inputName">
+                        <label style="float: left;font-size: 20px">Name(<span style="color:red;">*</span>)</label>
+                        <input type="text" name="name" class="form-control form-control-lg"
+                               value="<c:out value='${listGroup.name}'/>" required/>
+                    </div>
+
+                    <div class="select">
+                        <div class="group_type">
+                            <label style="float: left;font-size: 20px">Group Type(<span
+                                    style="color:red;">*</span>)</label>
+                            <select class="form-select" name="groupType"
+                                    style="width: 380px;height: 45px;" required>
+                                <option><c:out value='${listGroup.groupType}'/></option>
+                                <option>Manage</option>
+                                <option>Accountant</option>
+                                <option>Plan</option>
+                            </select>
+                        </div>
+                        <div class="permission">
+                            <label style="float: left;margin-left: 15px;font-size: 20px">Permission(<span
+                                    style="color:red;">*</span>)</label>
+                            <select class="form-select" name="permission"
+                                    style="width: 380px;height: 45px;margin-left: 4%;" required>
+                                <option><c:out value='${listGroup.permission}'/></option>
+                                <option>Public</option>
+                                <option>Private</option>
+                            </select>
                         </div>
                     </div>
-                </form>
-                <div>
+                    <div style="margin-left: 15% ">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" name="information"
+                                      style="height: 180px;width: 82%;"value="<c:out value='${listGroup.information}'/>">
+                            </textarea>
+                            <label style="font-size: 20px; margin-right: 55rem">Information</label>
+                        </div>
+                    </div>
+                    <div>
+                        <button style="width: 100px;height: 50px;margin-top: 25px" type="submit" class="btn btn-secondary" style="width: 100px">Edit</button>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
+<div class="bg-light py-2" id="footer">
+    <div class="container text-center">
+        <p class="text-muted mb-0 py-1">© 2023 Trello Group 7</p>
+    </div>
+</div>
+</div>
 </body>
+<script>
+    function showConfirmation() {
+        var result = confirm("Are you sure you want to remove this member from the group?");
+        if (result) {
+            window.location.href = "/homeUser?action=deleteGroup&id=${group.id}";
+        } else {
+
+        }
+    }
+</script>
 </html>
