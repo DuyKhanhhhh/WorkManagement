@@ -171,6 +171,7 @@
     #main {
         transition: margin-left .5s;
         padding: 16px;
+        float: left;
     }
 
     /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
@@ -206,6 +207,9 @@
         display: flex;
         align-items: center;
     }
+     .title {
+         cursor:pointer;
+     }
 </style>
 <body>
 <div class="container-fluid">
@@ -215,12 +219,6 @@
                 <div class="headImg">
                     <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
                          width="130px" height="60px">
-                </div>
-                <div style="width: 600px">
-                    <form class="d-flex">
-                        <input class="form-control" type="search" placeholder="Search">
-                        <button style="margin-left: 10px" class="btn btn-outline-secondary" type="submit">Search</button>
-                    </form>
                 </div>
                 <div class="headRight">
           <span class="group-text">
@@ -246,9 +244,49 @@
     </div>
     <div class="row">
         <div class="title">
+            <div id="nameTable">
+
+                <input type="submit"  class="button" id="button">
+                <input type="text" class="title" id="title" value="${tables.name}">
+
+                <script>
+                    const inputElement = document.getElementById("title");
+                    const inputValue = document.getElementById("button")
+                    var input = document.querySelector('input');
+
+
+                    inputElement.addEventListener("dblclick", function() {
+                        inputElement.disabled = false;
+                        inputElement.focus();
+                    });
+
+                    inputElement.addEventListener("keyup", function(event) {
+                        if (event.keyCode === 13) {
+                            inputElement.disabled = true;
+                            inputValue.onclick;
+                        }
+                    });
+
+                    inputElement.addEventListener("blur", function() {
+                        inputElement.disabled = true;
+                        inputValue.onclick;
+
+                    });
+
+
+                    input.addEventListener('input', resizeInput);
+                    resizeInput.call(input);
+
+                    function resizeInput() {
+                        this.style.width = this.value.length + "ch";
+                    }
+                </script>
+            </div>
             <span id="text">${member.name}</span>
             <div class="titleRight">
+
                 <div id="mySidebar" class="sidebar">
+
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
                     <h2 style="text-align: center;color: white">Menu</h2>
                     <hr style="color:white;">

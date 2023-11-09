@@ -56,11 +56,7 @@ public class AddUserToTableController extends HttpServlet {
         HttpSession session = request.getSession();
         int idGroup = Integer.parseInt(request.getParameter("id"));
         int idTable = Integer.parseInt(request.getParameter("idTable"));
-        int idUser = Integer.parseInt(request.getParameter("idUser"));
-        Table table = new Table();
-        table.setId(idTable);
-        table.setIdUser(idUser);
-        table.setIdGroup(idGroup);
+        Table table = userDAO.findTableById(idTable);
         session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
         session.setAttribute("groups", group);

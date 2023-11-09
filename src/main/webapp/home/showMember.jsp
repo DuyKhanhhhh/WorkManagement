@@ -370,7 +370,6 @@
                 </div>
             </div>
 
-            <p></p>
             <div class="table_all">
                 <table class="table table-hover">
                     <tr>

@@ -43,4 +43,11 @@ public interface IUserDAO {
     void addAdminToTable(int idTable, User user);
     boolean updatePermissionAdmin(int id);
     boolean updatePermissionMember(int id);
+
+
+    Member findUserToGroup(int idGroup , int idUser);
+
+    boolean deleteIdMemberOfGroup(int id);
+
+
 }
