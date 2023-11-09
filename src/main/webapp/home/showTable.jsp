@@ -29,26 +29,18 @@
     }
 
     #header {
+        height: 70px;
         position: fixed;
+        background-color: #2f2f2f;
+        border-bottom: solid #d4d0d0 1px;
     }
 
     #fullLeft {
         display: flex;
     }
 
-    #boxLeft {
-        background-image: url("https://i.pinimg.com/236x/4e/4f/65/4e4f6521b262e4fb9664455012f741fb.jpg");
-        max-height: 100%;
-        margin-top: 4%;
-        height: 100%;
-        position: fixed;
-        flex: 0 0 auto;
-        margin-bottom: 4%;
-    }
-
     #content {
-        margin-top: 3%;
-        margin-left: 18.5%;
+        margin-top: 5%;
     }
 
     #footer {
@@ -57,36 +49,6 @@
         right: 0;
         position: fixed;
     }
-
-    .textSpan {
-        font-size: 40px;
-        margin-left: 14px;
-        font-weight: bold;
-    }
-
-
-    .table {
-        width: 100%;
-        height: 3rem;
-        margin-top: 2rem;
-    }
-
-    .group {
-        width: 100%;
-        height: 3rem;
-        flex: 1 1 auto;
-    }
-
-    .group_name {
-        width: 80%;
-        height: 3rem;
-    }
-
-    .group_add {
-        margin-left: 2rem;
-        margin-top: 1rem;
-    }
-
 
     a {
         text-decoration: none;
@@ -170,14 +132,15 @@
     }
 
     #member {
-        width: 100%;
-        height: 120px;
-        border-bottom: solid black 1px;
+        width: 90%;
+        height: 110px;
+        border-bottom: solid #d4d0d0 1px;
+        margin: 0 auto;
     }
 
     #table_all {
         width: 80%;
-        margin: 80px 140px;
+        margin: 80px 230px;
     }
 
     .name_member {
@@ -191,26 +154,28 @@
         width: 40%;
         height: 80px;
         float: left;
-        margin-top: 45px;
+        margin-top: 17px;
         margin-bottom: 35px;
     }
 
     #table {
 
         width: 22%;
-        height: 120px;
+        height: 110px;
         border-radius: 3px;
-        background-color: #e9e9e9;
+        background-image: linear-gradient(to right, #DECBA4, #3E5151);
         margin-left: 25px;
         float: left;
         margin-bottom: 20px;
     }
-
+    #permission{
+        margin-left: 120px;
+    }
 </style>
 <body>
 <div class="container-fluid">
     <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="header">
+        <nav class="navbar navbar-expand-lg navbar-dark " id="header">
             <div class="container-fluid">
                 <div class="headImg">
                     <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
@@ -239,35 +204,54 @@
         </nav>
     </div>
     <div class="row" id="fullLeft">
-        <div class="col-2" id="boxLeft">
-            <div class="table">
-                <div class="d-flex align-items-center">
-                    <i class="fa-solid fa-table" style="font-size: 30px"></i>
-                    <span class="textSpan">Table</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-10" id="content">
+        <div id="content">
             <div id="member">
                 <div class="name_member">
-                    <h2 style=" margin-top: 50px ; margin-left: 60%"><b><c:out value="${groups.name}"></c:out></b></h2>
+                    <div style="width: 30%; height: 100%; margin-left: 20%;">
+                        <h3 style=" margin-top: 10px ; margin-left: 40%"><b><c:out value="${groups.name}"></c:out></b>
+                        </h3>
+                        <div id="permission">
+                            <div>
+                                <c:choose>
+                                    <c:when test="${groups.permission.equals('Public')}">
+                                        <div style="float:left; margin-bottom: 100px;">
+                                            <small><i class="fa-solid fa-earth-asia"></i></small>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div style="float:left; margin-bottom: 100px;">
+                                            <small><i class="fa-solid fa-lock"></i></small>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                            <div>
+                                <small style="margin-left: 7px; margin-bottom: 100px">
+                                    <c:out value="${groups.permission}"></c:out>
+                                </small>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
                 <div class="add_member">
                     <a href="/addMembers?action=addMember&groupId=<c:out value="${groups.id}"></c:out>">
-                        <button style="margin-left: 20% ; height: 45px; border-radius: 15px; background: #4799e2 ; color: white"
-                                type="submit">Invite members to the workspace
+                        <button style="margin-left: 12% ; height: 45px; border-radius: 5px; background: #268aeb ; color: white"
+                                type="submit"><i style="margin-left: 7px ; margin-right: 6px" class="fa-solid fa-user-plus"></i>Invite members to the workspace
                         </button>
                     </a>
                 </div>
             </div>
 
-            <p></p>
-            <h3 style="margin-left: 160px; "><b>Table</b></h3>
+            <br>
+            <br>
+            <br>
+            <h3 style="margin-left: 260px; "><b>Table</b></h3>
             <c:forEach var="table" items="${tables}">
                 <a href="/addUserToTable?action=showTable&id=${groups.id}&idTable=${table.id}&idUser=${user.id}">
                     <div id="table_all">
                         <div id="table">
-                            <h4 style="font-family: initial; margin-left: 1rem ; margin-top: 1rem; color: black">${table.name}</h4>
+                            <h4 style="font-family: initial; margin-left: 1rem ; margin-top: 1rem; color: white">${table.name}</h4>
                         </div>
                     </div>
                 </a>
@@ -277,7 +261,7 @@
     </div>
     <div class="bg-light py-2" id="footer">
         <div class="container text-center">
-            <p class="text-muted mb-0 py-1">© 2023 Trello Group 7.</p>
+            <p class="text-muted mb-0 py-1">© 2023 Trello Group 7</p>
         </div>
     </div>
 </div>

@@ -108,7 +108,6 @@ public class HomeUserController extends HttpServlet {
         Table table = new Table();
         table.setName(name);
         table.setPermission(permission);
-        table.setIdUser(id);
         table.setIdGroup(idGroup);
         userDAO.addTable(table);
         userDAO.addAdminToTable(table.getId(), user);
@@ -180,6 +179,7 @@ public class HomeUserController extends HttpServlet {
                 break;
             default:
                 selectGroupFromSql(request, response);
+                break;
 
         }
     }
@@ -319,8 +319,21 @@ public class HomeUserController extends HttpServlet {
                 return group1.getName().compareToIgnoreCase(group2.getName());
             }
         });
+        List<Group> groupFromUser = new ArrayList<>();
+        for (Group item : groups){
+            Member member = userDAO.findUserToGroup(item.getId(),id);
+                if (member != null) {
+                    groupFromUser.add(item);
+                }else {
+                    if (item.getPermission().equals("Public")){
+                        groupFromUser.add(item);
+                    }
+                }
+            }
+
+        session.setAttribute("groups",groupFromUser);
         session.setAttribute("tables", tables);
-        session.setAttribute("groups", groups);
+
         session.setAttribute("user", user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("homeUser.jsp");
         try {
