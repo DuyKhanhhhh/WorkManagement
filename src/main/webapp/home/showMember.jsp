@@ -265,7 +265,6 @@
                 </div>
             </div>
 
-            <p></p>
             <div class="table_all">
                 <table class="table table-hover">
                     <tr>
@@ -275,23 +274,30 @@
                         <th>Actions</th>
                     </tr>
                     <c:forEach var="member" items="${member}">
+
                         <tr>
                             <td>${member.nameUser}</td>
                             <td>${member.emailUser}</td>
                             <td>${member.role}</td>
                             <td>
-                                <div class="">
-                                    <a onclick="showConfirmation()"  style="font-size: 20px;color: black">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </a>
-                                </div>
+
+                                <c:if test="${member.role.equals('Member')}">
+                                    <div class="">
+                                        <a onclick="showConfirmation()" style="font-size: 20px;color: black">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </c:if>
                             </td>
+
                         </tr>
+
+
                         <script>
                             function showConfirmation() {
                                 var result = confirm("Are you sure you want to remove this member from the group?");
                                 if (result) {
-                                    window.location.href = "/homeUser?action=deleteMember&idMember=${member.id}&groupId=${groups.id}";
+                                    window.location.href = "/homeUser?action=deleteMember&idMember=${member.idMember}&groupId=${groups.id}";
                                 }
                             }
                         </script>

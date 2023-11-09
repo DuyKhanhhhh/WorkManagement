@@ -23,16 +23,16 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_TABLE_BY_ID = "SELECT * FROM tableWork where id = ?";
     private static final String DELETE_GROUP_SQL = "DELETE FROM groupWork where id = ?";
     private static final String DELETE_MEMBER_OF_GROUP = "DELETE FROM member where id = ?";
+    private static final String DELETE_ID_MEMBER_OF_GROUP = "DELETE FROM groupWork where id = ?";
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
     private static final String SEARCH_NAME_PRODUCT = "SELECT * FROM user WHERE id NOT IN (select user.id  from member join user on idUser = user.id where idGroup = ? ) AND  name LIKE  ? || email LIKE ? ";
     private static final String ADD_MEMBER_TO_SQL = "INSERT INTO member(idGroup,idUser,role) VALUES (?,?,?)";
     private static final String ADD_MEMBER_TO_TABLE = "INSERT INTO userToTable(idUser,idTable,role) VALUES (?,?,?)";
-    private static final String SELECT_ALL_GROUP_MEMBER = "SELECT m.id,u.name,u.email,role FROM user u JOIN member m ON u.id = m.idUser JOIN groupWork g ON m.idGroup = g.id WHERE g.id = ?";
+    private static final String SELECT_ALL_GROUP_MEMBER = "SELECT member.id,user.name,user.email,role FROM user JOIN member ON user.id = member.idUser JOIN groupWork ON member.idGroup = groupWork.id WHERE groupWork.id = ?";
     private static final String SELECT_ALL_USER_TO_TABLE = "SELECT id,u.name,u.email,m.role,u.avatar FROM user u JOIN userToTable m ON u.id = m.idUser JOIN tableWork t ON m.idTable = t.id WHERE t.id = ?";
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
     private static final String FIND_USER_TO_GROUP = "SELECT * FROM member WHERE idGroup = ? and idUser = ? ";
     private static final String FIND_TABLE_BY_ID = "SELECT * FROM tableWork WHERE id= ?";
-
 
     @Override
     public User findPasswordByEmail(String email, String password) {
@@ -301,6 +301,21 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setInt(1, id);
             rowDelete = preparedStatement.executeUpdate() > 0;
         } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDelete;
+    }
+    @Override
+    public boolean deleteIdMemberOfGroup(int id) {
+        boolean rowDelete;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ID_MEMBER_OF_GROUP);
+            preparedStatement.setInt(1, id);
+            rowDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return rowDelete;
