@@ -186,7 +186,6 @@ public class HomeUserController extends HttpServlet {
             default:
                 selectGroupFromSql(request, response);
                 break;
-
         }
     }
 
@@ -196,7 +195,7 @@ public class HomeUserController extends HttpServlet {
         userDAO.updatePermissionAdmin(idMember);
         request.setAttribute("member", member);
         try {
-            request.getRequestDispatcher("member").forward(request, response);
+            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -206,11 +205,11 @@ public class HomeUserController extends HttpServlet {
 
     private void updatePermissionMember(HttpServletRequest request, HttpServletResponse response) {
         int idMember = Integer.parseInt(request.getParameter("id"));
-        Member member = userDAO.findMemberById(idMember);
         userDAO.updatePermissionMember(idMember);
+        Member member = userDAO.findMemberById(idMember);
         request.setAttribute("member", member);
         try {
-            request.getRequestDispatcher("member").forward(request, response);
+            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

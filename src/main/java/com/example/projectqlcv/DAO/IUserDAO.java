@@ -23,8 +23,6 @@ public interface IUserDAO {
     void addGroup(Group group);
 
     List<Group> selectGroupFromSQL();
-    List<AddUserToTable> selectUserToTable(int idTable);
-
     void addTable(Table table);
     List<Table> showTableInGroup(int idGroup);
 
@@ -43,7 +41,7 @@ public interface IUserDAO {
     void addAdminToTable(int idTable, User user);
     boolean updatePermissionAdmin(int id);
     boolean updatePermissionMember(int id);
-
+    List<AddUserToTable> findUserToTable(int id);
 
     Member findUserToGroup(int idGroup , int idUser);
 

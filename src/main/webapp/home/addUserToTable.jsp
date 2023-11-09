@@ -190,12 +190,12 @@
                 <h2 style="text-align: center; margin-top: 40px">Search member </h2>
             </div>
             <p></p>
-            <a href="/addUserToTable?action=show&idTable=${tables.id}">
+            <a href="/addUserToTable?action=show&idTable=${tables.id}&id=${user.id}">
                 <input type="submit" value="Back">
             </a>
 
             <div id="search">
-                <form class="d-flex" method="post" action="/addUserToTable?action=searchUser&id=${groups.id}">
+                <form class="d-flex" method="post" action="/addUserToTable?action=searchUser&id=${groups.id}&idTable=${tables.id}">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                            name="search">
                     <button class="btn btn-outline-success" type="submit" name="search">Search</button>

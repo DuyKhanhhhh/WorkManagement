@@ -6,11 +6,30 @@ public class AddUserToTable {
     private int id;
     private int idUser;
     private int idGroup;
+    private int idTable;
     private String role;
     private String nameUser;
     private String emailUser;
     private String avatar;
 
+    public AddUserToTable( int idTable, int id, int idUser, int idGroup, String role, String avatar, String name, String emailUser) {
+        this.id = id;
+        this.idUser = idUser;
+        this.idGroup = idGroup;
+        this.idTable = idTable;
+        this.role = role;
+        this.avatar = avatar;
+        this.nameUser = name;
+        this.emailUser = emailUser;
+    }
+
+    public int getIdTable() {
+        return idTable;
+    }
+
+    public void setIdTable(int idTable) {
+        this.idTable = idTable;
+    }
 
     public String getNameUser() {
         return nameUser;
@@ -51,16 +70,24 @@ public class AddUserToTable {
         return idUser;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
     public void setIdUser(int idUser) {
         this.idUser = idUser;
     }
 
     public int getIdGroup() {
-        return idGroup;
+        return idTable;
     }
 
-    public void setIdGroup(int idGroup) {
-        this.idGroup = idGroup;
+    public void setIdGroup(int idTable) {
+        this.idTable = idTable;
     }
 
     public String getRole() {
@@ -71,10 +98,10 @@ public class AddUserToTable {
         this.role = role;
     }
 
-    public AddUserToTable(int id, int idUser, int idGroup, String role) {
+    public AddUserToTable(int id, int idUser, int idTable, String role) {
         this.id = id;
         this.idUser = idUser;
-        this.idGroup = idGroup;
+        this.idTable = idTable;
         this.role = role;
     }
 }
