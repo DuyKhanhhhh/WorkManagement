@@ -195,6 +195,111 @@
         margin-bottom: 35px;
     }
 
+    /* menu */
+    .menu-wrapper, .menu a {
+        width: 100%;
+    }
+
+    .menu::after {
+        content: '';
+        clear: both;
+        display: block;
+    }
+
+    .menu a {
+        display: block;
+        padding: 4px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .menu li {
+        position: relative;
+    }
+
+    .menu > li {
+        float: left;
+    }
+
+    .menu, .menu ul {
+        display: inline-block;
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        background: white;
+    }
+
+    .menu ul li + li {
+        border-top: 1px solid #fff;
+    }
+
+    .menu ul {
+        position: absolute;
+        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
+    }
+
+    .menu > li ul, .menu ul ul {
+        opacity: 0;
+        -webkit-transition: all 0.2s ease-in;
+        -moz-transition: all 0.2s ease-in;
+        transition: all 0.2s ease-in;
+        z-index: -1;
+        visibility: hidden;
+    }
+
+    .menu > li ul {
+        top: 130%;
+        left: 0;
+    }
+
+    .menu ul ul {
+        left: 130%;
+        top: 0;
+    }
+
+    .menu ul a {
+        width: 100px;
+    }
+
+    .menu > li:hover > ul {
+        top: 100%;
+        opacity: 1;
+        z-index: 1;
+        visibility: visible;
+    }
+
+    .menu ul > li:hover > ul {
+        left: 100%;
+        opacity: 1;
+        z-index: 1;
+        visibility: visible;
+    }
+
+    .menu-gold, .menu-gold a {
+        color: #000;
+    }
+
+    .menu-gold a:hover {
+        background-color: white;
+        color: #000;
+    }
+
+    body {
+        background-image: url("http://recruit.framgia.vn/wp-content/themes/framgia-vn/css/images/bg/banner.jpg");
+        text-align: center;
+    }
+
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #fff;
+        font-size: 40px;
+    }
+
+    /* ends */
+
 </style>
 <body>
 <div class="container-fluid">
@@ -278,9 +383,26 @@
                         <tr>
                             <td>${member.nameUser}</td>
                             <td>${member.emailUser}</td>
-                            <td>${member.role}</td>
                             <td>
-
+                                <div class="menu-wrapper menu-gold">
+                                    <ul class="menu">
+                                        <li>
+                                            <a href="">${member.role}</a>
+                                            <ul>
+                                                <c:choose>
+                                                    <c:when test="${member.idMember.equals('Member')}">
+                                                <li><a href="/homeUser?action=updatePermissionAdmin?id=${member.idMember}">Member</a></li>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                <li><a href="/homeUser?action=updatePermissionMember?id=${member.idMember}">Admin</a></li>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+                            <td>
                                 <c:if test="${member.role.equals('Member')}">
                                     <div class="">
                                         <a onclick="showConfirmation()" style="font-size: 20px;color: black">
@@ -289,11 +411,9 @@
                                     </div>
                                 </c:if>
                             </td>
-
                         </tr>
-
-
                         <script>
+
                             function showConfirmation() {
                                 var result = confirm("Are you sure you want to remove this member from the group?");
                                 if (result) {

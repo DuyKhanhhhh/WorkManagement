@@ -53,9 +53,9 @@ public class HomeUserController extends HttpServlet {
     }
 
     private void searchUser(HttpServletRequest request, HttpServletResponse response) {
-        int idGroup =Integer.parseInt(request.getParameter("idGroup"));
+        int idGroup = Integer.parseInt(request.getParameter("idGroup"));
         String name = request.getParameter("search");
-        List<User> userList = userDAO.searchNameUser(idGroup,name);
+        List<User> userList = userDAO.searchNameUser(idGroup, name);
         request.setAttribute("list", userList);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("home/addMember.jsp");
@@ -175,7 +175,13 @@ public class HomeUserController extends HttpServlet {
                 showMember(request, response);
                 break;
             case "table":
-                showTableInGroup(request,response);
+                showTableInGroup(request, response);
+                break;
+            case "updatePermissionMember":
+                updatePermissionMember(request, response);
+                break;
+            case "updatePermissionAdmin":
+                updatePermissionAdmin(request, response);
                 break;
             default:
                 selectGroupFromSql(request, response);
@@ -183,14 +189,43 @@ public class HomeUserController extends HttpServlet {
 
         }
     }
-    private void showTableInGroup(HttpServletRequest request ,HttpServletResponse response){
-        int idGroup =Integer.parseInt(request.getParameter("idGroup"));
-        List<Table> tableList = userDAO.showTableInGroup(idGroup);
-        request.setAttribute("tables",tableList);
-        Group groupList = userDAO.findGroupById(idGroup);
-        request.setAttribute("groups",groupList);
+
+    private void updatePermissionAdmin(HttpServletRequest request, HttpServletResponse response) {
+        int idMember = Integer.parseInt(request.getParameter("id"));
+        Member member = userDAO.findMemberById(idMember);
+        userDAO.updatePermissionAdmin(idMember);
+        request.setAttribute("member", member);
         try {
-            request.getRequestDispatcher("home/showTable.jsp").forward(request,response);
+            request.getRequestDispatcher("member").forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void updatePermissionMember(HttpServletRequest request, HttpServletResponse response) {
+        int idMember = Integer.parseInt(request.getParameter("id"));
+        Member member = userDAO.findMemberById(idMember);
+        userDAO.updatePermissionMember(idMember);
+        request.setAttribute("member", member);
+        try {
+            request.getRequestDispatcher("member").forward(request, response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showTableInGroup(HttpServletRequest request, HttpServletResponse response) {
+        int idGroup = Integer.parseInt(request.getParameter("idGroup"));
+        List<Table> tableList = userDAO.showTableInGroup(idGroup);
+        request.setAttribute("tables", tableList);
+        Group groupList = userDAO.findGroupById(idGroup);
+        request.setAttribute("groups", groupList);
+        try {
+            request.getRequestDispatcher("home/showTable.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

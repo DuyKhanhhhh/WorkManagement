@@ -31,8 +31,64 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT member.id,user.name,user.email,role FROM user JOIN member ON user.id = member.idUser JOIN groupWork ON member.idGroup = groupWork.id WHERE groupWork.id = ?";
     private static final String SELECT_ALL_USER_TO_TABLE = "SELECT id,u.name,u.email,m.role,u.avatar FROM user u JOIN userToTable m ON u.id = m.idUser JOIN tableWork t ON m.idTable = t.id WHERE t.id = ?";
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
+
+    private static final String UPDATE_PERMISSION_MEMBER = "update member set permission = ? where id = ?";
+    private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
+
+    @Override
+    public Member findMemberById (int id){
+        Member member = null;
+        try(Connection connection = DataConnector.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_MEMBER)) {
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+            int idGroup = rs.getInt("idGroup");
+            int idUser = rs.getInt("isUser");
+            String role = rs.getString("role");
+            member = new Member(id,idGroup,idUser,role);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return member;
+    }
+    @Override
+    public boolean updatePermissionMember(int id) {
+        boolean updateGroup;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PERMISSION_MEMBER);
+            preparedStatement.setString(1, "Admin");
+            preparedStatement.setInt(2,id);
+            updateGroup = preparedStatement.executeUpdate() > 0;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return updateGroup;
+    }
+    @Override
+    public boolean updatePermissionAdmin(int id) {
+        boolean updateGroup;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PERMISSION_MEMBER);
+            preparedStatement.setString(1, "Member");
+            preparedStatement.setInt(2,id);
+            updateGroup = preparedStatement.executeUpdate() > 0;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return updateGroup;
+    }
+
     private static final String FIND_USER_TO_GROUP = "SELECT * FROM member WHERE idGroup = ? and idUser = ? ";
     private static final String FIND_TABLE_BY_ID = "SELECT * FROM tableWork WHERE id= ?";
+
 
     @Override
     public User findPasswordByEmail(String email, String password) {
@@ -305,21 +361,7 @@ public class UserDAO implements IUserDAO {
         }
         return rowDelete;
     }
-    @Override
-    public boolean deleteIdMemberOfGroup(int id) {
-        boolean rowDelete;
-        try {
-            Connection connection = DataConnector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ID_MEMBER_OF_GROUP);
-            preparedStatement.setInt(1, id);
-            rowDelete = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return rowDelete;
-    }
+
 
     @Override
     public Group findGroupById(int id) {
@@ -497,11 +539,11 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setInt(1, idGroup);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int idMember = resultSet.getInt("id");
+                int id = resultSet.getInt("id");
                 String nameUser = resultSet.getString("name");
                 String email = resultSet.getString("email");
                 String role = resultSet.getString("role");
-                memberList.add(new Member(idMember, nameUser, email, role));
+                memberList.add(new Member(id, nameUser, email, role));
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);

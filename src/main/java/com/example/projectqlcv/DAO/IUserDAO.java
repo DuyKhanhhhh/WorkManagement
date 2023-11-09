@@ -33,7 +33,7 @@ public interface IUserDAO {
     boolean deleteGroup(int id);
     Group findGroupById(int id);
     Table findTableById(int id);
-
+    Member findMemberById (int id);
     List<User> searchNameUser(int idGroup, String nameUser);
     void addAdminToGroup(int idGroup,User user);
     void addMemberToGroup(int idGroup, User user);
@@ -41,9 +41,13 @@ public interface IUserDAO {
     boolean deleteMember(int id);
     void addUserToTable(int idTable, User user);
     void addAdminToTable(int idTable, User user);
+    boolean updatePermissionAdmin(int id);
+    boolean updatePermissionMember(int id);
+
 
     Member findUserToGroup(int idGroup , int idUser);
 
     boolean deleteIdMemberOfGroup(int id);
+
 
 }
