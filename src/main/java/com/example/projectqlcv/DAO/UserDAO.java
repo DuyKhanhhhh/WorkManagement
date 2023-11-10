@@ -24,7 +24,7 @@ public class UserDAO implements IUserDAO {
     private static final String DELETE_GROUP_SQL = "DELETE FROM groupWork where id = ?";
     private static final String DELETE_MEMBER_OF_GROUP = "DELETE FROM member where id = ?";
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
-    private static final String SEARCH_NAME_PRODUCT = "SELECT * FROM user WHERE id NOT IN (select user.id  from member join user on idUser = user.id where idGroup = ? ) AND  name LIKE  ? || email LIKE ? ";
+    private static final String SEARCH_NAME_PRODUCT = "SELECT * FROM user WHERE id NOT IN (select u.id  from member m join user u on m.idUser = u.id where idGroup = ? ) AND (name LIKE ? || email LIKE ?)";
     private static final String ADD_MEMBER_TO_SQL = "INSERT INTO member(idGroup,idUser,role) VALUES (?,?,?)";
     private static final String ADD_MEMBER_TO_TABLE = "INSERT INTO userToTable(idUser,idTable,role) VALUES (?,?,?)";
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT member.id,user.name,user.email,role FROM user JOIN member ON user.id = member.idUser JOIN groupWork ON member.idGroup = groupWork.id WHERE groupWork.id = ?";
@@ -398,10 +398,10 @@ public class UserDAO implements IUserDAO {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 String name = rs.getString("name");
-                String group = rs.getString("title");
+                String title = rs.getString("title");
                 String permission = rs.getString("permission");
                 String information = rs.getString("information");
-                listGroup = new Group(id, name, group, permission, information);
+                listGroup = new Group(id, name,title, permission, information);
             }
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);

@@ -246,13 +246,11 @@
         <div class="title">
             <div id="nameTable">
 
-                <input type="submit"  class="button" id="button">
                 <input type="text" class="title" id="title" value="${tables.name}">
 
                 <script>
                     const inputElement = document.getElementById("title");
                     const inputValue = document.getElementById("button")
-                    var input = document.querySelector('input');
 
 
                     inputElement.addEventListener("dblclick", function() {

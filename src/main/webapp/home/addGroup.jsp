@@ -263,7 +263,6 @@
                                     style="color:red;">*</span>)</label>
                             <select class="form-select" name="permission"
                                     style="width: 380px;height: 45px;margin-left: 4%;" required>
-                                <option></option>
                                 <option>Public</option>
                                 <option>Private</option>
                             </select>
