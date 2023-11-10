@@ -69,9 +69,11 @@
         margin-left: 14px;
         font-weight: bold;
     }
-    i{
+
+    i {
         font-size: 25px;
     }
+
     .icon {
         text-decoration: none;
         color: black;
@@ -124,9 +126,11 @@
         text-decoration: none;
         color: black;
     }
-    span{
+
+    span {
         font-size: 23px;
     }
+
     /* Style for dropdown content */
     .dropdown-content {
         display: none; /* Hidden by default */
@@ -136,10 +140,12 @@
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
     }
-    .dropdown-content a{
+
+    .dropdown-content a {
         font-size: 15px;
         color: white;
     }
+
     /* Style for each content div */
     .dropdown-content div {
         padding: 10px 5px;
@@ -164,7 +170,7 @@
 
     .name_group {
         width: 85%;
-        margin-left:15%;
+        margin-left: 15%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -262,7 +268,7 @@
                         </div>
                         <div class="d_flex_right">
                             <div class="d-flex align-items-center ml-auto">
-                                <a href="homeUser?action=updateGroup&id=${group.id}" class="icon">
+                                <a href="/homeUser?action=updateGroup&id=${group.id}" class="icon">
                                     <i class="fa-solid fa-table-cells"></i>
                                     <span style="font-size: 20px">Information</span>
                                 </a>
@@ -273,27 +279,29 @@
                                 </a>
 
                                 <a href="/homeUser?action=member&idGroup=${group.id}" class="icon">
-                                    <i class="fa-solid fa-user-group" ></i>
+                                    <i class="fa-solid fa-user-group"></i>
                                     <span style="font-size: 20px">Member</span>
                                 </a>
 
                                 <a href="#" class="icon">
-                                    <i class="fa-solid fa-gear" ></i>
+                                    <i class="fa-solid fa-gear"></i>
                                     <span style="font-size: 20px">Setting</span>
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <c:forEach items="${tables}" var="table">
-                        <div class="groupContent">
-                            <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
-                               style="text-decoration: none; color: black">
-                                <div class="table_create">
-                                    <h4 style="text-align: center;margin-top: 33%">${table.name}</h4>
-                                </div>
-                            </a>
-                        </div>
-                    </c:forEach>
+                        <c:forEach items="${tables}" var="table">
+                            <c:if test="${group.id eq table.idGroup}">
+                            <div class="groupContent">
+                                <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
+                                   style="text-decoration: none; color: black">
+                                    <div class="table_create">
+                                        <h4 style="text-align: center;margin-top: 33%">${table.name}</h4>
+                                    </div>
+                                </a>
+                            </div>
+                            </c:if>
+                        </c:forEach>
                     <div class="groupContent">
                         <div class="table_create">
                             <h4 style="text-align: center;margin-top: 33%"><c:out value="${listTable.name}"/></h4>
