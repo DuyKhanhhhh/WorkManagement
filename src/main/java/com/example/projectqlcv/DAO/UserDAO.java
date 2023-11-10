@@ -30,8 +30,9 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT member.id,user.name,user.email,role FROM user JOIN member ON user.id = member.idUser JOIN groupWork ON member.idGroup = groupWork.id WHERE groupWork.id = ?";
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
     private static final String UPDATE_PERMISSION_MEMBER = "update member set role = ? where id = ?";
+    private static final String UPDATE_PERMISSION_USER_TO_TABLE = "update userToTable set role = ? where idUser = ?";
     private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
-    private static final String SELECT_USER_TO_TABLE = "select user.email, userToTable.id, user.name, userToTable.idTable, userToTable.idUser, role, user.avatar, tableWork.idGroup, userToTable.status from userToTable join user on userToTable.idUser = user.id join tableWork on userToTable.idTable = tableWork.id where tableWork.id =?";
+    private static final String SELECT_USER_TO_TABLE = "select u.email, m.id, u.name, m.idTable, m.idUser, m.role, u.avatar, t.idGroup, m.status from userToTable m join user u on m.idUser = u.id join tableWork t on m.idTable = t.id where t.id =?";
     private static final String SEARCH_USER_TO_TABLE = "select * from user where id not in \n" +
             "(select u.id from userToTable m join user u on  m.idUser = u.id  join tableWork t on m.idTable = t.id where m.status = 'Added' and t.idGroup like ?) and (name like ? || email like ?);";
 
@@ -98,12 +99,12 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public boolean updatePermissionAdmin(int id) {
+    public boolean updatePermissionUserToTable(int id) {
         boolean updateGroup;
         try {
             Connection connection = DataConnector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PERMISSION_MEMBER);
-            preparedStatement.setString(1, "Member");
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PERMISSION_USER_TO_TABLE);
+            preparedStatement.setString(1, "Admin");
             preparedStatement.setInt(2, id);
             updateGroup = preparedStatement.executeUpdate() > 0;
         } catch (ClassNotFoundException e) {

@@ -13,7 +13,7 @@ public class AddUserToTable {
     private String avatar;
     private String status;
 
-    public AddUserToTable(int idTable, int id, int idUser, int idGroup, String role, String avatar, String name, String emailUser ,String status) {
+    public AddUserToTable( int id, int idTable, int idUser, int idGroup, String role, String avatar, String name, String emailUser ,String status) {
         this.id = id;
         this.idUser = idUser;
         this.idGroup = idGroup;
