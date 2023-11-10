@@ -5,10 +5,18 @@ public class Table {
     private int idGroup;
     private String name;
     private String permission;
+    private String status;
 
     public Table() {
     }
 
+    public Table(int id, int idGroup, String name, String permission, String status) {
+        this.id = id;
+        this.idGroup = idGroup;
+        this.name = name;
+        this.permission = permission;
+        this.status = status;
+    }
 
     public Table(int id, String name, String permission) {
         this.id = id;
@@ -21,6 +29,14 @@ public class Table {
         this.idGroup = idGroup;
         this.name = name;
         this.permission = permission;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getId() {
