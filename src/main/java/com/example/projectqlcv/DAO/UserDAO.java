@@ -425,8 +425,7 @@ public class UserDAO implements IUserDAO {
                 int idGroup = rs.getInt("idGroup");
                 String name = rs.getString("name");
                 String permission = rs.getString("permission");
-                String status = rs.getString("status");
-                table = new Table(id, idGroup, name, permission, status);
+                table = new Table(id, idGroup, name, permission);
             }
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
