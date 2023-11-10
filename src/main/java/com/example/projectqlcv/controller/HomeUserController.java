@@ -364,10 +364,8 @@ public class HomeUserController extends HttpServlet {
                     }
                 }
             }
-
         session.setAttribute("groups",groupFromUser);
         session.setAttribute("tables", tables);
-
         session.setAttribute("user", user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("homeUser.jsp");
         try {

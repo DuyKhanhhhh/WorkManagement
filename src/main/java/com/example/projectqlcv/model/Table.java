@@ -9,6 +9,12 @@ public class Table {
     public Table() {
     }
 
+    public Table(int id, int idGroup, String name, String permission) {
+        this.id = id;
+        this.idGroup = idGroup;
+        this.name = name;
+        this.permission = permission;
+    }
 
     public Table(int id, String name, String permission) {
         this.id = id;
@@ -16,12 +22,6 @@ public class Table {
         this.permission = permission;
     }
 
-    public Table(int id, int idGroup, String name, String permission) {
-        this.id = id;
-        this.idGroup = idGroup;
-        this.name = name;
-        this.permission = permission;
-    }
 
     public int getId() {
         return id;

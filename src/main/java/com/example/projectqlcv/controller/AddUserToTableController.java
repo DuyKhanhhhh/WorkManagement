@@ -77,7 +77,7 @@ public class AddUserToTableController extends HttpServlet {
         Table table = userDAO.findTableById(idTable);
         request.setAttribute("tables",table);
         String name = request.getParameter("search");
-        List<User> userList = userDAO.searchNameUser(idGroup,name);
+        List<User> userList = userDAO.searchUserToTable(idGroup,name);
         request.setAttribute("list", userList);
 
         RequestDispatcher dispatcher = request.getRequestDispatcher("home/addUserToTable.jsp");

@@ -18,7 +18,7 @@ public class UserDAO implements IUserDAO {
     private static final String ADD_GROUP_TO_SQL = "INSERT INTO groupWork(name,title,permission,information) VALUES(?,?,?,?)";
     private static final String SELECT_ALL_GROUP_WORK = "SELECT * FROM groupWork";
     private static final String UPDATE_GROUP = "UPDATE groupWork SET name = ?, title = ?, permission = ?, information = ? WHERE id = ?";
-    private static final String ADD_TABLE_TO_SQL = "INSERT INTO tableWork( idGroup, name, permission) VALUES( ?, ?, ?) ";
+    private static final String ADD_TABLE_TO_SQL = "INSERT INTO tableWork(idGroup, name, permission) VALUES( ?, ?, ?) ";
     private static final String SELECT_GROUP_BY_ID = "SELECT * FROM groupWork where id = ?";
     private static final String SELECT_TABLE_BY_ID = "SELECT * FROM tableWork where id = ?";
     private static final String DELETE_GROUP_SQL = "DELETE FROM groupWork where id = ?";
@@ -26,12 +26,14 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
     private static final String SEARCH_NAME_PRODUCT = "SELECT * FROM user WHERE id NOT IN (select u.id  from member m join user u on m.idUser = u.id where idGroup = ? ) AND (name LIKE ? || email LIKE ?)";
     private static final String ADD_MEMBER_TO_SQL = "INSERT INTO member(idGroup,idUser,role) VALUES (?,?,?)";
-    private static final String ADD_MEMBER_TO_TABLE = "INSERT INTO userToTable(idUser,idTable,role) VALUES (?,?,?)";
+    private static final String ADD_MEMBER_TO_TABLE = "INSERT INTO userToTable(idUser,idTable,role,status) VALUES (?,?,?,'Added')";
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT member.id,user.name,user.email,role FROM user JOIN member ON user.id = member.idUser JOIN groupWork ON member.idGroup = groupWork.id WHERE groupWork.id = ?";
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
     private static final String UPDATE_PERMISSION_MEMBER = "update member set role = ? where id = ?";
     private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
-    private static final String SELECT_USER_TO_TABLE = "select user.email, userToTable.id, user.name, userToTable.idTable, userToTable.idUser, role, user.avatar, tableWork.idGroup from userToTable join user on userToTable.idUser = user.id join tableWork on userToTable.idTable = tableWork.id where tableWork.id =?";
+    private static final String SELECT_USER_TO_TABLE = "select user.email, userToTable.id, user.name, userToTable.idTable, userToTable.idUser, role, user.avatar, tableWork.idGroup, userToTable.status from userToTable join user on userToTable.idUser = user.id join tableWork on userToTable.idTable = tableWork.id where tableWork.id =?";
+    private static final String SEARCH_USER_TO_TABLE = "select * from user where id not in \n" +
+            "(select u.id from userToTable m join user u on  m.idUser = u.id  join tableWork t on m.idTable = t.id where m.status = 'Added' and t.idGroup like ?) and (name like ? || email like ?);";
 
     @Override
     public Member findMemberById(int id) {
@@ -84,7 +86,8 @@ public class UserDAO implements IUserDAO {
                 String avatar = rs.getString("avatar");
                 String name = rs.getString("name");
                 String email = rs.getString("email");
-                addUserToTable.add(new AddUserToTable(idUserToTable, id, idUser, idGroup, role, avatar, name, email));
+                String status = rs.getString("status");
+                addUserToTable.add(new AddUserToTable(idUserToTable, id, idUser, idGroup, role, avatar, name, email, status));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -437,6 +440,30 @@ public class UserDAO implements IUserDAO {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_NAME_PRODUCT);
             preparedStatement.setInt(1, idGroup);
+            preparedStatement.setString(2, "%" + nameUser + "%");
+            preparedStatement.setString(3, "%" + nameUser + "%");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+                String avatar = resultSet.getString("avatar");
+                list.add(new User(id, name, email, avatar));
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public List<User> searchUserToTable(int idGroup, String nameUser) {
+        try {
+            List<User> list = new ArrayList<>();
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_USER_TO_TABLE);
+            preparedStatement.setInt(1,idGroup);
             preparedStatement.setString(2, "%" + nameUser + "%");
             preparedStatement.setString(3, "%" + nameUser + "%");
             ResultSet resultSet = preparedStatement.executeQuery();

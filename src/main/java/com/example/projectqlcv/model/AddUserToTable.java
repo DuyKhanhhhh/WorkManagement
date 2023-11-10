@@ -11,8 +11,9 @@ public class AddUserToTable {
     private String nameUser;
     private String emailUser;
     private String avatar;
+    private String status;
 
-    public AddUserToTable( int idTable, int id, int idUser, int idGroup, String role, String avatar, String name, String emailUser) {
+    public AddUserToTable(int idTable, int id, int idUser, int idGroup, String role, String avatar, String name, String emailUser ,String status) {
         this.id = id;
         this.idUser = idUser;
         this.idGroup = idGroup;
@@ -21,6 +22,7 @@ public class AddUserToTable {
         this.avatar = avatar;
         this.nameUser = name;
         this.emailUser = emailUser;
+        this.status = status;
     }
 
     public int getIdTable() {
@@ -47,7 +49,7 @@ public class AddUserToTable {
         this.emailUser = emailUser;
     }
 
-    public AddUserToTable(int id, String nameUser, String emailUser, String role,String avatar) {
+    public AddUserToTable(int id, String nameUser, String emailUser, String role, String avatar) {
         this.id = id;
         this.nameUser = nameUser;
         this.emailUser = emailUser;
@@ -56,6 +58,14 @@ public class AddUserToTable {
     }
 
     public AddUserToTable() {
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getId() {
