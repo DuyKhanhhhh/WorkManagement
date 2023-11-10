@@ -40,7 +40,7 @@
 
     #boxLeft {
         max-height: 100%;
-        margin-top: 2.6%;
+        margin-top: 2.7%;
         height: 100%;
         position: fixed;
         flex: 0 0 auto;

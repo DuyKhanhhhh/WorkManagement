@@ -47,7 +47,6 @@ public interface IUserDAO {
 
     Member findUserToGroup(int idGroup , int idUser);
 
-    boolean deleteIdMemberOfGroup(int id);
 
 
 }

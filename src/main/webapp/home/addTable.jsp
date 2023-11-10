@@ -36,7 +36,6 @@
                                 <div class="form-outline mb-4">
                                  <span class="input-group-text">
                                     <select class="form-select" aria-label="Default select example" name="permission">
-                                    <option selected>Open Permission</option>
                                     <option>Public</option>
                                     <option>Private</option>
                                     </select>
