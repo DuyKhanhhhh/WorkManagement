@@ -359,14 +359,7 @@
         <div class="col-10" id="content">
             <div id="member">
                 <div class="name_member">
-                    <h2 style=" margin-top: 50px ; margin-left: 60%"><c:out value="${groups.name}"></c:out></h2>
-                </div>
-                <div class="add_member">
-                    <a href="/addMembers?action=addMember&groupId=<c:out value="${groups.id}"></c:out>">
-                        <button style="margin-left: 20% ; height: 45px; border-radius: 15px; background: #4799e2 ; color: white"
-                                type="submit">Invite members to the workspace
-                        </button>
-                    </a>
+                    <h2 style=" margin-top: 50px ; margin-left: 60%"><c:out value="${tables.name}"></c:out></h2>
                 </div>
             </div>
 
@@ -378,32 +371,36 @@
                         <th>Role</th>
                         <th>Actions</th>
                     </tr>
-                    <c:forEach var="member" items="${member}">
+                    <c:forEach var="userToTable" items="${userToTable}">
 
                         <tr>
-                            <td>${member.nameUser}</td>
-                            <td>${member.emailUser}</td>
+                            <td>${userToTable.nameUser}</td>
+                            <td>${userToTable.emailUser}</td>
                             <td>
                                 <div class="menu-wrapper menu-gold">
                                     <ul class="menu">
                                         <li>
-                                            <a href="">${member.role}</a>
+                                            <a href="">${userToTable.role}</a>
                                             <ul>
-<%--                                                <c:choose>--%>
-<%--                                                    <c:when test="${member.idMember.equals('Member')}">--%>
-                                                <li><a href="/homeUser?action=updatePermissionAdmin?id=${member.idMember}">Member</a></li>
-<%--                                                    </c:when>--%>
-<%--                                                    <c:otherwise>--%>
-                                                <li><a href="/homeUser?action=updatePermissionMember?id=${member.idMember}">Admin</a></li>
-<%--                                                    </c:otherwise>--%>
-<%--                                                </c:choose>--%>
+                                                    <%--                                                <c:choose>--%>
+                                                    <%--                                                    <c:when test="${member.idMember.equals('Member')}">--%>
+                                                <li>
+                                                    <a href="/homeUser?action=updatePermissionAdmin?id=${userToTable.id}">Member</a>
+                                                </li>
+                                                    <%--                                                    </c:when>--%>
+                                                    <%--                                                    <c:otherwise>--%>
+                                                <li>
+                                                    <a href="/homeUser?action=updatePermissionMember?id=${userToTable.id}">Admin</a>
+                                                </li>
+                                                    <%--                                                    </c:otherwise>--%>
+                                                    <%--                                                </c:choose>--%>
                                             </ul>
                                         </li>
                                     </ul>
                                 </div>
                             </td>
                             <td>
-                                <c:if test="${member.role.equals('Member')}">
+                                <c:if test="${userToTable.role.equals('Member')}">
                                     <div class="">
                                         <a onclick="showConfirmation()" style="font-size: 20px;color: black">
                                             <i class="fa-solid fa-trash"></i>
@@ -417,7 +414,7 @@
                             function showConfirmation() {
                                 var result = confirm("Are you sure you want to remove this member from the group?");
                                 if (result) {
-                                    window.location.href = "/homeUser?action=deleteMember&idMember=${member.idMember}&groupId=${groups.id}";
+                                    window.location.href = "/homeUser?action=deleteMember&=";
                                 }
                             }
                         </script>

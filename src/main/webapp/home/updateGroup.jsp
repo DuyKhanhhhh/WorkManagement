@@ -280,7 +280,6 @@
                                     if (result) {
                                         window.location.href = "/homeUser?action=deleteGroup&id=${group.id}";
                                     } else {
-
                                     }
                                 }
                             </script>

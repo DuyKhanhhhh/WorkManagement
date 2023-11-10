@@ -28,23 +28,22 @@ public class UserDAO implements IUserDAO {
     private static final String ADD_MEMBER_TO_SQL = "INSERT INTO member(idGroup,idUser,role) VALUES (?,?,?)";
     private static final String ADD_MEMBER_TO_TABLE = "INSERT INTO userToTable(idUser,idTable,role) VALUES (?,?,?)";
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT member.id,user.name,user.email,role FROM user JOIN member ON user.id = member.idUser JOIN groupWork ON member.idGroup = groupWork.id WHERE groupWork.id = ?";
-    private static final String SELECT_ALL_USER_TO_TABLE = "SELECT id,u.name,u.email,m.role,u.avatar FROM user u JOIN userToTable m ON u.id = m.idUser JOIN tableWork t ON m.idTable = t.id WHERE t.id = ?";
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
-
-    private static final String UPDATE_PERMISSION_MEMBER = "update member set permission = ? where id = ?";
+    private static final String UPDATE_PERMISSION_MEMBER = "update member set role = ? where id = ?";
     private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
+    private static final String SELECT_USER_TO_TABLE = "select user.email, userToTable.id, user.name, userToTable.idTable, userToTable.idUser, role, user.avatar, tableWork.idGroup from userToTable join user on userToTable.idUser = user.id join tableWork on userToTable.idTable = tableWork.id where tableWork.id =?";
 
     @Override
-    public Member findMemberById (int id){
+    public Member findMemberById(int id) {
         Member member = null;
-        try(Connection connection = DataConnector.getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_MEMBER)) {
-            preparedStatement.setInt(1,id);
+        try (Connection connection = DataConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_MEMBER)) {
+            preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             int idGroup = rs.getInt("idGroup");
             int idUser = rs.getInt("isUser");
             String role = rs.getString("role");
-            member = new Member(id,idGroup,idUser,role);
+            member = new Member(id, idGroup, idUser, role);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -52,6 +51,7 @@ public class UserDAO implements IUserDAO {
         }
         return member;
     }
+
     @Override
     public boolean updatePermissionMember(int id) {
         boolean updateGroup;
@@ -59,7 +59,7 @@ public class UserDAO implements IUserDAO {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PERMISSION_MEMBER);
             preparedStatement.setString(1, "Admin");
-            preparedStatement.setInt(2,id);
+            preparedStatement.setInt(2, id);
             updateGroup = preparedStatement.executeUpdate() > 0;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -68,6 +68,32 @@ public class UserDAO implements IUserDAO {
         }
         return updateGroup;
     }
+
+    @Override
+    public List<AddUserToTable> findUserToTable(int id) {
+        List<AddUserToTable> addUserToTable = new ArrayList<>();
+        try (Connection connection = DataConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_USER_TO_TABLE)) {
+            preparedStatement.setInt(1, id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int idUserToTable = rs.getInt("id");
+                int idGroup = rs.getInt("idGroup");
+                int idUser = rs.getInt("idUser");
+                String role = rs.getString("role");
+                String avatar = rs.getString("avatar");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                addUserToTable.add(new AddUserToTable(idUserToTable, id, idUser, idGroup, role, avatar, name, email));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return addUserToTable;
+    }
+
     @Override
     public boolean updatePermissionAdmin(int id) {
         boolean updateGroup;
@@ -75,7 +101,7 @@ public class UserDAO implements IUserDAO {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PERMISSION_MEMBER);
             preparedStatement.setString(1, "Member");
-            preparedStatement.setInt(2,id);
+            preparedStatement.setInt(2, id);
             updateGroup = preparedStatement.executeUpdate() > 0;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -501,8 +527,8 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public Member findUserToGroup(int idGroup , int idUser) {
-        Member member =null;
+    public Member findUserToGroup(int idGroup, int idUser) {
+        Member member = null;
         try {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_TO_GROUP);
@@ -518,7 +544,7 @@ public class UserDAO implements IUserDAO {
 //                member.setGroupId(idGroup);
 //                member.setUserId(idUserDb);
 //                member.setRole(role);
-                member = new Member(id,idGroupOb,idUserDb,role);
+                member = new Member(id, idGroupOb, idUserDb, role);
             }
 
         } catch (SQLException | ClassNotFoundException e) {
@@ -526,7 +552,6 @@ public class UserDAO implements IUserDAO {
         }
         return member;
     }
-
 
 
     @Override
@@ -550,27 +575,6 @@ public class UserDAO implements IUserDAO {
         return memberList;
     }
 
-    @Override
-    public List<AddUserToTable> selectUserToTable(int idTable) {
-        List<AddUserToTable> addUserToTables = new ArrayList<>();
-        try {
-            Connection connection = DataConnector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_USER_TO_TABLE);
-            preparedStatement.setInt(1, idTable);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String nameUser = resultSet.getString("name");
-                String email = resultSet.getString("email");
-                String role = resultSet.getString("role");
-                String avatar = resultSet.getString("avatar");
-                addUserToTables.add(new AddUserToTable(id, nameUser, email, role, avatar));
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return addUserToTables;
-    }
 
     @Override
     public List<Table> showTableInGroup(int idGroup) {

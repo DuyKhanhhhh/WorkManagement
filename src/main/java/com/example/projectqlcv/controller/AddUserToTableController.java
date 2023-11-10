@@ -56,6 +56,8 @@ public class AddUserToTableController extends HttpServlet {
         HttpSession session = request.getSession();
         int idGroup = Integer.parseInt(request.getParameter("id"));
         int idTable = Integer.parseInt(request.getParameter("idTable"));
+        List<AddUserToTable> addUserToTable = userDAO.findUserToTable(idTable);
+        session.setAttribute("userToTable",addUserToTable);
         Table table = userDAO.findTableById(idTable);
         session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
@@ -70,12 +72,15 @@ public class AddUserToTableController extends HttpServlet {
     }
 
     private void searchUser(HttpServletRequest request, HttpServletResponse response) {
-        int idGroup =Integer.parseInt(request.getParameter("idGroup"));
+        int idGroup =Integer.parseInt(request.getParameter("id"));
+        int idTable =Integer.parseInt(request.getParameter("idTable"));
+        Table table = userDAO.findTableById(idTable);
+        request.setAttribute("tables",table);
         String name = request.getParameter("search");
         List<User> userList = userDAO.searchNameUser(idGroup,name);
         request.setAttribute("list", userList);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("home/addMember.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("home/addUserToTable.jsp");
         try {
             dispatcher.forward(request, response);
         } catch (ServletException e) {
@@ -104,17 +109,34 @@ public class AddUserToTableController extends HttpServlet {
                 break;
             case "show":
                 showAllUserToTable(request,response);
+                break;
+            case "showUserToTable":
+                showUserToTable(request,response);
+                break;
+        }
+    }
 
+    private void showUserToTable(HttpServletRequest request, HttpServletResponse response) {
+        int idTable = Integer.parseInt(request.getParameter("idTable"));
+        List<AddUserToTable> addUserToTables = userDAO.findUserToTable(idTable);
+        HttpSession session = request.getSession();
+        session.setAttribute("userToTable",addUserToTables);
+        Table table = userDAO.findTableById(idTable);
+        session.setAttribute("tables",table);
+        try {
+            request.getRequestDispatcher("home/showUserToTable.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     private void showAllUserToTable(HttpServletRequest request, HttpServletResponse response) {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
-        Table table = userDAO.findTableById(idTable);
+        List<AddUserToTable> addUserToTable = userDAO.findUserToTable(idTable);
         HttpSession session = request.getSession();
-        session.setAttribute("tables", table);
-        List<AddUserToTable> addUserToTables = userDAO.selectUserToTable(idTable);
-        session.setAttribute("member", addUserToTables);
+        session.setAttribute("userToTable", addUserToTable);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
         } catch (ServletException e) {
@@ -130,9 +152,11 @@ public class AddUserToTableController extends HttpServlet {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         User user = userDAO.selectAllUserId(id);
         userDAO.addUserToTable(idTable, user);
+        Table table = userDAO.findTableById(idTable);
+        request.setAttribute("tables",table);
         request.setAttribute("message", "Add member success !");
         try {
-            request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
+            request.getRequestDispatcher("home/addUserToTable.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

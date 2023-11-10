@@ -282,7 +282,6 @@
                     }
                 </script>
             </div>
-            <span id="text">${member.name}</span>
             <div class="titleRight">
 
                 <div id="mySidebar" class="sidebar">
@@ -291,7 +290,7 @@
                     <h2 style="text-align: center;color: white">Menu</h2>
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
-                    <a href="#">Services</a>
+                    <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}">Member</a>
                     <a href="#">Clients</a>
                     <a href="#">Contact</a>
                 </div>
@@ -300,9 +299,9 @@
           <span onclick="openNav()"><i class="fa-solid fa-bars" style="color: #000000;font-size: 28px"></i></span>
         </div>
         <div class="member">
-            <c:forEach var="member" items="${member}">
+            <c:forEach var="userToTable" items="${userToTable}">
           <div class="circleMember">
-            <img src="${member.avatar}" alt="Avatar">
+            <img src="${userToTable.avatar}" alt="Avatar">
           </div>
             </c:forEach>
         </div>
@@ -312,7 +311,7 @@
     </div>
     <div class="bg-light py-2" id="footer">
         <div class="container text-center">
-            <p class="text-muted mb-0 py-1">© 2023 Trello Group 7.</p>
+            <p class="text-muted mb-0 py-1">©2023 Trello Group 7</p>
         </div>
     </div>
 </div>
