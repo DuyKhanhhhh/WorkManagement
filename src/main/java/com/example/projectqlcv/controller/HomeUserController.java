@@ -178,43 +178,9 @@ public class HomeUserController extends HttpServlet {
             case "table":
                 showTableInGroup(request, response);
                 break;
-            case "updatePermissionMember":
-                updatePermissionMember(request, response);
-                break;
-            case "updatePermissionAdmin":
-                updatePermissionAdmin(request, response);
-                break;
             default:
                 selectGroupFromSql(request, response);
                 break;
-        }
-    }
-
-    private void updatePermissionAdmin(HttpServletRequest request, HttpServletResponse response) {
-        int idMember = Integer.parseInt(request.getParameter("id"));
-        Member member = userDAO.findMemberById(idMember);
-        userDAO.updatePermissionAdmin(idMember);
-        request.setAttribute("member", member);
-        try {
-            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void updatePermissionMember(HttpServletRequest request, HttpServletResponse response) {
-        int idMember = Integer.parseInt(request.getParameter("id"));
-        userDAO.updatePermissionMember(idMember);
-        Member member = userDAO.findMemberById(idMember);
-        request.setAttribute("member", member);
-        try {
-            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 
@@ -348,14 +314,6 @@ public class HomeUserController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         int id = user.getId();
         user = userDAO.selectAllUserId(id);
-
-//        for ( Group group: groups) {
-//            for (Table table :tables) {
-//                if (group.getId() == table.getIdGroup()) {
-//
-//                }
-//            }
-//        }
 
         Collections.sort(groups, new Comparator<Group>() {
             @Override

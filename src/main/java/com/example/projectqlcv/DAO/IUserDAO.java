@@ -39,7 +39,7 @@ public interface IUserDAO {
     boolean deleteMember(int id);
     void addUserToTable(int idTable, User user);
     void addAdminToTable(int idTable, User user);
-    boolean updatePermissionAdmin(int id);
+    boolean updatePermissionUserToTable(int id);
     boolean updatePermissionMember(int id);
     List<AddUserToTable> findUserToTable(int id);
     List<User> searchUserToTable(int idGroup, String nameUser);

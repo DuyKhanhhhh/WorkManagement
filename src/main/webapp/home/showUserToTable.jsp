@@ -208,11 +208,11 @@
 
     .menu a {
         display: block;
-        padding: 4px;
+        padding: 5px;
         -webkit-box-sizing: border-box;
         box-sizing: border-box;
         text-decoration: none;
-        font-size: 17px;
+        font-size: 16px;
     }
 
     .menu li {
@@ -382,25 +382,20 @@
                                         <li>
                                             <a href="">${userToTable.role}</a>
                                             <ul>
-                                                    <%--                                                <c:choose>--%>
-                                                    <%--                                                    <c:when test="${member.idMember.equals('Member')}">--%>
+                                                <c:if test="${userToTable.role.equals('User')}">
+                                                    <form action="/addUserToTable?action=updatePermissionUser&id=${userToTable.id}&idTable=${tables.id}" method="post">
                                                 <li>
-                                                    <a href="/homeUser?action=updatePermissionAdmin?id=${userToTable.id}">Member</a>
+                                                    <input type="submit" value="Admin" style="border: none; font-size: 17px" />
                                                 </li>
-                                                    <%--                                                    </c:when>--%>
-                                                    <%--                                                    <c:otherwise>--%>
-                                                <li>
-                                                    <a href="/homeUser?action=updatePermissionMember?id=${userToTable.id}">Admin</a>
-                                                </li>
-                                                    <%--                                                    </c:otherwise>--%>
-                                                    <%--                                                </c:choose>--%>
+                                                    </form>
+                                                </c:if>
                                             </ul>
                                         </li>
                                     </ul>
                                 </div>
                             </td>
                             <td>
-                                <c:if test="${userToTable.role.equals('Member')}">
+                                <c:if test="${userToTable.role.equals('User')}">
                                     <div class="">
                                         <a onclick="showConfirmation()" style="font-size: 20px;color: black">
                                             <i class="fa-solid fa-trash"></i>
