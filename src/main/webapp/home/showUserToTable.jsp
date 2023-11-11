@@ -407,9 +407,9 @@
                         <script>
 
                             function showConfirmation() {
-                                var result = confirm("Are you sure you want to remove this member from the group?");
+                                var result = confirm("Are you sure you want to remove this user from the table?");
                                 if (result) {
-                                    window.location.href = "/homeUser?action=deleteMember&=";
+                                    window.location.href = "/addUserToTable?action=deleteUserToTable&id=${userToTable.id}&idTable=${tables.id}";
                                 }
                             }
                         </script>
