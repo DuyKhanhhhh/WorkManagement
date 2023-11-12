@@ -35,6 +35,7 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_USER_TO_TABLE = "select u.email, m.id, u.name, m.idTable, m.idUser, m.role, u.avatar, t.idGroup, m.status from userToTable m join user u on m.idUser = u.id join tableWork t on m.idTable = t.id where t.id =?";
     private static final String SEARCH_USER_TO_TABLE = "select * from user where id not in \n" +
             "(select u.id from userToTable m join user u on  m.idUser = u.id  join tableWork t on m.idTable = t.id where m.status = 'Added' and t.idGroup like ?) and (name like ? || email like ?);";
+    private static final String DELETE_USER_TO_TABLE = "delete from userToTable where id = ?";
 
     @Override
     public Member findMemberById(int id) {
@@ -383,6 +384,19 @@ public class UserDAO implements IUserDAO {
         try {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_MEMBER_OF_GROUP);
+            preparedStatement.setInt(1, id);
+            rowDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDelete;
+    }
+    @Override
+    public boolean deleteUserToTable(int id) {
+        boolean rowDelete;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_TO_TABLE);
             preparedStatement.setInt(1, id);
             rowDelete = preparedStatement.executeUpdate() > 0;
         } catch (SQLException | ClassNotFoundException e) {
