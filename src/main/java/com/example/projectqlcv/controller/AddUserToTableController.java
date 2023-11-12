@@ -2,6 +2,7 @@ package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.*;
+import sun.tools.jconsole.Tab;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -78,11 +79,9 @@ public class AddUserToTableController extends HttpServlet {
         int idGroup = Integer.parseInt(request.getParameter("id"));
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         List<AddUserToTable> addUserToTable = userDAO.findUserToTable(idTable);
-        for (AddUserToTable a : addUserToTable
-        ) {
-            System.out.println(a.getId());
-        }
         session.setAttribute("userToTable", addUserToTable);
+        AddUserToTable addUserToTable1 = userDAO.findUserToTableById(idTable);
+        session.setAttribute("userOfTable",addUserToTable1);
         Table table = userDAO.findTableById(idTable);
         session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
@@ -141,6 +140,20 @@ public class AddUserToTableController extends HttpServlet {
             case "deleteUserToTable":
                 deleteUserToTable(request, response);
                 break;
+            case "deleteTable":
+                deleteTable(request, response);
+                break;
+        }
+    }
+
+    private void deleteTable(HttpServletRequest request, HttpServletResponse response) {
+        int idTable = Integer.parseInt(request.getParameter("idTable"));
+        userDAO.deleteUserToTable(idTable);
+        userDAO.deleteTable(idTable);
+        try {
+            response.sendRedirect("/homeUser");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -152,8 +165,8 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("message", "Delete success !");
         List<AddUserToTable> addUserToTables = userDAO.findUserToTable(idTable);
         Table table = userDAO.findTableById(idTable);
-        session.setAttribute("userToTable",addUserToTables);
-        session.setAttribute("tables",table);
+        session.setAttribute("userToTable", addUserToTables);
+        session.setAttribute("tables", table);
         try {
             request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);
         } catch (ServletException e) {

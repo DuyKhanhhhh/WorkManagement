@@ -184,32 +184,38 @@
             font-size: 10px;
         }
     }
-    #text{
+
+    #text {
         font-size: 33px;
     }
-    #rightTitle{
+
+    #rightTitle {
         display: flex;
         flex-direction: row-reverse;
     }
-    .circleMember{
+
+    .circleMember {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         overflow: hidden;
         margin-right: 8px;
     }
+
     .circleMember img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
-    .member{
+
+    .member {
         display: flex;
         align-items: center;
     }
-     .title {
-         cursor:pointer;
-     }
+
+    .title {
+        cursor: pointer;
+    }
 </style>
 <body>
 <div class="container-fluid">
@@ -253,19 +259,19 @@
                     const inputValue = document.getElementById("button")
 
 
-                    inputElement.addEventListener("dblclick", function() {
+                    inputElement.addEventListener("dblclick", function () {
                         inputElement.disabled = false;
                         inputElement.focus();
                     });
 
-                    inputElement.addEventListener("keyup", function(event) {
+                    inputElement.addEventListener("keyup", function (event) {
                         if (event.keyCode === 13) {
                             inputElement.disabled = true;
                             inputValue.onclick;
                         }
                     });
 
-                    inputElement.addEventListener("blur", function() {
+                    inputElement.addEventListener("blur", function () {
                         inputElement.disabled = true;
                         inputValue.onclick;
 
@@ -289,7 +295,7 @@
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
                     <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}">Member</a>
-                    <a href="#">Clients</a>
+                    <a onclick="showConfirmation()" style="color: white">Delete table</a>
                     <a href="#">Contact</a>
                 </div>
                 <span id="rightTitle">
@@ -314,6 +320,12 @@
     </div>
 </div>
 <script>
+    function showConfirmation() {
+        var result = confirm("Are you sure you want to remove this table ?");
+        if (result) {
+            window.location.href = "/addUserToTable?action=deleteTable&idTable=${tables.id}&id=${userOfTable.id}";
+        }
+    }
     function openNav() {
         document.getElementById("mySidebar").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px";

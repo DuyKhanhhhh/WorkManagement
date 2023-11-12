@@ -35,7 +35,9 @@ public class UserDAO implements IUserDAO {
     private static final String UPDATE_PERMISSION_USER_TO_TABLE = "update userToTable set role = ? where idUser = ?";
     private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
     private static final String SELECT_USER_TO_TABLE = "select u.email, m.id, u.name, m.idTable, m.idUser, m.role, u.avatar, t.idGroup, m.status from userToTable m join user u on m.idUser = u.id join tableWork t on m.idTable = t.id where t.id =?";
-    private static final String DELETE_USER_TO_TABLE = "delete from userToTable where id = ?";
+    private static final String DELETE_ID_TABLE_USER_TO_TABLE = "delete from userToTable where idTable = ?";
+    private static final String DELETE_TABLE_TO_SQL = "delete from tableWork where id = ?";
+    private static final String FIND_USER_TO_TABLE_BY_ID = "select * from userToTable where idTable = ?";
 
     @Override
     public Member findMemberById(int id) {
@@ -398,8 +400,36 @@ public class UserDAO implements IUserDAO {
         boolean rowDelete;
         try {
             Connection connection = DataConnector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_TO_TABLE);
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ID_TABLE_USER_TO_TABLE);
             preparedStatement.setInt(1, id);
+            rowDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDelete;
+    }
+
+    @Override
+    public boolean deleteTable(int id) {
+        boolean rowDelete;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TABLE_TO_SQL);
+            preparedStatement.setInt(1, id);
+            rowDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDelete;
+    }
+
+    @Override
+    public boolean deleteIdTable(int idTable) {
+        boolean rowDelete;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TABLE_TO_SQL);
+            preparedStatement.setInt(1, idTable);
             rowDelete = preparedStatement.executeUpdate() > 0;
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -613,6 +643,25 @@ public class UserDAO implements IUserDAO {
             throw new RuntimeException(e);
         }
         return member;
+    }
+    @Override
+    public AddUserToTable findUserToTableById(int idTable) {
+        AddUserToTable addUserToTable = null;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_TO_TABLE_BY_ID);
+            preparedStatement.setInt(1,idTable);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                int idUser = resultSet.getInt("idUser");
+                String role = resultSet.getString("role");
+                addUserToTable = new AddUserToTable(id, idUser,idTable,role);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return addUserToTable;
     }
 
 

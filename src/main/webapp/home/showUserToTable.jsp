@@ -372,7 +372,6 @@
                         <th>Actions</th>
                     </tr>
                     <c:forEach var="userToTable" items="${userToTable}">
-
                         <tr>
                             <td>${userToTable.nameUser}</td>
                             <td>${userToTable.emailUser}</td>
@@ -383,10 +382,12 @@
                                             <a href="">${userToTable.role}</a>
                                             <ul>
                                                 <c:if test="${userToTable.role.equals('User')}">
-                                                    <form action="/addUserToTable?action=updatePermissionUser&id=${userToTable.id}&idTable=${tables.id}" method="post">
-                                                <li>
-                                                    <input type="submit" value="Admin" style="border: none; font-size: 17px" />
-                                                </li>
+                                                    <form action="/addUserToTable?action=updatePermissionUser&id=${userToTable.id}&idTable=${tables.id}"
+                                                          method="post">
+                                                        <li>
+                                                            <input type="submit" value="Admin"
+                                                                   style="border: none; font-size: 17px"/>
+                                                        </li>
                                                     </form>
                                                 </c:if>
                                             </ul>
