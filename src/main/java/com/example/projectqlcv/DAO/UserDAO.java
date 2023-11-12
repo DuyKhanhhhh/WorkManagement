@@ -30,10 +30,12 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT member.id,user.name,user.email,role FROM user JOIN member ON user.id = member.idUser JOIN groupWork ON member.idGroup = groupWork.id WHERE groupWork.id = ?";
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
     private static final String UPDATE_PERMISSION_MEMBER = "update member set role = ? where id = ?";
-    private static final String SELECT_ALL_MEMBER = "select idGroup,idUser,role from member where id = ?";
-    private static final String SELECT_USER_TO_TABLE = "select user.email, userToTable.id, user.name, userToTable.idTable, userToTable.idUser, role, user.avatar, tableWork.idGroup, userToTable.status from userToTable join user on userToTable.idUser = user.id join tableWork on userToTable.idTable = tableWork.id where tableWork.id =?";
     private static final String SEARCH_USER_TO_TABLE = "select * from user where id not in (select u.id from userToTable m join user u on  m.idUser = u.id  join tableWork t on m.idTable = t.id where m.status = 'Added' and t.idGroup like ?) and (name like ? || email like ?);";
     private static final String FIND_ROLE_USER_TO_MEMBER = "SELECT role FROM member WHERE idUser = ?";
+    private static final String UPDATE_PERMISSION_USER_TO_TABLE = "update userToTable set role = ? where idUser = ?";
+    private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
+    private static final String SELECT_USER_TO_TABLE = "select u.email, m.id, u.name, m.idTable, m.idUser, m.role, u.avatar, t.idGroup, m.status from userToTable m join user u on m.idUser = u.id join tableWork t on m.idTable = t.id where t.id =?";
+    private static final String DELETE_USER_TO_TABLE = "delete from userToTable where id = ?";
 
     @Override
     public Member findMemberById(int id) {
@@ -99,6 +101,22 @@ public class UserDAO implements IUserDAO {
         return addUserToTable;
     }
 
+    @Override
+    public boolean updatePermissionUserToTable(int id) {
+        boolean updateGroup;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PERMISSION_USER_TO_TABLE);
+            preparedStatement.setString(1, "Admin");
+            preparedStatement.setInt(2, id);
+            updateGroup = preparedStatement.executeUpdate() > 0;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return updateGroup;
+    }
 
     private static final String FIND_USER_TO_GROUP = "SELECT * FROM member WHERE idGroup = ? and idUser = ? ";
     private static final String FIND_TABLE_BY_ID = "SELECT * FROM tableWork WHERE id= ?";
@@ -368,6 +386,19 @@ public class UserDAO implements IUserDAO {
         try {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_MEMBER_OF_GROUP);
+            preparedStatement.setInt(1, id);
+            rowDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDelete;
+    }
+    @Override
+    public boolean deleteUserToTable(int id) {
+        boolean rowDelete;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER_TO_TABLE);
             preparedStatement.setInt(1, id);
             rowDelete = preparedStatement.executeUpdate() > 0;
         } catch (SQLException | ClassNotFoundException e) {

@@ -39,12 +39,14 @@ public interface IUserDAO {
     boolean deleteMember(int id);
     void addUserToTable(int idTable, User user);
     void addAdminToTable(int idTable, User user);
-
+    boolean updatePermissionUserToTable(int id);
     boolean updatePermissionMember(int id);
     List<AddUserToTable> findUserToTable(int id);
     List<User> searchUserToTable(int idGroup, String nameUser);
     Member findUserToGroup(int idGroup , int idUser);
     Member findRoleUserToMember(int idUser);
+    boolean deleteUserToTable(int id);
+
 
 
 }

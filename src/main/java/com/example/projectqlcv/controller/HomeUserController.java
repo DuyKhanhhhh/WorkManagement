@@ -6,6 +6,7 @@ import com.example.projectqlcv.model.Group;
 import com.example.projectqlcv.model.Member;
 import com.example.projectqlcv.model.Table;
 import com.example.projectqlcv.model.User;
+import sun.tools.jconsole.Tab;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -180,7 +181,6 @@ public class HomeUserController extends HttpServlet {
         }
     }
 
-
     private void showTableInGroup(HttpServletRequest request, HttpServletResponse response) {
         int idGroup = Integer.parseInt(request.getParameter("idGroup"));
         List<Table> tableList = userDAO.showTableInGroup(idGroup);
@@ -297,6 +297,7 @@ public class HomeUserController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         int id = user.getId();
         user = userDAO.selectAllUserId(id);
+
         Collections.sort(groups, new Comparator<Group>() {
             @Override
             public int compare(Group group1, Group group2) {
@@ -314,8 +315,8 @@ public class HomeUserController extends HttpServlet {
                     }
                 }
             }
-        session.setAttribute("groups",groupFromUser);
         session.setAttribute("tables", tables);
+        session.setAttribute("groups",groupFromUser);
         session.setAttribute("user", user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("homeUser.jsp");
         try {
