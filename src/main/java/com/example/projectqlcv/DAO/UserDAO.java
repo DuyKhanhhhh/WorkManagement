@@ -30,11 +30,11 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT member.id,user.name,user.email,role FROM user JOIN member ON user.id = member.idUser JOIN groupWork ON member.idGroup = groupWork.id WHERE groupWork.id = ?";
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
     private static final String UPDATE_PERMISSION_MEMBER = "update member set role = ? where id = ?";
+    private static final String SEARCH_USER_TO_TABLE = "select * from user where id not in (select u.id from userToTable m join user u on  m.idUser = u.id  join tableWork t on m.idTable = t.id where m.status = 'Added' and t.idGroup like ?) and (name like ? || email like ?);";
+    private static final String FIND_ROLE_USER_TO_MEMBER = "SELECT role FROM member WHERE idUser = ?";
     private static final String UPDATE_PERMISSION_USER_TO_TABLE = "update userToTable set role = ? where idUser = ?";
     private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
     private static final String SELECT_USER_TO_TABLE = "select u.email, m.id, u.name, m.idTable, m.idUser, m.role, u.avatar, t.idGroup, m.status from userToTable m join user u on m.idUser = u.id join tableWork t on m.idTable = t.id where t.id =?";
-    private static final String SEARCH_USER_TO_TABLE = "select * from user where id not in \n" +
-            "(select u.id from userToTable m join user u on  m.idUser = u.id  join tableWork t on m.idTable = t.id where m.status = 'Added' and t.idGroup like ?) and (name like ? || email like ?);";
     private static final String DELETE_USER_TO_TABLE = "delete from userToTable where id = ?";
 
     @Override
@@ -44,10 +44,12 @@ public class UserDAO implements IUserDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_MEMBER)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
-            int idGroup = rs.getInt("idGroup");
-            int idUser = rs.getInt("isUser");
-            String role = rs.getString("role");
-            member = new Member(id, idGroup, idUser, role);
+            while (rs.next()){
+                int idGroup = rs.getInt("idGroup");
+                int idUser = rs.getInt("idUser");
+                String role = rs.getString("role");
+                member = new Member(id, idGroup, idUser, role);
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
@@ -590,6 +592,24 @@ public class UserDAO implements IUserDAO {
             }
 
         } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return member;
+    }
+
+    @Override
+    public Member findRoleUserToMember(int idUser) {
+        Member member = null;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ROLE_USER_TO_MEMBER);
+            preparedStatement.setInt(1,idUser);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                String role = resultSet.getString("role");
+                member = new Member(role);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return member;

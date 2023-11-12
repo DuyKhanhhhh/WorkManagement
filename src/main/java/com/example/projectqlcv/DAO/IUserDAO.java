@@ -44,6 +44,7 @@ public interface IUserDAO {
     List<AddUserToTable> findUserToTable(int id);
     List<User> searchUserToTable(int idGroup, String nameUser);
     Member findUserToGroup(int idGroup , int idUser);
+    Member findRoleUserToMember(int idUser);
     boolean deleteUserToTable(int id);
 
 

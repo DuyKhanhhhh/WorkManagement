@@ -160,9 +160,6 @@ public class HomeUserController extends HttpServlet {
             case "deleteGroup":
                 showDeleteGroup(request, response);
                 break;
-            case "deleteMember":
-                deleteMember(request, response);
-                break;
             case "addTableToSQL":
                 showNewFromTable(request, response);
                 break;
@@ -200,33 +197,19 @@ public class HomeUserController extends HttpServlet {
     }
 
 
-    private void deleteMember(HttpServletRequest request, HttpServletResponse response) {
-        int idMember = Integer.parseInt(request.getParameter("idMember"));
-        int idGroup = Integer.parseInt(request.getParameter("groupId"));
-        userDAO.deleteMember(idMember);
-        request.setAttribute("message", "Delete success !");
-        Group group = userDAO.findGroupById(idGroup);
-        HttpSession session = request.getSession();
-        session.setAttribute("groups", group);
-        List<Member> member = userDAO.selectGroupMember(idGroup);
-        session.setAttribute("member", member);
-        try {
-            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     private void showMember(HttpServletRequest request, HttpServletResponse response) {
         try {
+            int idUser = Integer.parseInt(request.getParameter("idUser"));
             int idGroup = Integer.parseInt(request.getParameter("idGroup"));
             Group group = userDAO.findGroupById(idGroup);
             HttpSession session = request.getSession();
             session.setAttribute("groups", group);
             List<Member> member = userDAO.selectGroupMember(idGroup);
             session.setAttribute("member", member);
+            Member roleMember = userDAO.findRoleUserToMember(idUser);
+            session.setAttribute("roleMember",roleMember);
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
 
         } catch (ServletException e) {

@@ -376,7 +376,11 @@
                         <th>Name member</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Actions</th>
+                        <c:choose>
+                            <c:when test="${roleMember.role.equals('Admin')}">
+                                <th>Actions</th>
+                            </c:when>
+                        </c:choose>
                     </tr>
                     <c:forEach var="member" items="${member}">
 
@@ -385,39 +389,51 @@
                             <td>${member.emailUser}</td>
                             <td>
                                 <div class="menu-wrapper menu-gold">
+
                                     <ul class="menu">
                                         <li>
                                             <a href="">${member.role}</a>
-                                            <ul>
-<%--                                                <c:choose>--%>
-<%--                                                    <c:when test="${member.idMember.equals('Member')}">--%>
-                                                <li><a href="/homeUser?action=updatePermissionAdmin?id=${member.idMember}">Member</a></li>
-<%--                                                    </c:when>--%>
-<%--                                                    <c:otherwise>--%>
-                                                <li><a href="/homeUser?action=updatePermissionMember?id=${member.idMember}">Admin</a></li>
-<%--                                                    </c:otherwise>--%>
-<%--                                                </c:choose>--%>
-                                            </ul>
+                                            <c:choose>
+                                                <c:when test="${roleMember.role.equals('Admin')}">
+                                                    <ul>
+                                                        <c:choose>
+                                                            <c:when test="${member.role.equals('Member')}">
+                                                                <li>
+                                                                    <a href="/addMembers?action=updatePermissionMember&idMember=${member.id}&idGroup=${groups.id}&idUser=${user.id}">
+                                                                        Admin
+                                                                    </a>
+                                                                </li>
+                                                            </c:when>
+                                                        </c:choose>
+                                                    </ul>
+                                                </c:when>
+                                            </c:choose>
+
                                         </li>
                                     </ul>
                                 </div>
                             </td>
-                            <td>
-                                <c:if test="${member.role.equals('Member')}">
-                                    <div class="">
-                                        <a onclick="showConfirmation()" style="font-size: 20px;color: black">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </c:if>
-                            </td>
+
+                            <c:choose>
+                                <c:when test="${roleMember.role.equals('Admin')}">
+                                    <td>
+                                        <c:if test="${member.role.equals('Member')}">
+                                            <div class="">
+                                                <a onclick="showConfirmation()" style="font-size: 20px;color: black">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </c:if>
+                                    </td>
+                                </c:when>
+                            </c:choose>
+
                         </tr>
                         <script>
-
                             function showConfirmation() {
                                 var result = confirm("Are you sure you want to remove this member from the group?");
                                 if (result) {
-                                    window.location.href = "/homeUser?action=deleteMember&idMember=${member.idMember}&groupId=${groups.id}";
+                                    window.location.href = "/addMembers?action=deleteMember&idMember=${member.idMember}&groupId=${groups.id}&idUser=${user.id}";
                                 }
                             }
                         </script>

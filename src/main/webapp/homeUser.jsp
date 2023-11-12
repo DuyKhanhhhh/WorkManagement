@@ -267,6 +267,7 @@
                             </div>
                         </div>
                         <div class="d_flex_right">
+
                             <div class="d-flex align-items-center ml-auto">
                                 <a href="/homeUser?action=updateGroup&id=${group.id}" class="icon">
                                     <i class="fa-solid fa-table-cells"></i>
@@ -278,8 +279,9 @@
                                     <span style="font-size: 20px">Table</span>
                                 </a>
 
-                                <a href="/homeUser?action=member&idGroup=${group.id}" class="icon">
-                                    <i class="fa-solid fa-user-group"></i>
+                                <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}" class="icon">
+                                    <i class="fa-solid fa-user-group" ></i>
+
                                     <span style="font-size: 20px">Member</span>
                                 </a>
 
