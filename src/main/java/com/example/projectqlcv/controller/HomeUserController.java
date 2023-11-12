@@ -159,9 +159,6 @@ public class HomeUserController extends HttpServlet {
             case "deleteGroup":
                 showDeleteGroup(request, response);
                 break;
-            case "deleteMember":
-                deleteMember(request, response);
-                break;
             case "addTableToSQL":
                 showNewFromTable(request, response);
                 break;
@@ -177,45 +174,12 @@ public class HomeUserController extends HttpServlet {
             case "table":
                 showTableInGroup(request, response);
                 break;
-            case "updatePermissionMember":
-                updatePermissionMember(request, response);
-                break;
-            case "updatePermissionAdmin":
-                updatePermissionAdmin(request, response);
-                break;
             default:
                 selectGroupFromSql(request, response);
                 break;
         }
     }
 
-    private void updatePermissionAdmin(HttpServletRequest request, HttpServletResponse response) {
-        int idMember = Integer.parseInt(request.getParameter("id"));
-        Member member = userDAO.findMemberById(idMember);
-        userDAO.updatePermissionAdmin(idMember);
-        request.setAttribute("member", member);
-        try {
-            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void updatePermissionMember(HttpServletRequest request, HttpServletResponse response) {
-        int idMember = Integer.parseInt(request.getParameter("id"));
-        userDAO.updatePermissionMember(idMember);
-        Member member = userDAO.findMemberById(idMember);
-        request.setAttribute("member", member);
-        try {
-            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private void showTableInGroup(HttpServletRequest request, HttpServletResponse response) {
         int idGroup = Integer.parseInt(request.getParameter("idGroup"));
@@ -233,33 +197,19 @@ public class HomeUserController extends HttpServlet {
     }
 
 
-    private void deleteMember(HttpServletRequest request, HttpServletResponse response) {
-        int idMember = Integer.parseInt(request.getParameter("idMember"));
-        int idGroup = Integer.parseInt(request.getParameter("groupId"));
-        userDAO.deleteMember(idMember);
-        request.setAttribute("message", "Delete success !");
-        Group group = userDAO.findGroupById(idGroup);
-        HttpSession session = request.getSession();
-        session.setAttribute("groups", group);
-        List<Member> member = userDAO.selectGroupMember(idGroup);
-        session.setAttribute("member", member);
-        try {
-            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
 
     private void showMember(HttpServletRequest request, HttpServletResponse response) {
         try {
+            int idUser = Integer.parseInt(request.getParameter("idUser"));
             int idGroup = Integer.parseInt(request.getParameter("idGroup"));
             Group group = userDAO.findGroupById(idGroup);
             HttpSession session = request.getSession();
             session.setAttribute("groups", group);
             List<Member> member = userDAO.selectGroupMember(idGroup);
             session.setAttribute("member", member);
+            Member roleMember = userDAO.findRoleUserToMember(idUser);
+            session.setAttribute("roleMember",roleMember);
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
 
         } catch (ServletException e) {
