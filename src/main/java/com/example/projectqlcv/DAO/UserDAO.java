@@ -36,6 +36,7 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
     private static final String SELECT_USER_TO_TABLE = "select u.email, m.id, u.name, m.idTable, m.idUser, m.role, u.avatar, t.idGroup, m.status from userToTable m join user u on m.idUser = u.id join tableWork t on m.idTable = t.id where t.id =?";
     private static final String DELETE_USER_TO_TABLE = "delete from userToTable where id = ?";
+    private static final String EDIT_NAME_TABLE = "UPDATE tableWork SET name = ? WHERE id= ?";
 
     @Override
     public Member findMemberById(int id) {
@@ -405,6 +406,21 @@ public class UserDAO implements IUserDAO {
             throw new RuntimeException(e);
         }
         return rowDelete;
+    }
+
+    @Override
+    public boolean editNameTable(int idTable,String nameUpdate) {
+        boolean rowEdit;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(EDIT_NAME_TABLE);
+            preparedStatement.setString(1,nameUpdate);
+            preparedStatement.setInt(2,idTable);
+            rowEdit =  preparedStatement.executeUpdate() >0 ;
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rowEdit;
     }
 
 

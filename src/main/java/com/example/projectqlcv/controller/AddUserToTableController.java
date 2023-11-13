@@ -36,6 +36,9 @@ public class AddUserToTableController extends HttpServlet {
             case "updatePermissionUser":
                 updatePermissionUser(request, response);
                 break;
+            case "editNameTable":
+                editNameToTable(request,response);
+                break;
         }
     }
 
@@ -141,6 +144,22 @@ public class AddUserToTableController extends HttpServlet {
             case "deleteUserToTable":
                 deleteUserToTable(request, response);
                 break;
+        }
+    }
+
+    private void editNameToTable(HttpServletRequest request, HttpServletResponse response) {
+        int idTable =Integer.parseInt(request.getParameter("idTable"));
+        String nameUpdate = request.getParameter("nameUpdate");
+        userDAO.editNameTable(idTable,nameUpdate);
+        Table table = userDAO.findTableById(idTable);
+        HttpSession session = request.getSession();
+        session.setAttribute("tables",table);
+        try {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

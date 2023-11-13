@@ -398,11 +398,13 @@
                                                     <ul>
                                                         <c:choose>
                                                             <c:when test="${member.role.equals('Member')}">
-                                                                <li>
-                                                                    <a href="/addMembers?action=updatePermissionMember&idMember=${member.id}&idGroup=${groups.id}&idUser=${user.id}">
-                                                                        Admin
-                                                                    </a>
-                                                                </li>
+                                                                <form action="/addMembers?action=updatePermissionMember&idMember=${member.id}&idGroup=${groups.id}&idUser=${user.id}"
+                                                                      method="post">
+                                                                    <li>
+                                                                        <button>Admin</button>
+
+                                                                    </li>
+                                                                </form>
                                                             </c:when>
                                                         </c:choose>
                                                     </ul>
