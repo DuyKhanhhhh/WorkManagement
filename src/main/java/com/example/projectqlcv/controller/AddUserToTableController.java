@@ -92,7 +92,7 @@ public class AddUserToTableController extends HttpServlet {
         Member member = userDAO.findRoleUserToMember(idUser);
         session.setAttribute("memberToGroup",member);
         try {
-            request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
+            request.getRequestDispatcher("/column").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

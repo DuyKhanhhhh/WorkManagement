@@ -240,7 +240,8 @@ public class UserDAO implements IUserDAO {
 
     @Override
     public void signUp(String email, String password, String name, String phoneNumber) {
-        try (Connection connection = DataConnector.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_TO_SQL);) {
+        try (Connection connection = DataConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_TO_SQL);) {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, name);
             preparedStatement.setString(3, phoneNumber);
