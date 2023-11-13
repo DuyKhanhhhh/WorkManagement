@@ -184,32 +184,38 @@
             font-size: 10px;
         }
     }
-    #text{
+
+    #text {
         font-size: 33px;
     }
-    #rightTitle{
+
+    #rightTitle {
         display: flex;
         flex-direction: row-reverse;
     }
-    .circleMember{
+
+    .circleMember {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         overflow: hidden;
         margin-right: 8px;
     }
+
     .circleMember img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
-    .member{
+
+    .member {
         display: flex;
         align-items: center;
     }
-     .title {
-         cursor:pointer;
-     }
+
+    .title {
+        cursor: pointer;
+    }
 </style>
 <body>
 <div class="container-fluid">
@@ -251,25 +257,31 @@
                 <script>
                     const inputElement = document.getElementById("title");
                     const inputValue = document.getElementById("button")
+                    // Dòng mã này truy xuất phần tử HTML có ID "title" và lưu nó vào biến inputElement.
 
-
-                    inputElement.addEventListener("dblclick", function() {
+                    inputElement.addEventListener("dblclick", function () {
                         inputElement.disabled = false;
                         inputElement.focus();
                     });
+                    // Dòng mã này truy xuất phần tử HTML bằng "button" ID và lưu nó vào biến inputValue.
 
-                    inputElement.addEventListener("keyup", function(event) {
+                    inputElement.addEventListener("keyup", function (event) {
                         if (event.keyCode === 13) {
                             inputElement.disabled = true;
                             inputValue.onclick;
                         }
                     });
+                    // Mã này thêm trình xử lý sự kiện vào inputElement trình xử lý sự kiện nhấp đúp.
+                    // Khi xảy ra sự kiện nhấp đúp, mã sẽ vô hiệu hóa trường nhập và đặt tiêu điểm vào trường đó
 
-                    inputElement.addEventListener("blur", function() {
+                    inputElement.addEventListener("blur", function () {
                         inputElement.disabled = true;
                         inputValue.onclick;
 
                     });
+                    // Mã này thêm một trình xử lý sự kiện vào trình inputElement xử lý các sự kiện mờ.
+                    // Khi xảy ra sự kiện mờ (tức là trường đầu vào mất tiêu điểm),
+                    // mã sẽ vô hiệu hóa trường đầu vào và thực thi trình onclick xử lý sự kiện của inputValue phần tử.
 
 
                     input.addEventListener('input', resizeInput);
@@ -278,6 +290,10 @@
                     function resizeInput() {
                         this.style.width = this.value.length + "ch";
                     }
+
+                    // Mã này thêm trình xử lý sự kiện vào input phần tử xử lý các sự kiện đầu vào.
+                    // Khi một sự kiện đầu vào xảy ra, mã sẽ gọi resizeInput() hàm.
+                    // Hàm resizeInput() tự động thay đổi kích thước trường đầu vào để phù hợp với độ dài nội dung của nó.
                 </script>
             </div>
             <div class="titleRight">
@@ -288,9 +304,14 @@
                     <h2 style="text-align: center;color: white">Menu</h2>
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
-                    <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}">Member</a>
-                    <a href="#">Clients</a>
-                    <a href="#">Contact</a>
+                    <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
+                    <c:if test="${member.role.equals('Admin') && member.idTable eq tables.id}">
+                        <a onclick="showConfirmation()" style="color: white">Delete table</a>
+                    </c:if>
+                    <c:if test="${member.idUser != memberToGroup.idUser}">
+                        <a href="/addUserToTable?action=joinTable&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
+                            Join table</a>
+                    </c:if>
                 </div>
                 <span id="rightTitle">
           <div id="main">
@@ -314,6 +335,13 @@
     </div>
 </div>
 <script>
+    function showConfirmation() {
+        var result = confirm("Are you sure you want to remove this table ?");
+        if (result) {
+            window.location.href = "/addUserToTable?action=deleteTable&idTable=${tables.id}&id=${userOfTable.id}";
+        }
+    }
+
     function openNav() {
         document.getElementById("mySidebar").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px";
