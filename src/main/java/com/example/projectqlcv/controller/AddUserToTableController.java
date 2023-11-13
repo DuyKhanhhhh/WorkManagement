@@ -78,17 +78,13 @@ public class AddUserToTableController extends HttpServlet {
         int idGroup = Integer.parseInt(request.getParameter("id"));
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         List<AddUserToTable> addUserToTable = userDAO.findUserToTable(idTable);
-        for (AddUserToTable a : addUserToTable
-        ) {
-            System.out.println(a.getId());
-        }
         session.setAttribute("userToTable", addUserToTable);
         Table table = userDAO.findTableById(idTable);
         session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
         session.setAttribute("groups", group);
         try {
-            request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
+            request.getRequestDispatcher("/column").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
