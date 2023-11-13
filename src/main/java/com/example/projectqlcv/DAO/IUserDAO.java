@@ -49,7 +49,7 @@ public interface IUserDAO {
     boolean deleteTable(int id);
     boolean deleteIdTable(int idTable);
     AddUserToTable findUserToTableById(int idTable);
-
+    AddUserToTable findRoleUserToUserToTable(int idUser);
 
 
 }
