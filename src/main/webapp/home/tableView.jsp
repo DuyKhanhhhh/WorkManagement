@@ -354,7 +354,49 @@
     <div class="row">
         <div class="title">
             <div id="nameTable">
-                <input type="text" class="title" id="title" value="${tables.name}">
+
+
+
+                <form id="edit"  action="/addUserToTable" method="post">
+                    <input name="nameUpdate" type="text" class="title" id="title" value="${tables.name}" style="border: none">
+                    <input name="action" value="editNameTable" type="hidden">
+                    <input name="idTable" value="${tables.id}" type="hidden">
+                    <input type="submit" class="button" id="buttonEdit" style="display: none ; border: none " hidden="hidden">
+                </form>
+
+                <script>
+                    const inputElement = document.getElementById("title");
+                    const inputValue = document.getElementById("buttonEdit")
+
+
+                    inputElement.addEventListener("dblclick", function() {
+                        inputElement.disabled = false;
+                        inputElement.focus();
+                    });
+
+                    inputElement.addEventListener("keyup", function(event) {
+                        if (event.keyCode === 13) {
+                            inputElement.disabled = true;
+                            editName();
+                        }
+                    });
+
+                    inputElement.addEventListener("blur", function() {
+                        inputElement.disabled = true;
+                        editName();
+                    });
+
+                    function editName(){
+                        document.getElementById("submit").click();
+                    }
+
+                    input.addEventListener('input', resizeInput);
+                    resizeInput.call(input);
+
+                    function resizeInput() {
+                        this.style.width = this.value.length + "ch";
+                    }
+                </script>
             </div>
             <div class="titleRight">
                 <div id="mySidebar" class="sidebar">

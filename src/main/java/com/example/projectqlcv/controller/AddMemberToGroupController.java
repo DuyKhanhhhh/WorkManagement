@@ -27,19 +27,28 @@ public class AddMemberToGroupController extends HttpServlet {
     }
 
 
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action == null) {
+            action = "";
+        }
+        switch (action) {
+            case "updatePermissionMember":
+                updatePermissionMember(request, response);
+                break;
+        }
+    }
+
     private void updatePermissionMember(HttpServletRequest request, HttpServletResponse response) {
         int idUser = Integer.parseInt(request.getParameter("idUser"));
         int idMember = Integer.parseInt(request.getParameter("idMember"));
-        int idGroup = Integer.parseInt(request.getParameter("idGroup"));
         Member member = iUserDAO.findMemberById(idMember);
         Member roleMember = iUserDAO.findRoleUserToMember(idUser);
         request.setAttribute("roleMember",roleMember);
-       if ((roleMember.getRole()).equals("Admin")) {
            iUserDAO.updatePermissionMember(idMember);
            request.setAttribute("member", member);
-       }
         try {
-            iUserDAO.selectGroupMember(idGroup);
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
@@ -73,9 +82,6 @@ public class AddMemberToGroupController extends HttpServlet {
                 break;
             case "addUser":
                 addUserToGroup(request, response);
-                break;
-            case "updatePermissionMember":
-                updatePermissionMember(request, response);
                 break;
             case "deleteMember":
                 deleteMember(request, response);
