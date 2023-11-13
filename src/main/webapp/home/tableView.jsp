@@ -185,6 +185,10 @@
         }
     }
 
+    #text {
+        font-size: 33px;
+    }
+
     #rightTitle {
         display: flex;
         flex-direction: row-reverse;
@@ -314,6 +318,7 @@
         padding-left: 5px;
         word-wrap: break-word;
     }
+
 </style>
 <body>
 <div class="container-fluid">
@@ -357,9 +362,14 @@
                     <h2 style="text-align: center;color: white">Menu</h2>
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
-                    <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}">Member</a>
-                    <a href="#">Clients</a>
-                    <a href="#">Contact</a>
+                    <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
+                    <c:if test="${member.role.equals('Admin') && member.idTable eq tables.id}">
+                        <a onclick="showConfirmation()" style="color: white">Delete table</a>
+                    </c:if>
+                    <c:if test="${member.idUser != memberToGroup.idUser}">
+                        <a href="/addUserToTable?action=joinTable&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
+                            Join table</a>
+                    </c:if>
                 </div>
                 <span id="rightTitle">
                     <div id="main">
@@ -436,6 +446,12 @@
 
     function closeForm() {
         document.getElementById("formAdd").style.display = "none";
+     
+    function showConfirmation() {
+        var result = confirm("Are you sure you want to remove this table ?");
+        if (result) {
+            window.location.href = "/addUserToTable?action=deleteTable&idTable=${tables.id}&id=${userOfTable.id}";
+        }
     }
 
     function openNav() {

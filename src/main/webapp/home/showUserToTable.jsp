@@ -369,10 +369,13 @@
                         <th>Name member</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Actions</th>
+                            <c:choose>
+                                <c:when test="${member.role.equals('Admin')}">
+                                    <th>Actions</th>
+                                </c:when>
+                            </c:choose>
                     </tr>
                     <c:forEach var="userToTable" items="${userToTable}">
-
                         <tr>
                             <td>${userToTable.nameUser}</td>
                             <td>${userToTable.emailUser}</td>
@@ -381,28 +384,38 @@
                                     <ul class="menu">
                                         <li>
                                             <a href="">${userToTable.role}</a>
-                                            <ul>
-                                                <c:if test="${userToTable.role.equals('User')}">
-                                                    <form action="/addUserToTable?action=updatePermissionUser&id=${userToTable.id}&idTable=${tables.id}" method="post">
-                                                <li>
-                                                    <input type="submit" value="Admin" style="border: none; font-size: 17px" />
-                                                </li>
-                                                    </form>
-                                                </c:if>
-                                            </ul>
+                                            <c:choose>
+                                                <c:when test="${member.role.equals('Admin')}">
+                                                    <ul>
+                                                        <c:if test="${userToTable.role.equals('User')}">
+                                                            <form action="/addUserToTable?action=updatePermissionUser&id=${userToTable.id}&idTable=${tables.id}"
+                                                                  method="post">
+                                                                <li>
+                                                                    <input type="submit" value="Admin"
+                                                                           style="border: none; font-size: 17px"/>
+                                                                </li>
+                                                            </form>
+                                                        </c:if>
+                                                    </ul>
+                                                </c:when>
+                                            </c:choose>
                                         </li>
                                     </ul>
                                 </div>
                             </td>
-                            <td>
-                                <c:if test="${userToTable.role.equals('User')}">
-                                    <div class="">
-                                        <a onclick="showConfirmation()" style="font-size: 20px;color: black">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </c:if>
-                            </td>
+                            <c:choose>
+                                <c:when test="${member.role.equals('Admin')}">
+                                    <td>
+                                        <c:if test="${userToTable.role.equals('User')}">
+                                            <div class="">
+                                                <a onclick="showConfirmation()" style="font-size: 20px;color: black">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </c:if>
+                                    </td>
+                                </c:when>
+                            </c:choose>
                         </tr>
                         <script>
 

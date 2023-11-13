@@ -84,17 +84,21 @@ public class Member {
     public Member() {
     }
 
-    public Member(int id, String nameUser, String emailUser,String role) {
+    public Member(String role) {
+        this.role = role;
+    }
+
+    public Member(int id, String nameUser, String emailUser, String role) {
         this.id=id;
         this.role = role;
         this.nameUser = nameUser;
         this.emailUser = emailUser;
     }
 
-    public Member(int idMember, int groupId, int userId, String role) {
-        this.id = idMember;
-        this.idGroup = groupId;
-        this.idUser = userId;
+    public Member(int id, int idGroup, int idUser, String role) {
+        this.id = id;
+        this.idGroup =idGroup;
+        this.idUser = idUser;
         this.role = role;
     }
 

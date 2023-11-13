@@ -248,7 +248,7 @@
             <br>
             <h3 style="margin-left: 260px; "><b>Table</b></h3>
             <c:forEach var="table" items="${tables}">
-                <a href="/addUserToTable?action=showTable&id=${groups.id}&idTable=${table.id}">
+                <a href="/addUserToTable?action=showTable&id=${groups.id}&idTable=${table.id}&idUser=${user.id}">
                     <div id="table_all">
                         <div id="table">
                             <h4 style="font-family: initial; margin-left: 1rem ; margin-top: 1rem; color: white">${table.name}</h4>
