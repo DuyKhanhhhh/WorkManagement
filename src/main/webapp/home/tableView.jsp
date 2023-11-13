@@ -534,6 +534,7 @@
     function resizeInput() {
         this.style.width = this.value.length + "ch";
     }
+    }
 </script>
 </body>
 </html>
