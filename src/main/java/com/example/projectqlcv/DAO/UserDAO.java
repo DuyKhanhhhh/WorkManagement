@@ -419,13 +419,15 @@ public class UserDAO implements IUserDAO {
         try {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(EDIT_NAME_TABLE);
-            preparedStatement.setString(1,nameUpdate);
-            preparedStatement.setInt(2,idTable);
-            rowEdit =  preparedStatement.executeUpdate() >0 ;
+            preparedStatement.setString(1, nameUpdate);
+            preparedStatement.setInt(2, idTable);
+            rowEdit = preparedStatement.executeUpdate() > 0;
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
         return rowEdit;
+    }
+    @Override
     public boolean deleteTable(int id) {
         boolean rowDelete;
         try {
