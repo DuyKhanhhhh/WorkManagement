@@ -184,32 +184,141 @@
             font-size: 10px;
         }
     }
-    #text{
+
+    #text {
         font-size: 33px;
     }
-    #rightTitle{
+
+    #rightTitle {
         display: flex;
         flex-direction: row-reverse;
     }
-    .circleMember{
+
+    .circleMember {
         width: 40px;
         height: 40px;
         border-radius: 50%;
         overflow: hidden;
         margin-right: 8px;
     }
+
     .circleMember img {
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
-    .member{
+
+    .member {
         display: flex;
         align-items: center;
     }
-     .title {
-         cursor:pointer;
-     }
+
+    .title {
+        cursor: pointer;
+    }
+
+    .formAdd {
+        display: none;
+        width: 260px;
+        position: fixed;
+        background-color: #fff;
+        overflow-x: hidden;
+        padding-top: 30px;
+        margin: 18px;
+        border-radius: 7px;
+        top: 23%;
+        left: 50%;
+    }
+
+    .formAdd a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+    }
+
+    .formAdd .closebtn {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        font-size: 36px;
+        margin-top: -25px;
+    }
+
+    .formDelete {
+        display: none;
+        width: 260px;
+        position: fixed;
+        background-color: #fff;
+        overflow-x: hidden;
+        padding-top: 30px;
+        margin: 18px;
+        border-radius: 7px;
+        top: 23%;
+        left: 50%;
+    }
+
+    .formDelete a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+    }
+
+    .formDelete .closebtn {
+        position: absolute;
+        top: 0;
+        right: 0px;
+        font-size: 36px;
+        margin-top: -25px;
+    }
+
+    .boxDelete {
+        width: 260px;
+        height: 45px;
+        border-radius: 7px;
+        background-color: white;
+        margin-top: 10px;
+        margin-left: 15px;
+    }
+
+    .boxAdd {
+        width: 260px;
+        height: 45px;
+        border-radius: 7px;
+        background-color: white;
+        margin-top: 10px;
+        margin-left: 15px;
+    }
+
+    .columnContent {
+        width: 260px;
+        height: 680px;
+        border-radius: 7px;
+        border: 1px solid black;
+        background-color: white;
+        float: left;
+        margin-top: 10px;
+        margin-left: 15px;
+        overflow: auto;
+    }
+
+    .contentTable {
+        border: 1px solid;
+        background: darkgray;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        border-radius: 5px;
+        margin-top: 8px;
+        font-size: 20px;
+        height: auto;
+        padding-left: 5px;
+        word-wrap: break-word;
+    }
+
 </style>
 <body>
 <div class="container-fluid">
@@ -290,32 +399,73 @@
                 </script>
             </div>
             <div class="titleRight">
-
                 <div id="mySidebar" class="sidebar">
-
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
                     <h2 style="text-align: center;color: white">Menu</h2>
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
-                    <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}">Member</a>
-                    <a href="#">Clients</a>
-                    <a href="#">Contact</a>
+                    <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
+                    <c:if test="${member.role.equals('Admin') && member.idTable eq tables.id}">
+                        <a onclick="showConfirmation()" style="color: white">Delete table</a>
+                    </c:if>
+                    <c:if test="${member.idUser != memberToGroup.idUser}">
+                        <a href="/addUserToTable?action=joinTable&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
+                            Join table</a>
+                    </c:if>
                 </div>
                 <span id="rightTitle">
-          <div id="main">
-          <span onclick="openNav()"><i class="fa-solid fa-bars" style="color: #000000;font-size: 28px"></i></span>
-        </div>
-        <div class="member">
-            <c:forEach var="userToTable" items="${userToTable}">
-          <div class="circleMember">
-            <img src="${userToTable.avatar}" alt="Avatar">
-          </div>
-            </c:forEach>
-        </div>
-      </span>
+                    <div id="main">
+                        <span onclick="openNav()"><i class="fa-solid fa-bars"
+                                                     style="color: #000000;font-size: 28px"></i></span>
+                    </div>
+                    <div class="member">
+                        <c:forEach var="userToTable" items="${userToTable}">
+                            <div class="circleMember">
+                                <img src="${userToTable.avatar}" alt="Avatar">
+                            </div>
+                        </c:forEach>
+                    </div>
+                </span>
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div id="formAdd" class="formAdd">
+            <form method="post" action="/column?action=addColumn&idTable=${tables.id}">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeForm()">&times;</a>
+                <div class="mb-3">
+                    <input type="text" class="form-control" name="name" placeholder="Enter a list title">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Column</button>
+                </div>
+            </form>
+        </div>
+
+
+
+        <c:forEach items="${listColumn}" var="listColumn">
+            <%--            <c:if test="${table.id eq listColumn.idTable}">--%>
+            <div id="formDelete" class="formDelete">
+                <a href="/column?action=delete&id=${listColumn.id}">
+                    <span class="closebtn" onclick="closeFormDelete()">&times;</span>
+                    <input type="submit" class="btn btn-primary" value="Delete">
+                </a>
+            </div>
+            <div class="columnContent">
+                <div class="contentTable">
+                    <span>${listColumn.name}</span>
+                    <div onclick="openFormDelete()">
+                        <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                    </div>
+                </div>
+            </div>
+            <%--            </c:if>--%>
+        </c:forEach>
+        <div class="boxAdd" onclick="openForm()">
+            <span style="font-size: 20px">+ Add list</span>
+        </div>
+    </div>
+
     <div class="bg-light py-2" id="footer">
         <div class="container text-center">
             <p class="text-muted mb-0 py-1">©2023 Trello Group 7</p>
@@ -323,6 +473,29 @@
     </div>
 </div>
 <script>
+
+    function openFormDelete() {
+        document.getElementById("formDelete").style.display = "block";
+    }
+
+    function closeFormDelete() {
+        document.getElementById("formDelete").style.display = "none";
+    }
+
+    function openForm() {
+        document.getElementById("formAdd").style.display = "block";
+    }
+
+    function closeForm() {
+        document.getElementById("formAdd").style.display = "none";
+     
+    function showConfirmation() {
+        var result = confirm("Are you sure you want to remove this table ?");
+        if (result) {
+            window.location.href = "/addUserToTable?action=deleteTable&idTable=${tables.id}&id=${userOfTable.id}";
+        }
+    }
+
     function openNav() {
         document.getElementById("mySidebar").style.width = "250px";
         document.getElementById("main").style.marginLeft = "250px";
@@ -331,6 +504,35 @@
     function closeNav() {
         document.getElementById("mySidebar").style.width = "0";
         document.getElementById("main").style.marginLeft = "0";
+    }
+
+    const inputElement = document.getElementById("title");
+    const inputValue = document.getElementById("button")
+
+
+    inputElement.addEventListener("dblclick", function () {
+        inputElement.disabled = false;
+        inputElement.focus();
+    });
+
+    inputElement.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            inputElement.disabled = true;
+            inputValue.onclick;
+        }
+    });
+
+    inputElement.addEventListener("blur", function () {
+        inputElement.disabled = true;
+        inputValue.onclick;
+    });
+
+
+    input.addEventListener('input', resizeInput);
+    resizeInput.call(input);
+
+    function resizeInput() {
+        this.style.width = this.value.length + "ch";
     }
 </script>
 </body>

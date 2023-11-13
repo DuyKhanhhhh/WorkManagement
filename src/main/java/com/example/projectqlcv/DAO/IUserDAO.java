@@ -47,5 +47,9 @@ public interface IUserDAO {
     Member findRoleUserToMember(int idUser);
     boolean deleteUserToTable(int id);
     boolean editNameTable(int idTable, String nameUpdate);
+    boolean deleteTable(int id);
+    boolean deleteIdTable(int idTable);
+    AddUserToTable findUserToTableById(int idTable);
+    AddUserToTable findRoleUserToUserToTable(int idUser);
 
 }
