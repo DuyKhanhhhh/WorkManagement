@@ -150,7 +150,6 @@ public class HomeUserController extends HttpServlet {
             action = "";
         }
         switch (action) {
-
             case "addGroup":
                 showNewFormGroup(request, response);
                 break;

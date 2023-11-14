@@ -189,9 +189,11 @@
         background-color: white;
         float: left;
         margin-right: 2%;
+        margin-bottom: 2%;
         display: flex;
         align-items: center;
         justify-content: center;
+
     }
 
 </style>
@@ -297,7 +299,7 @@
                                 <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
                                    style="text-decoration: none; color: black">
                                     <div class="table_create">
-                                        <h4 style="text-align: center;margin-top: 33%">${table.name}</h4>
+                                        <h4>${table.name}</h4>
                                     </div>
                                 </a>
                             </div>
@@ -305,7 +307,7 @@
                         </c:forEach>
                     <div class="groupContent">
                         <div class="table_create">
-                            <h4 style="text-align: center;margin-top: 33%"><c:out value="${listTable.name}"/></h4>
+                            <h4 style="padding-top: 15px"><c:out value="${listTable.name}"/></h4>
                         </div>
                         <a href="/homeUser?action=addTableToSQL&id=${group.id}"
                            style="text-decoration: none; color: black">

@@ -75,7 +75,7 @@
     }
     .title {
         margin-top: 2.6%;
-        background-color: #b2b2b2;
+        background-color: #adb5bd;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -171,10 +171,9 @@
 
     .formAdd .closebtn {
         position: absolute;
-        top: 0;
-        right: 12px;
-        font-size: 36px;
-        margin-top: -12px;
+        top: -25px;
+        right: -2px;
+        font-size: 40px;
     }
 
     .formDelete {
@@ -190,7 +189,7 @@
     }
 
     .formDelete a {
-        padding: 8px 8px 8px 32px;
+        padding: 8px 1px 10px 0px;
         text-decoration: none;
         font-size: 25px;
         color: #818181;
@@ -199,17 +198,16 @@
 
     .formDelete .closebtn {
         position: absolute;
-        top: 0;
-        right: 0px;
-        font-size: 36px;
-        margin-top: -25px;
+        top: -16px;
+        right: 8px;
+        font-size: 40px;
     }
 
     .boxAdd {
         width: 260px;
         height: 45px;
         border-radius: 7px;
-        background-color: #e9ecef;
+        background-color: #ced4da;
         margin-top: 10px;
         margin-left: 15px;
     }
@@ -228,7 +226,7 @@
 
     .contentTable {
         border: 1px solid;
-        background: darkgray;
+        background-color: #ced4da;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -342,8 +340,8 @@
         <c:forEach items="${listColumn}" var="listColumn">
             <%--            <c:if test="${table.id eq listColumn.idTable}">--%>
             <div id="formDelete" class="formDelete">
+                <span class="closebtn" onclick="closeFormDelete()">&times;</span>
                 <a href="/column?action=delete&id=${listColumn.id}">
-                    <span class="closebtn" onclick="closeFormDelete()">&times;</span>
                     <input type="submit" class="btn btn-primary" value="Delete">
                 </a>
             </div>
