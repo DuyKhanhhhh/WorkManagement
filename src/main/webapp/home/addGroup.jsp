@@ -57,13 +57,6 @@
         margin-bottom: 9%;
     }
 
-    #footer {
-        bottom: 0;
-        left: 0;
-        right: 0;
-        position: fixed;
-    }
-
     .textSpan {
         font-size: 28px;
         margin-left: 14px;
@@ -283,11 +276,6 @@
             </form>
         </div>
     </div>
-    </div>
-    <div class="bg-light py-2" id="footer">
-        <div class="container text-center">
-            <p class="text-muted mb-0 py-1">© 2023 Trello Group 7</p>
-        </div>
     </div>
 </div>
 </body>

@@ -15,6 +15,16 @@
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
 </head>
 <style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    #header {
+        position: fixed;
+        background-color: #2f2f2f;
+        height: 50px;
+    }
+
     .headImg {
         margin-right: 20px;
     }
@@ -25,28 +35,36 @@
     }
 
     #boxLeft {
-        background-color: #b4b4b4;
-        height: 900px;
+        max-height: 100%;
+        margin-top: 2.6%;
+        height: 100%;
+        position: fixed;
+        flex: 0 0 auto;
+        margin-bottom: 4%;
+        box-shadow: 2px 0 6px rgba(0, 0, 0, 1);
+        clip-path: inset(0px -10px -10px -10px);
+        background-color: #e9ecef;
     }
 
     .textSpan {
-        font-size: 30px;
-        margin-left: 20px;
+        font-size: 28px;
+        margin-left: 14px;
+        font-weight: bold;
     }
-
-    #contentTitle {
-        margin: 36px;
+    i{
+        font-size: 25px;
     }
 
     .table {
         width: 100%;
         height: 3rem;
-        margin-top: 2rem;
+        margin-top: 1rem;
     }
 
     .group {
         width: 100%;
         height: 3rem;
+        flex: 1 1 auto;
     }
 
     .group_name {
@@ -55,55 +73,67 @@
     }
 
     .group_add {
-        width: 20%;
-        height: 3rem;
-        margin-left: 1rem;
-        margin-top: 1rem;
+        margin-left: 8%;
     }
-
-    .dropdown {
-        display: inline-block;
-        position: relative;
-    }
-
-    button {
-        border: none;
-        border-radius: 5px;
-        padding: 15px 20px;
-        font-size: 22px;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #ddd;
-    }
-
-    .dropdown-options {
-        display: none;
-        position: absolute;
-        overflow: auto;
-        background-color: #646464;
-        border-radius: 5px;
-        box-shadow: 0px 10px 10px 0px rgba(255, 255, 255, 0.4);
-    }
-
-    .dropdown:hover .dropdown-options {
-        display: block;
-    }
-
-    .dropdown-options a {
-        float: left;
-        display: block;
-        color: #000000;
-        padding: 5px;
+    a {
         text-decoration: none;
-        padding: 20px 20px;
+        color: black;
+    }
+    span{
+        font-size: 23px;
+    }
+    /* Style for dropdown content */
+    .dropdown-content {
+        display: none; /* Hidden by default */
+        position: absolute;
+        background-color: #000000;
+        min-width: 85px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+    .dropdown-content a{
+        font-size: 18px;
+        color: white;
+    }
+    /* Style for each content div */
+    .dropdown-content div {
+        padding: 10px 5px;
+        font-size: 16px;
+        text-align: center;
     }
 
-    .dropdown-options a:hover {
-        color: #0a0a23;
-        background-color: #ddd;
-        border-radius: 5px;
+    /* Highlight dropdown options on hover */
+    .dropdown-content div:hover {
+        background-color: #cecece;
+    }
+
+    /* Show the dropdown menu on hover */
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    .col-10 {
+        text-align: center;
+    }
+
+    .select {
+        width: 70%;
+        height: 110px;
+        margin: 0 auto;
+    }
+
+    .group_type {
+        width: 50%;
+        height: 40px;
+        float: left;
+    }
+
+    .permission {
+        width: 50%;
+        height: 40px;
+        float: left;
+    }
+    .title_h2{
+        margin-top: 40px;
     }
 
     .main_input {
@@ -111,7 +141,8 @@
         height: 700px;
         border: 5px solid black;
         border-radius: 10px;
-        margin: 10px;
+        margin-left: 21.5%;
+        margin-top: 8%;
     }
 
     .col-10 {
@@ -159,37 +190,26 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark" id="header">
             <div class="container-fluid">
                 <div class="headImg">
-                    <a href="/homeUser">
-                        <img src="https://png.pngtree.com/png-vector/20190624/ourlarge/pngtree-managementprocessproductiontaskwork-flat-color-icon-vect-png-image_1492738.jpg"
-                             width="70px"
-                             height="60px">
-                    </a>
+                    <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
+                         width="100" height="50">
                 </div>
-                <div class="collapse navbar-collapse">
-                    <div class="dropdown">
-                        <button>Group</button>
-                        <div class="dropdown-options">
-                            <a href="#">?</a>
-                            <a href="#">?</a>
-                            <a href="#">?</a>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="headRight">
                     <span class="group-text">
                     <div class="collapse navbar-collapse">
-                      <i class="fa-solid fa-bell" style="color: #ffffff;font-size: 34px; margin-right: 10px"></i>
-                         <div class="dropdown">
-                        <button>Name</button>
-                        <div class="dropdown-options">
-                            <a href="#">Setting</a>
-                            <a href="../editPassword.jsp">Change PassWord</a>
-                            <a href="../login.jsp">Logout</a>
-                        </div>
-                    </div>
+                      <i class="fa-solid fa-bell" style="color: #ffffff; margin-right: 15px"></i>
+                        <span class="dropdown">
+                            <button style="font-size: 15px" class="btn btn-light"><c:out value="${user.name}"/></button>
+                            <div class="dropdown-content">
+                                <div><a href="#">Setting</a></div>
+                                <div><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></div>
+                                <div><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></div>
+                                <div><a href="login.jsp">Logout</a></div>
+                            </div>
+                        </span>
                     </div>
                     </span>
                 </div>
@@ -291,6 +311,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>
