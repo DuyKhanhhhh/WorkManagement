@@ -9,4 +9,5 @@ public interface IColumDAO {
     void addColumnWork(int idTable, String  colum);
     List<Column> selectAllColumn();
     boolean deleteColumnWork(int id);
+    Column selectColumn(int idColumn);
 }

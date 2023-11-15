@@ -516,10 +516,11 @@ public class UserDAO implements IUserDAO {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
+                int idTable = rs.getInt("id");
                 int idGroup = rs.getInt("idGroup");
                 String name = rs.getString("name");
                 String permission = rs.getString("permission");
-                table = new Table(id, idGroup, name, permission);
+                table = new Table(idTable, idGroup, name, permission);
             }
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);

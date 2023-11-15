@@ -12,6 +12,7 @@ public class ColumnDAO implements IColumDAO{
     private static final String ADD_COLUMN_TO_SQL = "INSERT INTO columnWork(idTable, name) VALUES(?, ?) ";
     private static final String SELECT_ALL_COLUMN= "SELECT * FROM columnWork";
     private static final String DELETE_COLUMN_SQL = "DELETE FROM columnWork where id = ?";
+    private static final String SELECT_COLUMN_ID= "SELECT * FROM columnWork WHERE id=?";
 
     @Override
     public void addColumnWork(int idTable, String  colum) {
@@ -57,5 +58,27 @@ public class ColumnDAO implements IColumDAO{
             throw new RuntimeException(e);
         }
         return rowDelete;
+    }
+
+    @Override
+    public Column selectColumn(int idColumn) {
+        Column column = null;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COLUMN_ID);
+            preparedStatement.setInt(1,idColumn);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                int idTable = resultSet.getInt("idTable");
+                String name = resultSet.getString("name");
+                column = new Column(id,idTable,name);
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return column;
     }
 }
