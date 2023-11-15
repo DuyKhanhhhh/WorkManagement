@@ -33,6 +33,7 @@
         text-align: right;
         padding-right: 10px;
     }
+
     a {
         text-decoration: none;
         color: black;
@@ -73,6 +74,7 @@
     .dropdown:hover .dropdown-content {
         display: block;
     }
+
     .title {
         margin-top: 2.6%;
         background-color: #adb5bd;
@@ -237,16 +239,21 @@
         padding-left: 5px;
         word-wrap: break-word;
     }
-    .nav{
+
+    .nav {
         color: #000000;
         margin-top: 1px;
         margin-left: 10px;
-        cursor:pointer;
+        cursor: pointer;
     }
-    #nameTable{
+
+    #nameTable {
         margin-top: 5px;
         border: none;
         font-size: 20px;
+    }
+    h4{
+        padding-top: 15px;
     }
 </style>
 <body>
@@ -338,22 +345,30 @@
 
 
         <c:forEach items="${listColumn}" var="listColumn">
-            <%--            <c:if test="${table.id eq listColumn.idTable}">--%>
-            <div id="formDelete" class="formDelete">
-                <span class="closebtn" onclick="closeFormDelete()">&times;</span>
-                <a href="/column?action=delete&id=${listColumn.id}">
-                    <input type="submit" class="btn btn-primary" value="Delete">
-                </a>
-            </div>
-            <div class="columnContent">
-                <div class="contentTable">
-                    <span>${listColumn.name}</span>
-                    <div onclick="openFormDelete()">
-                        <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;margin-right: 4px;flex-wrap: inherit;"></i>
-                    </div>
+            <c:if test="${tables.id eq listColumn.idTable}">
+                <div id="formDelete" class="formDelete">
+                    <span class="closebtn" onclick="closeFormDelete()">&times;</span>
+                    <a href="/column?action=delete&id=${listColumn.id}">
+                        <input type="submit" class="btn btn-primary" value="Delete">
+                    </a>
                 </div>
-            </div>
-            <%--            </c:if>--%>
+                <div class="columnContent">
+                    <form id="editColumn" action="/addUserToTable" method="post">
+
+                        <div class="contentTable">
+                            <input name="nameColumnUpdate" type="text" class="titleColumn" id="titleColumn" value="${listColumn.name}"
+                                   style="border: none; max-width: 220px;cursor: pointer;background-color: #ced4da">
+                            <div onclick="openFormDelete()">
+                                <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                            </div>
+                        </div>
+                        <input name="action" value="editNameColumn" type="hidden">
+                        <input name="idColumn" value="${listColumn.id}" type="hidden">
+                        <input type="submit" class="button" id="buttonColumn" style="display: none ; border: none "
+                               hidden="hidden">
+                    </form>
+                </div>
+            </c:if>
         </c:forEach>
         <div class="boxAdd" onclick="openForm()">
             <span style="font-size: 20px">+ Add list</span>
@@ -396,7 +411,6 @@
     const inputElement = document.getElementById("title");
     const inputValue = document.getElementById("buttonEdit")
 
-
     inputElement.addEventListener("dblclick", function () {
         inputElement.disabled = false;
         inputElement.focus();
@@ -415,7 +429,7 @@
     });
 
     function editName() {
-        document.getElementById("submit").click();
+        document.getElementById("buttonEdit").click();
     }
 
     input.addEventListener('input', resizeInput);
@@ -423,6 +437,30 @@
 
     function resizeInput() {
         this.style.width = this.value.length + "ch";
+    }
+    const inputTitle = document.getElementById("titleColumn")
+    const inputColumn = document.getElementById("buttonColumn")
+
+    inputTitle.addEventListener("dblclick", function () {
+        inputTitle.disabled = false;
+        lockInput(inputTitle)
+        inputTitle.focus();
+
+    });
+
+    inputTitle.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            inputTitle.disabled = true;
+            editColumn();
+        }
+    });
+
+    inputTitle.addEventListener("blur", function () {
+        inputTitle.disabled = true;
+        editColumn();
+    });
+    function editColumn(){
+        document.getElementById("buttonColumn").click();
     }
 </script>
 </body>

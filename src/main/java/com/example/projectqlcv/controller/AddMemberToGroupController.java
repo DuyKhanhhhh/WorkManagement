@@ -43,11 +43,14 @@ public class AddMemberToGroupController extends HttpServlet {
     private void updatePermissionMember(HttpServletRequest request, HttpServletResponse response) {
         int idUser = Integer.parseInt(request.getParameter("idUser"));
         int idMember = Integer.parseInt(request.getParameter("idMember"));
-        Member member = iUserDAO.findMemberById(idMember);
+        int idGroup = Integer.parseInt(request.getParameter("idGroup"));
+
+        HttpSession session = request.getSession();
+        List<Member> member = iUserDAO.selectGroupMember(idGroup);
+        session.setAttribute("member", member);
         Member roleMember = iUserDAO.findRoleUserToMember(idUser);
         request.setAttribute("roleMember",roleMember);
            iUserDAO.updatePermissionMember(idMember);
-           request.setAttribute("member", member);
         try {
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
