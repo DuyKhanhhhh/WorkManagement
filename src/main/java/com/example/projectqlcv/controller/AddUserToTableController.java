@@ -40,8 +40,24 @@ public class AddUserToTableController extends HttpServlet {
             case "editNameTable":
                 editNameToTable(request,response);
                 break;
+            case "editNameColumn":
+                editNameToColumn(request,response);
+                break;
+
         }
     }
+
+    private void editNameToColumn(HttpServletRequest request, HttpServletResponse response) {
+        int idColumn = Integer.parseInt(request.getParameter("idColumn"));
+        String nameUpdate = request.getParameter("nameColumnUpdate");
+        userDAO.editNameColumn(idColumn,nameUpdate);
+        try {
+            response.sendRedirect("/column");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     private void updatePermissionUser(HttpServletRequest request, HttpServletResponse response) {
         int idUserToTable = Integer.parseInt(request.getParameter("id"));
@@ -178,6 +194,7 @@ public class AddUserToTableController extends HttpServlet {
 
     private void deleteTable(HttpServletRequest request, HttpServletResponse response) {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
+        userDAO.deleteColumnToTable(idTable);
         userDAO.deleteUserToTable(idTable);
         userDAO.deleteTable(idTable);
         try {

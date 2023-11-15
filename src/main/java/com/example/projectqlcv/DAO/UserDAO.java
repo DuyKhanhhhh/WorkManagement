@@ -41,6 +41,8 @@ public class UserDAO implements IUserDAO {
     private static final String DELETE_ID_TABLE_USER_TO_TABLE = "delete from userToTable where idTable = ?";
     private static final String DELETE_TABLE_TO_SQL = "delete from tableWork where id = ?";
     private static final String FIND_USER_TO_TABLE_BY_ID = "select * from userToTable where idTable = ?";
+    private static final String DELETE_ID_COLUMN = "delete from columnWork where idTable = ?";
+    private static final String EDIT_NAME_COLUMN = "UPDATE columnWork SET name = ? WHERE id= ?";
 
     @Override
     public Member findMemberById(int id) {
@@ -412,7 +414,34 @@ public class UserDAO implements IUserDAO {
         }
         return rowDelete;
     }
+    @Override
+    public boolean deleteColumnToTable(int id) {
+        boolean rowDelete;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ID_COLUMN);
+            preparedStatement.setInt(1, id);
+            rowDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDelete;
+    }
 
+    @Override
+    public boolean editNameColumn(int idColumn,String nameUpdate) {
+        boolean rowEdit;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(EDIT_NAME_COLUMN);
+            preparedStatement.setString(1, nameUpdate);
+            preparedStatement.setInt(2, idColumn);
+            rowEdit = preparedStatement.executeUpdate() > 0;
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rowEdit;
+    }
     @Override
     public boolean editNameTable(int idTable,String nameUpdate) {
         boolean rowEdit;
