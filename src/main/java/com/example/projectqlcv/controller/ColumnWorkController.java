@@ -1,6 +1,7 @@
 package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.ColumnDAO;
+import com.example.projectqlcv.model.Card;
 import com.example.projectqlcv.model.Column;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -30,6 +32,24 @@ public class ColumnWorkController extends HttpServlet {
             case "addColumn":
                 createColumn(request, response);
                 break;
+            case "addCart":
+                createCart(request, response);
+                break;
+        }
+
+    }
+
+    private void createCart(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            int idColumn = Integer.parseInt(request.getParameter("idColumn"));
+            String name = request.getParameter("name");
+            Card card = new Card();
+            card.setIdColumn(idColumn);
+            card.setName(name);
+            columnDAO.addCard(card);
+            response.sendRedirect("/column");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -76,8 +96,11 @@ public class ColumnWorkController extends HttpServlet {
 
     private void showAllColumn(HttpServletRequest request, HttpServletResponse response) {
         List<Column> listColumn= columnDAO.selectAllColumn();
+        List<Card> listCard = columnDAO.selectAllCard();
+        HttpSession session = request.getSession();
         try {
-            request.setAttribute("listColumn", listColumn);
+            session.setAttribute("listCard",listCard);
+            session.setAttribute("listColumn", listColumn);
             request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
         } catch (ServletException e) {
             throw new RuntimeException(e);

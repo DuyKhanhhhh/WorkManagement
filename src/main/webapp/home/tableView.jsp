@@ -157,10 +157,9 @@
         background-color: #e9ecef;
         overflow-x: hidden;
         padding-top: 30px;
-        margin: 18px;
         border-radius: 7px;
-        top: 23%;
-        left: 50%;
+        margin-left: -12px;
+        margin-top: -30px;
     }
 
     .formAdd a {
@@ -252,8 +251,94 @@
         border: none;
         font-size: 20px;
     }
-    h4{
+
+    h4 {
         padding-top: 15px;
+    }
+
+    .boxAddCart {
+        width: 234px;
+        height: 30px;
+        border-radius: 4px;
+        background-color: #ced4da;
+        display: flex;
+        justify-content: center;
+    }
+
+    .boxAddCart span {
+        font-size: 30px;
+        margin-top: -9px;
+    }
+
+    .addCard {
+        display: none;
+        width: 260px;
+        position: fixed;
+        border-radius: 7px;
+        background-color: #e9ecef;
+        overflow-x: hidden;
+        padding-top: 30px;
+    }
+
+    .addCard a {
+        padding: 8px 1px 10px 0px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #818181;
+        display: block;
+    }
+
+    .addCard .closebtn {
+        position: absolute;
+        top: -25px;
+        right: 4px;
+        font-size: 40px;
+    }
+
+    .showCard {
+        width: 234px;
+        height: auto;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        background-color: #ced4da;
+        cursor: pointer;
+    }
+
+    .showCard span {
+        font-size: 16px;
+    }
+
+    .formContent {
+        display: none;
+        position: fixed;
+        background-color: #8f979f;
+        border-radius: 8px;
+        height: 88%;
+        width: 36%;
+        margin-left: 33%;
+    }
+
+    .formContent .closebtn {
+        position: absolute;
+        top: -14px;
+        right: 16px;
+        font-size: 50px;
+    }
+
+    .contentHead {
+        height: 25px;
+        width: 5%;
+        padding: 12px 2px 0px 4px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .contentTitle {
+        padding: 12px 0 0;
+    }
+
+    .contentTitle h2 {
+        margin-right: 4px;
     }
 </style>
 <body>
@@ -333,17 +418,6 @@
     </div>
 
     <div class="row">
-        <div id="formAdd" class="formAdd">
-            <form method="post" action="/column?action=addColumn&idTable=${tables.id}">
-                <a href="javascript:void(0)" class="closebtn" onclick="closeForm()">&times;</a>
-                <div class="mb-3">
-                    <input type="text" class="form-control" name="name" placeholder="Enter a list title">
-                    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Column</button>
-                </div>
-            </form>
-        </div>
-
-
         <c:forEach items="${listColumn}" var="listColumn">
             <c:if test="${tables.id eq listColumn.idTable}">
                 <div id="formDelete" class="formDelete">
@@ -354,9 +428,9 @@
                 </div>
                 <div class="columnContent">
                     <form id="editColumn" action="/addUserToTable" method="post">
-
                         <div class="contentTable">
-                            <input name="nameColumnUpdate" type="text" class="titleColumn" id="titleColumn" value="${listColumn.name}"
+                            <input name="nameColumnUpdate" type="text" class="titleColumn" id="titleColumn"
+                                   value="${listColumn.name}"
                                    style="border: none; max-width: 220px;cursor: pointer;background-color: #ced4da">
                             <div onclick="openFormDelete()">
                                 <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
@@ -367,15 +441,72 @@
                         <input type="submit" class="button" id="buttonColumn" style="display: none ; border: none "
                                hidden="hidden">
                     </form>
+                    <c:forEach items="${listCard}" var="cardItem">
+                        <c:if test="${listColumn.id eq cardItem.getIdColumn()}">
+                            <div onclick="openFormContent()" class="showCard">
+                                <span>${cardItem.getName()}</span>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                    <div class="boxAddCart">
+                        <span onclick="openFormCard(${listColumn.id})">+</span>
+                        <div id="formAddCard${listColumn.id}" class="addCard">
+                            <form method="post" action="/column?action=addCart&idColumn=${listColumn.id}">
+                                <a href="javascript:void(0)" class="closebtn" onclick="closeFormCard(${listColumn.id})">&times;</a>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" name="name"
+                                           placeholder="Enter a list title">
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Card
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </c:if>
         </c:forEach>
-        <div class="boxAdd" onclick="openForm()">
-            <span style="font-size: 20px">+ Add list</span>
+        <div class="boxAdd">
+            <span onclick="openForm()" style="font-size: 20px">+ Add list</span>
+            <div id="formAdd" class="formAdd">
+                <form method="post" action="/column?action=addColumn&idTable=${tables.id}">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeForm()">&times;</a>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="name" placeholder="Enter a list title">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Column</button>
+                    </div>
+                </form>
+            </div>
         </div>
+        <c:forEach items="${listCard}" var="cardItem">
+            <div id="formShowCard" class="formContent">
+                <span class="closebtn" onclick="closeFormContent()">&times;</span>
+                <div class="contentHead">
+                    <span><i class="fa-solid fa-window-maximize" style="color: #000000;"></i></span>
+                    <div class="contentTitle">
+                        <h2>${cardItem.getName()}</h2>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
     </div>
 </div>
 <script>
+    function openFormContent() {
+        document.getElementById("formShowCard").style.display = "block";
+    }
+
+    function closeFormContent() {
+        document.getElementById("formShowCard").style.display = "none";
+    }
+
+    function openFormCard(idColum) {
+        document.getElementById("formAddCard" + idColum).style.display = "block";
+
+    }
+
+    function closeFormCard(idColum) {
+        document.getElementById("formAddCard" + idColum).style.display = "none";
+    }
 
     function openFormDelete() {
         document.getElementById("formDelete").style.display = "block";
@@ -438,6 +569,7 @@
     function resizeInput() {
         this.style.width = this.value.length + "ch";
     }
+
     const inputTitle = document.getElementById("titleColumn")
     const inputColumn = document.getElementById("buttonColumn")
 
@@ -459,7 +591,8 @@
         inputTitle.disabled = true;
         editColumn();
     });
-    function editColumn(){
+
+    function editColumn() {
         document.getElementById("buttonColumn").click();
     }
 </script>
