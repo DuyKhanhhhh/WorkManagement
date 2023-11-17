@@ -371,7 +371,6 @@
         </nav>
     </div>
     <div class="row">
-
         <div class="title">
             <c:forEach var="listTable" items="${listTable}">
                 <c:if test="${(tables.id).equals(listTable.id)}">
@@ -602,12 +601,13 @@
     });
 
     function editColumn() {
-    // inputTitle.addEventListener("blur", function () {
-    //     inputTitle.disabled = true;
-    //     editColumn();
-    // });
-    function editColumn(){
-        document.getElementById("buttonColumn").click();
+        // inputTitle.addEventListener("blur", function () {
+        //     inputTitle.disabled = true;
+        //     editColumn();
+        // });
+        function editColumn() {
+            document.getElementById("buttonColumn").click();
+        }
     }
 </script>
 </body>
