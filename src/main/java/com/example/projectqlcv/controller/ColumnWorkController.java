@@ -21,12 +21,12 @@ import java.util.List;
 
 @WebServlet(name = "ColumnWorkController", value = "/column")
 public class ColumnWorkController extends HttpServlet {
-    ColumnDAO columnDAO = null;
+    IColumDAO iColumDAO = null;
     IUserDAO userDAO = null;
 
     @Override
     public void init() throws ServletException {
-        columnDAO = new ColumnDAO();
+        iColumDAO = new ColumnDAO();
         userDAO = new UserDAO();
     }
 
@@ -54,7 +54,7 @@ public class ColumnWorkController extends HttpServlet {
             Card card = new Card();
             card.setIdColumn(idColumn);
             card.setName(name);
-            columnDAO.addCard(card);
+            iColumDAO.addCard(card);
             response.sendRedirect("/column");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -65,7 +65,7 @@ public class ColumnWorkController extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("idTable"));
             String name = request.getParameter("name");
-            columnDAO.addColumnWork(id,name);
+            iColumDAO.addColumnWork(id,name);
           response.sendRedirect("/column");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -90,8 +90,8 @@ public class ColumnWorkController extends HttpServlet {
 
     private void deleteColumn(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        columnDAO.deleteColumnWork(id);
-        List<Column> listColumn= columnDAO.selectAllColumn();
+        iColumDAO.deleteColumnWork(id);
+        List<Column> listColumn= iColumDAO.selectAllColumn();
         request.setAttribute("listColumn", listColumn);
         try {
         request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
@@ -103,12 +103,14 @@ public class ColumnWorkController extends HttpServlet {
     }
 
     private void showAllColumn(HttpServletRequest request, HttpServletResponse response) {
-        List<Column> listColumn= columnDAO.selectAllColumn();
-        List<Card> listCard = columnDAO.selectAllCard();
+        List<Column> listColumn= iColumDAO.selectAllColumn();
+        List<Card> listCard = iColumDAO.selectAllCard();
+        List<Table> listTable = userDAO.selectAllTable();
         HttpSession session = request.getSession();
         try {
-        session.setAttribute("listCard",listCard);
+            session.setAttribute("listCard",listCard);
             session.setAttribute("listColumn", listColumn);
+            session.setAttribute("listTable",listTable);
             request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
         } catch (ServletException e) {
             throw new RuntimeException(e);

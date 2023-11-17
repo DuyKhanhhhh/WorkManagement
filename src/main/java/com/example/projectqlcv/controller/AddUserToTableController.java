@@ -51,7 +51,7 @@ public class AddUserToTableController extends HttpServlet {
 
     private void editNameToColumn(HttpServletRequest request, HttpServletResponse response) {
         int idColumn = Integer.parseInt(request.getParameter("idColumn"));
-        Column column = iColumDAO.selectColumn(idColumn);
+        Column column = columnDAO.selectColumn(idColumn);
         String nameUpdate = request.getParameter("nameColumnUpdate");
         if (nameUpdate == ""){
             nameUpdate = column.getName();
@@ -137,7 +137,7 @@ public class AddUserToTableController extends HttpServlet {
         try {
             session.setAttribute("listCard",listCard);
             session.setAttribute("listColumn", listColumn);
-            request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
+            request.getRequestDispatcher("/column").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
