@@ -42,6 +42,7 @@ public class ColumnDAO implements IColumDAO{
             if (resultSet.next()) {
                 idCard = resultSet.getInt(1);
             }
+            System.out.println(idCard);
             card.setId(idCard);
         }  catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
