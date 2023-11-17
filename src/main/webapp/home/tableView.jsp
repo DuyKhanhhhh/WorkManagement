@@ -390,6 +390,21 @@
         margin-right: 5px;
         margin-left: 20px;
     }
+    .comment{
+        display: flex;
+        margin-top: 20px;
+    }
+    .comment i {
+        color: #000000;
+        font-size: 26px;
+        padding-left: 4px;
+    }
+
+    .comment button {
+        width: 20%;
+        margin-left: 14px;
+        margin-top: 110px;
+    }
 </style>
 <body>
 <div class="container-fluid">
@@ -492,7 +507,7 @@
                     </form>
                     <c:forEach items="${listCard}" var="cardItem">
                         <c:if test="${listColumn.id eq cardItem.getIdColumn()}">
-                            <div onclick="openFormContent()" class="showCard">
+                            <div onclick="openFormContent(${cardItem.getId()},`${cardItem.getName()}`)" class="showCard">
                                 <span>${cardItem.getName()}</span>
                             </div>
                         </c:if>
@@ -532,18 +547,29 @@
                 <div class="contentHead">
                     <span><i class="fa-solid fa-window-maximize" style="color: #000000;"></i></span>
                     <div class="contentTitle">
-                        <h2>Name</h2>
+                        <h2 id="textName"></h2>
                     </div>
                 </div>
                 <div class="content">
                     <i class="fa-solid fa-bars" style="color: #000000;"></i>
+                    <form id="myForm" method="post">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
+                                      style="height: 200px"></textarea>
+                            <label for="floatingTextarea1">Content</label>
+                        </div>
+                        <button type="button" class="btn btn-secondary">Submit</button>
+                    </form>
+                </div>
+                <div class="comment">
+                    <i class="fa-solid fa-list-ul" style="color: #000000;"></i>
                     <form>
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                                      style="height: 200px"></textarea>
+                            <textarea class="form-control" name="comment" placeholder="Leave a comment here" id="floatingTextarea2"
+                                      style="height: 150px"></textarea>
                             <label for="floatingTextarea2">Comments</label>
                         </div>
-                        <button type="button" class="btn btn-secondary">Add</button>
+                        <button type="button" class="btn btn-secondary">Submit</button>
                     </form>
                 </div>
             </div>
@@ -568,8 +594,13 @@
     </div>
 </div>
 <script>
-    function openFormContent() {
-        document.getElementById("formShowCard").style.display = "block";
+    function openFormContent(id,name) {
+        document.getElementById("formShowCard" ).style.display = "block";
+        document.getElementById("textName").innerText = name;
+        // Lấy đối tượng form
+        var form = document.getElementById("myForm");
+        // Thay đổi thuộc tính action của form
+        form.action = "your-url/" + id;
     }
 
     function closeFormContent() {
