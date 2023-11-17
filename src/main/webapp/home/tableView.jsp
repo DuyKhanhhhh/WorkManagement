@@ -313,9 +313,10 @@
         position: fixed;
         background-color: #8f979f;
         border-radius: 8px;
-        height: 88%;
+        height: 70%;
         width: 36%;
         margin-left: 33%;
+        margin-top: 66px;
     }
 
     .formContent .closebtn {
@@ -337,6 +338,57 @@
 
     .contentTitle h2 {
         margin-right: 4px;
+    }
+
+    .cardLeft {
+        width: 75%;
+        float: left;
+    }
+
+    .content {
+        display: flex;
+        margin-top: 15px;
+    }
+
+    .content i {
+        color: #000000;
+        font-size: 26px;
+        padding-left: 4px;
+    }
+
+    .content button {
+        width: 20%;
+        margin-left: 14px;
+        margin-top: 110px;
+    }
+
+    .cardRight {
+        width: 25%;
+        float: right;
+        padding-top: 45px;
+    }
+
+    .form-floating {
+        height: 100px;
+        width: 430px;
+        margin-left: 14px;
+    }
+
+    .boxIconCard {
+        border: 1px solid black;
+        width: 160px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        background-color: #b8bdb5;
+        border-radius: 5px;
+    }
+    .boxIconCard i {
+        font-size: 20px;
+        position: absolute;
+        margin-right: 5px;
+        margin-left: 20px;
     }
 </style>
 <body>
@@ -425,7 +477,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         <c:forEach items="${listColumn}" var="listColumn">
             <c:if test="${tables.id eq listColumn.idTable}">
@@ -486,17 +537,45 @@
                 </form>
             </div>
         </div>
-        <c:forEach items="${listCard}" var="cardItem">
-            <div id="formShowCard" class="formContent">
+        <div id="formShowCard" class="formContent">
+            <div class=cardLeft>
                 <span class="closebtn" onclick="closeFormContent()">&times;</span>
                 <div class="contentHead">
                     <span><i class="fa-solid fa-window-maximize" style="color: #000000;"></i></span>
                     <div class="contentTitle">
-                        <h2>${cardItem.getName()}</h2>
+                        <h2>Name</h2>
                     </div>
                 </div>
+                <div class="content">
+                    <i class="fa-solid fa-bars" style="color: #000000;"></i>
+                    <form>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                      style="height: 200px"></textarea>
+                            <label for="floatingTextarea2">Comments</label>
+                        </div>
+                        <button type="button" class="btn btn-secondary">Add</button>
+                    </form>
+                </div>
             </div>
-        </c:forEach>
+            <div class="cardRight">
+                <h2>Option</h2>
+                <hr>
+                <div class="boxIconCard">
+                    <i class="fa-solid fa-user" style="color: #000000;"></i>
+                    <span>Member</span>
+                </div>
+                <div class="boxIconCard">
+                    <i class="fa-solid fa-tag" style="color: #000000;"></i>
+                    <span>Label</span>
+                </div>
+                <div class="boxIconCard">
+                    <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
+                    <span>Attach</span>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
 <script>
