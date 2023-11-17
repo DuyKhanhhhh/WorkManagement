@@ -326,15 +326,13 @@
     }
 
     .contentHead {
-        height: 25px;
-        width: 5%;
-        padding: 12px 2px 0px 4px;
-        position: relative;
-        z-index: 1;
+        padding: 45px 30px 0px 4px;
+        display: flex;
+        align-items: center;
     }
 
     .contentTitle {
-        padding: 12px 0 0;
+        padding-left: 15px;
     }
 
     .contentTitle h2 {
