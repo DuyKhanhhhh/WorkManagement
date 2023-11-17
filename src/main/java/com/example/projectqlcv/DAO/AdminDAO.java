@@ -7,8 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 public class AdminDAO implements IAdminDAO {
-
-
     private static final String ADD_USER_TO_SQL = "INSERT INTO user(email, name, phoneNumber, password) VALUES(?, ?, ?, ?) ";
     private static final String UPDATE_USER_ID = "UPDATE user SET name = ?, email = ? , phoneNumber = ? , password = ? , address = ? , avatar =  ? WHERE id = ? ";
     private static final String SELECT_ALL_USER_ID = "SELECT * FROM user WHERE id = ?";

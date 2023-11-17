@@ -1,7 +1,6 @@
 package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.ColumnDAO;
-import com.example.projectqlcv.DAO.IColumDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.*;
 import sun.tools.jconsole.Tab;
@@ -19,12 +18,12 @@ import java.util.List;
 @WebServlet(name = "AddUserToTableController", value = "/addUserToTable")
 public class AddUserToTableController extends HttpServlet {
     UserDAO userDAO = null;
-    IColumDAO iColumDAO = null;
+    ColumnDAO columnDAO = null;
 
     @Override
     public void init() throws ServletException {
         userDAO = new UserDAO();
-        iColumDAO = new ColumnDAO();
+        columnDAO = new ColumnDAO();
     }
 
     @Override
@@ -133,8 +132,12 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("roleUser",userToTable);
         Member member = userDAO.findRoleUserToMember(idUser);
         session.setAttribute("memberToGroup",member);
+        List<Column> listColumn= columnDAO.selectAllColumn();
+        List<Card> listCard = columnDAO.selectAllCard();
         try {
-            request.getRequestDispatcher("/column").forward(request, response);
+            session.setAttribute("listCard",listCard);
+            session.setAttribute("listColumn", listColumn);
+            request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
