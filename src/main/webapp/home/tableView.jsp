@@ -371,17 +371,28 @@
         </nav>
     </div>
     <div class="row">
+
         <div class="title">
-            <div id="nameTable">
-                <form id="edit" action="/addUserToTable" method="post">
-                    <input name="nameUpdate" type="text" class="title" id="title" value="${tables.name}"
-                           style="border: none">
-                    <input name="action" value="editNameTable" type="hidden">
-                    <input name="idTable" value="${tables.id}" type="hidden">
-                    <input type="submit" class="button" id="buttonEdit" style="display: none ; border: none "
-                           hidden="hidden">
-                </form>
-            </div>
+            <c:forEach var="listTable" items="${listTable}">
+                <c:if test="${(tables.id).equals(listTable.id)}">
+                    <c:if test="${(roleUser.role).equals('Admin')}">
+                        <div id="nameTable">
+                            <form id="edit" action="/addUserToTable" method="post">
+                                <input name="nameUpdate" type="text" class="title" id="title" value="${listTable.name}"
+                                       style="border: none">
+                                <input name="action" value="editNameTable" type="hidden">
+                                <input name="idTable" value="${tables.id}" type="hidden">
+                                <input type="submit" class="button" id="buttonEdit" style="display: none ; border: none "
+                                       hidden="hidden">
+                            </form>
+                        </div>
+                    </c:if>
+                    <c:if test="${(roleUser.role).equals('User') || (roleUser.role).equals(null)}">
+                        <label style="">${listTable.name}</label>
+                    </c:if>
+                </c:if>
+            </c:forEach>
+
             <div class="titleRight">
                 <div id="setting" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
@@ -389,10 +400,10 @@
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
                     <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
-                    <c:if test="${member.role.equals('Admin') && member.idTable eq tables.id}">
+                    <c:if test="${roleUser.role.equals('Admin') && rolerUser.idTable eq tables.id}">
                         <a onclick="showConfirmation()" style="color: white">Delete table</a>
                     </c:if>
-                    <c:if test="${member.idUser != memberToGroup.idUser}">
+                    <c:if test="${roleUser.idUser != memberToGroup.idUser}">
                         <a href="/addUserToTable?action=joinTable&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
                             Join table</a>
                     </c:if>
@@ -552,10 +563,10 @@
         }
     });
 
-    inputElement.addEventListener("blur", function () {
-        inputElement.disabled = true;
-        editName();
-    });
+    // inputElement.addEventListener("blur", function () {
+    //     inputElement.disabled = true;
+    //     editName();
+    // });
 
     function editName() {
         document.getElementById("buttonEdit").click();
@@ -591,6 +602,11 @@
     });
 
     function editColumn() {
+    // inputTitle.addEventListener("blur", function () {
+    //     inputTitle.disabled = true;
+    //     editColumn();
+    // });
+    function editColumn(){
         document.getElementById("buttonColumn").click();
     }
 </script>

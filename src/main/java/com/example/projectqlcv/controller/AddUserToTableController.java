@@ -46,14 +46,33 @@ public class AddUserToTableController extends HttpServlet {
             case "editNameColumn":
                 editNameToColumn(request,response);
                 break;
-
         }
     }
 
     private void editNameToColumn(HttpServletRequest request, HttpServletResponse response) {
         int idColumn = Integer.parseInt(request.getParameter("idColumn"));
+        Column column = iColumDAO.selectColumn(idColumn);
         String nameUpdate = request.getParameter("nameColumnUpdate");
+        if (nameUpdate == ""){
+            nameUpdate = column.getName();
+        }
         userDAO.editNameColumn(idColumn,nameUpdate);
+        try {
+            response.sendRedirect("/column");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    private void editNameToTable(HttpServletRequest request, HttpServletResponse response) {
+        int idTable =Integer.parseInt(request.getParameter("idTable"));
+        Table table = userDAO.findTableById(idTable);
+        String nameUpdate = request.getParameter("nameUpdate");
+        if (nameUpdate == ""){
+            nameUpdate = table.getName();
+        }
+        userDAO.editNameTable(idTable,nameUpdate);
+//        HttpSession session = request.getSession();
+//        session.setAttribute("tables",table);
         try {
             response.sendRedirect("/column");
         } catch (IOException e) {
@@ -110,7 +129,7 @@ public class AddUserToTableController extends HttpServlet {
         Group group = userDAO.findGroupById(idGroup);
         session.setAttribute("groups", group);
         AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(idUser);
-        session.setAttribute("member",userToTable);
+        session.setAttribute("roleUser",userToTable);
         Member member = userDAO.findRoleUserToMember(idUser);
         session.setAttribute("memberToGroup",member);
         List<Column> listColumn= columnDAO.selectAllColumn();
@@ -211,19 +230,6 @@ public class AddUserToTableController extends HttpServlet {
         }
     }
 
-    private void editNameToTable(HttpServletRequest request, HttpServletResponse response) {
-        int idTable =Integer.parseInt(request.getParameter("idTable"));
-        String nameUpdate = request.getParameter("nameUpdate");
-        userDAO.editNameTable(idTable,nameUpdate);
-        Table table = userDAO.findTableById(idTable);
-        HttpSession session = request.getSession();
-        session.setAttribute("tables",table);
-        try {
-            response.sendRedirect("/column");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private void deleteUserToTable(HttpServletRequest request, HttpServletResponse response) {
         int idUserToTable = Integer.parseInt(request.getParameter("id"));

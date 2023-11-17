@@ -306,9 +306,13 @@
                             </c:if>
                         </c:forEach>
                     <div class="groupContent">
-                        <div class="table_create">
-                            <h4 style="padding-top: 15px"><c:out value="${listTable.name}"/></h4>
-                        </div>
+                        <c:forEach var="listTable" items="${listTable}">
+                            <c:if test="${group.id eq table.idGroup}">
+                            <div class="table_create">
+                                <h4 style="padding-top: 15px">${listTable.name}</h4>
+                            </div>
+                            </c:if>
+                        </c:forEach>
                         <a href="/homeUser?action=addTableToSQL&id=${group.id}"
                            style="text-decoration: none; color: black">
                             <div class="table_create">
