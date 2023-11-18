@@ -309,7 +309,7 @@
     }
 
     .formContent {
-        display: none;
+        display: block;
         position: fixed;
         background-color: #8f979f;
         border-radius: 8px;
@@ -384,16 +384,19 @@
         background-color: #b8bdb5;
         border-radius: 5px;
     }
+
     .boxIconCard i {
         font-size: 20px;
         position: absolute;
         margin-right: 5px;
         margin-left: 20px;
     }
-    .comment{
+
+    .comment {
         display: flex;
         margin-top: 20px;
     }
+
     .comment i {
         color: #000000;
         font-size: 26px;
@@ -448,7 +451,8 @@
                                        style="border: none">
                                 <input name="action" value="editNameTable" type="hidden">
                                 <input name="idTable" value="${tables.id}" type="hidden">
-                                <input type="submit" class="button" id="buttonEdit" style="display: none ; border: none "
+                                <input type="submit" class="button" id="buttonEdit"
+                                       style="display: none ; border: none "
                                        hidden="hidden">
                             </form>
                         </div>
@@ -514,12 +518,15 @@
                         <input name="idColumn" value="${listColumn.id}" type="hidden">
                         <input type="submit" class="button" id="buttonColumn" style="display: none ; border: none "
                                hidden="hidden">
+
                     </form>
                     <c:forEach items="${listCard}" var="cardItem">
                         <c:if test="${listColumn.id eq cardItem.getIdColumn()}">
-                            <div onclick="openFormContent(${cardItem.getId()},`${cardItem.getName()}`)" class="showCard">
-                                <span>${cardItem.getName()}</span>
-                            </div>
+                                <a href="/column?action=showCard&idCard=${cardItem.getId()}">
+                                    <div class="showCard">
+                                        <span onclick="event.stopPropagation();">${cardItem.getName()}</span>
+                                    </div>
+                                </a>
                         </c:if>
                     </c:forEach>
                     <div class="boxAddCart">
@@ -551,67 +558,66 @@
                 </form>
             </div>
         </div>
-        <div id="formShowCard" class="formContent">
-            <div class=cardLeft>
-                <span class="closebtn" onclick="closeFormContent()">&times;</span>
-                <div class="contentHead">
-                    <span><i class="fa-solid fa-window-maximize" style="color: #000000;"></i></span>
-                    <div class="contentTitle">
-                        <h2 id="textName"></h2>
+        <c:if test="${card != null}">
+            <div id="formShowCard" class="formContent">
+                <div class=cardLeft>
+                    <span class="closebtn" onclick="closeFormContent()">&times;</span>
+                    <div class="contentHead">
+                        <span><i class="fa-solid fa-window-maximize" style="color: #000000;">${card.name}</i></span>
+                        <div class="contentTitle">
+                            <h2 id="textName"></h2>
+                        </div>
                     </div>
-                </div>
-                <div class="content">
-                    <i class="fa-solid fa-bars" style="color: #000000;"></i>
-                    <form id="myForm" method="post">
-                        <div class="form-floating">
+                    <div class="content">
+                        <i class="fa-solid fa-bars" style="color: #000000;"></i>
+                        <form id="myForm" method="post">
+                            <div class="form-floating">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
                                       style="height: 200px"></textarea>
-                            <label for="floatingTextarea1">Content</label>
-                        </div>
-                        <button type="button" class="btn btn-secondary">Submit</button>
-                    </form>
-                </div>
-                <div class="comment">
-                    <i class="fa-solid fa-list-ul" style="color: #000000;"></i>
-                    <form>
-                        <div class="form-floating">
-                            <textarea class="form-control" name="comment" placeholder="Leave a comment here" id="floatingTextarea2"
+                                <label for="floatingTextarea1">Content</label>
+                            </div>
+                            <button type="button" class="btn btn-secondary">Submit</button>
+                        </form>
+                    </div>
+                    <div class="comment">
+                        <i class="fa-solid fa-list-ul" style="color: #000000;"></i>
+                        <form>
+                            <div class="form-floating">
+                            <textarea class="form-control" name="comment" placeholder="Leave a comment here"
+                                      id="floatingTextarea2"
                                       style="height: 150px"></textarea>
-                            <label for="floatingTextarea2">Comments</label>
-                        </div>
-                        <button type="button" class="btn btn-secondary">Submit</button>
-                    </form>
+                                <label for="floatingTextarea2">Comments</label>
+                            </div>
+                            <button type="button" class="btn btn-secondary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="cardRight">
+                    <h2>Option</h2>
+                    <hr>
+                    <div class="boxIconCard">
+                        <i class="fa-solid fa-user" style="color: #000000;"></i>
+                        <span>Member</span>
+                    </div>
+                    <div class="boxIconCard">
+                        <i class="fa-solid fa-tag" style="color: #000000;"></i>
+                        <span>Label</span>
+                    </div>
+                    <div class="boxIconCard">
+                        <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
+                        <span>Attach</span>
+                    </div>
                 </div>
             </div>
-            <div class="cardRight">
-                <h2>Option</h2>
-                <hr>
-                <div class="boxIconCard">
-                    <i class="fa-solid fa-user" style="color: #000000;"></i>
-                    <span>Member</span>
-                </div>
-                <div class="boxIconCard">
-                    <i class="fa-solid fa-tag" style="color: #000000;"></i>
-                    <span>Label</span>
-                </div>
-                <div class="boxIconCard">
-                    <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
-                    <span>Attach</span>
-                </div>
-
-            </div>
-        </div>
+        </c:if>
     </div>
 </div>
 <script>
-    function openFormContent(id,name) {
-        document.getElementById("formShowCard" ).style.display = "block";
-        document.getElementById("textName").innerText = name;
-        // Lấy đối tượng form
-        var form = document.getElementById("myForm");
-        // Thay đổi thuộc tính action của form
-        form.action = "your-url/" + id;
-    }
+
+    // function openFormContent(id, name) {
+    //     document.getElementById("formShowCard").style.display = "block";
+    //     document.getElementById("textName").innerText = name;
+    // }
 
     function closeFormContent() {
         document.getElementById("formShowCard").style.display = "none";

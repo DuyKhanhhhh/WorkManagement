@@ -7,7 +7,6 @@ import com.example.projectqlcv.DAO.IColumDAO;
 import com.example.projectqlcv.DAO.IUserDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.Column;
-import com.example.projectqlcv.model.Group;
 import com.example.projectqlcv.model.Table;
 
 import javax.servlet.ServletException;
@@ -30,6 +29,7 @@ public class ColumnWorkController extends HttpServlet {
         userDAO = new UserDAO();
     }
 
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
@@ -43,8 +43,22 @@ public class ColumnWorkController extends HttpServlet {
             case "addCart":
                 createCart(request, response);
                 break;
+            case "showCard":
+                showCard(request,response);
+                break;
         }
 
+    }
+
+    private void showCard(HttpServletRequest request, HttpServletResponse response) {
+        int idCard = Integer.parseInt(request.getParameter("idCard"));
+        Card card = iColumDAO.findCardById(idCard);
+        request.setAttribute("card",card);
+        try {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void createCart(HttpServletRequest request, HttpServletResponse response) {
@@ -81,6 +95,9 @@ public class ColumnWorkController extends HttpServlet {
         switch (action) {
             case "delete":
                 deleteColumn(request,response);
+                break;
+            case "showCard":
+                showCard(request,response);
                 break;
             default:
                 showAllColumn(request,response);
