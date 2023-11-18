@@ -15,6 +15,7 @@ public class ColumnDAO implements IColumDAO{
     private static final String DELETE_COLUMN_SQL = "DELETE FROM columnWork where id = ?";
     private static final String ADD_CARD_TO_SQL = "INSERT INTO card(idColumn, name) VALUES(?, ?)";
     private static final String SELECT_ALL_CARD = "SELECT * FROM card";
+    private static final String FIND_CARD_BY_ID = "SELECT * FROM card WHERE id = ?";
     private static final String SELECT_COLUMN_ID= "SELECT * FROM columnWork WHERE id=?";
 
 
@@ -124,5 +125,27 @@ public class ColumnDAO implements IColumDAO{
             throw new RuntimeException(e);
         }
         return column;
+    }
+
+    @Override
+    public Card findCardById(int idCard) {
+        Card card = null;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_CARD_BY_ID);
+            preparedStatement.setInt(1,idCard);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int idColumn = resultSet.getInt("idColumn");
+                String name = resultSet.getString("name");
+                String content = resultSet.getString("content");
+                String comment = resultSet.getString("comment");
+                String label = resultSet.getString("label");
+                card = new Card(idCard,idColumn,name,content,comment,label);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return card;
     }
 }

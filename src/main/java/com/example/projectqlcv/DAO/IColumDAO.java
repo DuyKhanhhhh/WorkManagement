@@ -13,4 +13,5 @@ public interface IColumDAO {
     List<Card> selectAllCard();
     boolean deleteColumnWork(int id);
     Column selectColumn(int idColumn);
+    Card findCardById(int idCard);
 }
