@@ -17,6 +17,7 @@ public class ColumnDAO implements IColumDAO{
     private static final String SELECT_ALL_CARD = "SELECT * FROM card";
     private static final String FIND_CARD_BY_ID = "SELECT * FROM card WHERE id = ?";
     private static final String SELECT_COLUMN_ID= "SELECT * FROM columnWork WHERE id=?";
+    private static final String UPDATE_CONTENT_IN_CARD = "UPDATE card SET content = ? WHERE id = ?";
 
 
     @Override
@@ -147,5 +148,20 @@ public class ColumnDAO implements IColumDAO{
             throw new RuntimeException(e);
         }
         return card;
+    }
+
+    @Override
+    public boolean updateContentInCard(int idCard, String newContent) {
+        boolean rowUpdate;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CONTENT_IN_CARD);
+            preparedStatement.setString(1,newContent);
+            preparedStatement.setInt(2,idCard);
+            rowUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rowUpdate;
     }
 }

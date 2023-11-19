@@ -46,8 +46,22 @@ public class ColumnWorkController extends HttpServlet {
             case "showCard":
                 showCard(request,response);
                 break;
+            case "editContent":
+                editContent(request,response);
+                break;
         }
 
+    }
+
+    private void editContent(HttpServletRequest request, HttpServletResponse response) {
+        int idCard = Integer.parseInt(request.getParameter("idCard"));
+        String newContent = request.getParameter("newContent");
+        iColumDAO.updateContentInCard(idCard,newContent);
+        try {
+            response.sendRedirect("home/tableView.jsp");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void showCard(HttpServletRequest request, HttpServletResponse response) {
