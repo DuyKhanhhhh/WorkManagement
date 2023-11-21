@@ -408,6 +408,27 @@
         margin-left: 14px;
         margin-top: 110px;
     }
+
+    #my-div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 200px;
+        background-color: #fff;
+        margin-left: 20rem;
+        margin-top: 6rem;
+    }
+
+    #member {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 200px;
+        background-color: #fff;
+
+    }
 </style>
 <body>
 <div class="container-fluid">
@@ -442,27 +463,36 @@
     </div>
     <div class="row">
         <div class="title">
-            <c:forEach var="listTable" items="${listTable}">
-                <c:if test="${(tables.id).equals(listTable.id)}">
-                    <c:if test="${(roleUser.role).equals('Admin')}">
-                        <div id="nameTable">
-                            <form id="edit" action="/addUserToTable" method="post">
-                                <input name="nameUpdate" type="text" class="title" id="title" value="${listTable.name}"
-                                       style="border: none">
-                                <input name="action" value="editNameTable" type="hidden">
-                                <input name="idTable" value="${tables.id}" type="hidden">
-                                <input type="submit" class="button" id="buttonEdit"
-                                       style="display: none ; border: none "
-                                       hidden="hidden">
-                            </form>
-                        </div>
+            <div>
+                <c:forEach var="listTable" items="${listTable}">
+                    <c:if test="${(tables.id).equals(listTable.id)}">
+                        <c:if test="${(roleUser.role).equals('Admin')}">
+                            <div id="nameTable">
+                                <form id="edit" action="/addUserToTable" method="post">
+                                    <input name="nameUpdate" type="text" class="title" id="title"
+                                           value="${listTable.name}"
+                                           style="border: none">
+                                    <input name="action" value="editNameTable" type="hidden">
+                                    <input name="idTable" value="${tables.id}" type="hidden">
+                                    <input type="submit" class="button" id="buttonEdit"
+                                           style="display: none ; border: none "
+                                           hidden="hidden">
+                                </form>
+                            </div>
+                        </c:if>
+                        <c:if test="${(roleUser.role).equals('User') || (roleUser.role).equals(null)}">
+                            <label style="">${listTable.name}</label>
+                        </c:if>
                     </c:if>
-                    <c:if test="${(roleUser.role).equals('User') || (roleUser.role).equals(null)}">
-                        <label style="">${listTable.name}</label>
-                    </c:if>
-                </c:if>
-            </c:forEach>
-
+                </c:forEach>
+            </div>
+            <span id="">
+                    <div class="nav">
+                     <span onclick="openPermission()">
+                         <label style="display: inline-block;margin-right: 80rem;">${tables.permission}</label>
+                     </span>
+                    </div>
+                </span>
             <div class="titleRight">
                 <div id="setting" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
@@ -478,6 +508,19 @@
                             Join table</a>
                     </c:if>
                 </div>
+                <div id="my-div" style="display: none;">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closePermission()">×</a>
+                    <form action="/homeUser?action=updatePermissionTablePublic&idTable=${tables.id}" method="post">
+                        <input type="submit" value="Public"/>
+                    </form>
+                    <form action="/homeUser?action=updatePermissionTableGroup&idTable=${tables.id}" method="post">
+                        <input type="submit" value="Group"/>
+                    </form>
+                    <form action="/homeUser?action=updatePermissionTablePrivate&idTable=${tables.id}" method="post">
+                        <input type="submit" value="Private"/>
+                    </form>
+                </div>
+
                 <span id="rightTitle">
                     <div class="nav">
                      <span onclick="openNav()">
@@ -522,11 +565,11 @@
                     </form>
                     <c:forEach items="${listCard}" var="cardItem">
                         <c:if test="${listColumn.id eq cardItem.getIdColumn()}">
-                                <a href="/column?action=showCard&idCard=${cardItem.getId()}">
-                                    <div class="showCard">
-                                        <span onclick="event.stopPropagation();">${cardItem.getName()}</span>
-                                    </div>
-                                </a>
+                            <a href="/column?action=showCard&idCard=${cardItem.getId()}">
+                                <div class="showCard">
+                                    <span onclick="event.stopPropagation();">${cardItem.getName()}</span>
+                                </div>
+                            </a>
                         </c:if>
                     </c:forEach>
                     <div class="boxAddCart">
@@ -564,6 +607,14 @@
                     <span class="closebtn" onclick="closeFormContent()">&times;</span>
                     <div class="contentHead">
                         <span><i class="fa-solid fa-window-maximize" style="color: #000000;">${card.name}</i></span>
+                        <br>
+                        <c:forEach items="${listMember}" var="listMember">
+                            <a href="/column?action=addMemberToCard&idUser=${user.id}&idCard=${card.id}">
+                                <div class="circleMember">
+                                    <img src="${listMember.avatar}" alt="Avatar">
+                                </div>
+                            </a>
+                        </c:forEach>
                         <div class="contentTitle">
                             <h2 id="textName"></h2>
                         </div>
@@ -595,9 +646,11 @@
                 <div class="cardRight">
                     <h2>Option</h2>
                     <hr>
-                    <div class="boxIconCard">
-                        <i class="fa-solid fa-user" style="color: #000000;"></i>
-                        <span>Member</span>
+                    <div onclick="openMember()" class="boxIconCard">
+                        <a>
+                            <i class="fa-solid fa-user" style="color: #000000;"></i>
+                            <span>Member</span>
+                        </a>
                     </div>
                     <div class="boxIconCard">
                         <i class="fa-solid fa-tag" style="color: #000000;"></i>
@@ -607,6 +660,18 @@
                         <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
                         <span>Attach</span>
                     </div>
+                </div>
+                <div id="member" style="display: none;">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
+                    <c:forEach items="${listMember}" var="listMember">
+                        <a href="/column?action=addMemberToCard&idUser=${user.id}&idCard=${card.id}">
+                            <div class="circleMember">
+                                <img src="${listMember.avatar}" alt="Avatar">
+                            </div>
+                            <p>${listMember.nameUser}</p>
+
+                        </a>
+                    </c:forEach>
                 </div>
             </div>
         </c:if>
@@ -655,12 +720,28 @@
         }
     }
 
+    function openMember() {
+        document.getElementById("member").style.display = "block";
+    }
+
+    function closeMember() {
+        document.getElementById("member").style.display = "none";
+    }
+
     function openNav() {
         document.getElementById("setting").style.display = "block";
     }
 
     function closeNav() {
         document.getElementById("setting").style.display = "none";
+    }
+
+    function openPermission() {
+        document.getElementById("my-div").style.display = "block";
+    }
+
+    function closePermission() {
+        document.getElementById("my-div").style.display = "none";
     }
 
     const inputElement = document.getElementById("title");

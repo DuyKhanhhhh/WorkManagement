@@ -2,6 +2,7 @@ package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.ColumnDAO;
 
+import com.example.projectqlcv.model.AddUserToTable;
 import com.example.projectqlcv.model.Card;
 import com.example.projectqlcv.DAO.IColumDAO;
 import com.example.projectqlcv.DAO.IUserDAO;
@@ -99,11 +100,42 @@ public class ColumnWorkController extends HttpServlet {
             case "showCard":
                 showCard(request,response);
                 break;
+            case "showMemberToTable":
+//                showMemberToTable(request,response);
+                break;
+            case "addMemberToCard":
+                addMemberToCard(request,response);
+                break;
             default:
                 showAllColumn(request,response);
                 break;
         }
     }
+
+    private void addMemberToCard(HttpServletRequest request, HttpServletResponse response) {
+        int idUser = Integer.parseInt(request.getParameter("idUser"));
+        int idCard = Integer.parseInt(request.getParameter("idCard"));
+        userDAO.addUserInCard(idUser,idCard);
+        try {
+            response.sendRedirect("home/tableView.jsp");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+//    private void showMemberToTable(HttpServletRequest request, HttpServletResponse response) {
+//        int idTable = Integer.parseInt(request.getParameter("idTable"));
+//        List<AddUserToTable> member = userDAO.findUserToTable(idTable);
+//        HttpSession session = request.getSession();
+//        session.setAttribute("listMember",member);
+//        try {
+//            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+//        } catch (ServletException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     private void deleteColumn(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
@@ -124,6 +156,7 @@ public class ColumnWorkController extends HttpServlet {
         List<Card> listCard = iColumDAO.selectAllCard();
         List<Table> listTable = userDAO.selectAllTable();
         HttpSession session = request.getSession();
+
         try {
             session.setAttribute("listCard",listCard);
             session.setAttribute("listColumn", listColumn);

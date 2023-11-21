@@ -17,8 +17,6 @@ public class ColumnDAO implements IColumDAO{
     private static final String SELECT_ALL_CARD = "SELECT * FROM card";
     private static final String FIND_CARD_BY_ID = "SELECT * FROM card WHERE id = ?";
     private static final String SELECT_COLUMN_ID= "SELECT * FROM columnWork WHERE id=?";
-
-
     @Override
     public void addColumnWork(int idTable, String  colum) {
         try {

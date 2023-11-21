@@ -134,6 +134,8 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("memberToGroup",member);
         List<Column> listColumn= columnDAO.selectAllColumn();
         List<Card> listCard = columnDAO.selectAllCard();
+        List<AddUserToTable> memberToTable = userDAO.findUserToTable(idTable);
+        session.setAttribute("listMember",memberToTable);
         try {
             session.setAttribute("listCard",listCard);
             session.setAttribute("listColumn", listColumn);
