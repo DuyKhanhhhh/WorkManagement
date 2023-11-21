@@ -115,10 +115,18 @@ public class ColumnWorkController extends HttpServlet {
     private void addMemberToCard(HttpServletRequest request, HttpServletResponse response) {
         int idUser = Integer.parseInt(request.getParameter("idUser"));
         int idCard = Integer.parseInt(request.getParameter("idCard"));
+        int idTable = Integer.parseInt(request.getParameter("idTable"));
+        HttpSession session = request.getSession();
         userDAO.addUserInCard(idUser,idCard);
+        List<AddUserToTable> memberToTable = userDAO.findUserToTable(idTable);
+        session.setAttribute("listMember",memberToTable);
+        List<UserToCard> userToCard = userDAO.findMemberToCard(idCard);
+        session.setAttribute("userToCard",userToCard);
         try {
-            response.sendRedirect("/column");
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ServletException e) {
             throw new RuntimeException(e);
         }
     }

@@ -662,7 +662,7 @@
                 <div id="member" style="display: none;">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
                     <c:forEach var="userToTable" items="${userToTable}">
-                        <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}">
+                        <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}" onclick="closeFormContent()">
                             <div class="circleMember">
                                 <img src="${userToTable.avatar}" alt="Avatar">
                             </div>
