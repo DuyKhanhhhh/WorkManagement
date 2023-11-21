@@ -428,6 +428,30 @@
         height: 200px;
         background-color: #fff;
 
+    /*#clickContent{*/
+    /*    display: none;*/
+    /*}*/
+    .filter {
+        margin-left: 70%;
+    }
+
+    .searchCard {
+        width: 400px;
+        height: 150px;
+        background-color: #b4b4b4;
+        margin-left: 79%;
+        position: fixed;
+        display: none;
+    }
+
+    #buttonSearchCard {
+        background: none;
+        border: none;
+        outline: none;
+    }
+
+    #search {
+        margin-top: 50px;
     }
 </style>
 <body>
@@ -493,6 +517,13 @@
                      </span>
                     </div>
                 </span>
+                </c:if>
+            </c:forEach>
+            <div class="filter" onclick="showSearchCard()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <button id="buttonSearchCard" style="margin-left: 2px">Search</button>
+            </div>
+
             <div class="titleRight">
                 <div id="setting" class="sidenav">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
@@ -539,7 +570,18 @@
         </div>
     </div>
     <div class="row">
+
         <c:forEach items="${listColumn}" var="listColumn">
+            <div class="searchCard" id="searchCard">
+                <div id="search">
+                    <form class="d-flex" method="post"
+                          action="/column?action=searchCard&idTable=${tables.id}">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                               name="search">
+                        <button class="btn btn-secondary" type="submit" name="search">Search</button>
+                    </form>
+                </div>
+            </div>
             <c:if test="${tables.id eq listColumn.idTable}">
                 <div id="formDelete" class="formDelete">
                     <span class="closebtn" onclick="closeFormDelete()">&times;</span>
@@ -547,6 +589,7 @@
                         <input type="submit" class="btn btn-primary" value="Delete">
                     </a>
                 </div>
+
                 <div class="columnContent">
                     <form id="editColumn" action="/addUserToTable" method="post">
                         <div class="contentTable">
@@ -601,7 +644,7 @@
                 </form>
             </div>
         </div>
-        <c:if test="${card != null}">
+        <c:if test="${card != null  }">
             <div id="formShowCard" class="formContent">
                 <div class=cardLeft>
                     <span class="closebtn" onclick="closeFormContent()">&times;</span>
@@ -619,14 +662,17 @@
                     </div>
                     <div class="content">
                         <i class="fa-solid fa-bars" style="color: #000000;"></i>
-                        <form id="myForm" method="post">
+                            <%--                        <c:if test="${(roleUser.role).equals('Admin') || (roleUser.role).equals('User')}">--%>
+                        <form id="myForm" method="post" action="/column?action=editContent&idCard=${card.getId()}">
                             <div class="form-floating">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
-                                      style="height: 200px"></textarea>
+                                      name="newContent"
+                                      style="height: 200px">${card.getContent()}</textarea>
                                 <label for="floatingTextarea1">Content</label>
                             </div>
-                            <button type="button" class="btn btn-secondary">Submit</button>
+                            <button type="submit" class="btn btn-secondary">Submit</button>
                         </form>
+                            <%--                        </c:if>--%>
                     </div>
                     <div class="comment">
                         <i class="fa-solid fa-list-ul" style="color: #000000;"></i>
@@ -803,6 +849,24 @@
             document.getElementById("buttonColumn").click();
         }
     }
+
+    function showSearchCard() {
+        var button = document.getElementById("searchCard");
+        if (button.style.display === "none") {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
+        }
+    }
+
+    // function showButton(){
+    //     var button = document.getElementById("clickContent");
+    //     if (button.style.display === "none"){
+    //         button.style.display = "block";
+    //     }else {
+    //         button.style.display ="none";
+    //     }
+    // }
 </script>
 </body>
 </html>
