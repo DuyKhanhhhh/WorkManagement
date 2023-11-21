@@ -18,6 +18,7 @@ public class ColumnDAO implements IColumDAO{
     private static final String FIND_CARD_BY_ID = "SELECT * FROM card WHERE id = ?";
     private static final String SELECT_COLUMN_ID= "SELECT * FROM columnWork WHERE id=?";
     private static final String UPDATE_CONTENT_IN_CARD = "UPDATE card SET content = ? WHERE id = ?";
+    private static final String FIND_CARD_WHERE_NAME = "SELECT c.id,c.idColumn,c.name,c.content,c.comment,c.label FROM card c JOIN columnWork l ON c.idColumn = l.id JOIN tableWork t ON l.idTable = t.id WHERE c.name LIKE ? AND idTable = ?;";
 
 
     @Override
@@ -163,5 +164,31 @@ public class ColumnDAO implements IColumDAO{
             throw new RuntimeException(e);
         }
         return rowUpdate;
+    }
+
+    @Override
+    public List<Card> searchCard(int idTable , String name) {
+        List<Card> cardList = new ArrayList<>();
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_CARD_WHERE_NAME);
+            preparedStatement.setString(1,"%" + name + "%");
+            preparedStatement.setInt(2,idTable);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                int idColumn = resultSet.getInt("idColumn");
+                String nameCard = resultSet.getString("name");
+                String content = resultSet.getString("content");
+                String comment = resultSet.getString("comment");
+                String label = resultSet.getString("label");
+                cardList.add(new Card(id,idColumn,nameCard,content,comment,label));
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return cardList;
     }
 }

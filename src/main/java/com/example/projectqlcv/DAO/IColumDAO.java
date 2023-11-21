@@ -15,4 +15,5 @@ public interface IColumDAO {
     Column selectColumn(int idColumn);
     Card findCardById(int idCard);
     boolean updateContentInCard(int idCard , String newContent);
+    List<Card> searchCard(int idTable ,String search);
 }

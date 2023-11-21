@@ -49,17 +49,36 @@ public class ColumnWorkController extends HttpServlet {
             case "editContent":
                 editContent(request,response);
                 break;
+            case "searchCard":
+                searchCard(request,response);
+                break;
         }
 
     }
 
-    private void editContent(HttpServletRequest request, HttpServletResponse response) {
+    private void searchCard(HttpServletRequest request, HttpServletResponse response) {
+            int idTable =Integer.parseInt(request.getParameter("idTable"));
+            String search = request.getParameter("search");
+            List<Card> cardList = iColumDAO.searchCard(idTable,search);
+            request.setAttribute("listCard",cardList);
+        try {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void editContent(HttpServletRequest request, HttpServletResponse response) throws RuntimeException {
         int idCard = Integer.parseInt(request.getParameter("idCard"));
         String newContent = request.getParameter("newContent");
         iColumDAO.updateContentInCard(idCard,newContent);
+        Card card = iColumDAO.findCardById(idCard);
+        request.setAttribute("card",card);
         try {
-            response.sendRedirect("home/tableView.jsp");
-        } catch (IOException e) {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (IOException | ServletException e) {
             throw new RuntimeException(e);
         }
     }
