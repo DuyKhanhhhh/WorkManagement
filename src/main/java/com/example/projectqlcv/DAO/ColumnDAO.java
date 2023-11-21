@@ -20,7 +20,6 @@ public class ColumnDAO implements IColumDAO{
     private static final String UPDATE_CONTENT_IN_CARD = "UPDATE card SET content = ? WHERE id = ?";
     private static final String FIND_CARD_WHERE_NAME = "SELECT c.id,c.idColumn,c.name,c.content,c.comment,c.label FROM card c JOIN columnWork l ON c.idColumn = l.id JOIN tableWork t ON l.idTable = t.id WHERE c.name LIKE ? AND idTable = ?;";
 
-
     @Override
     public void addColumnWork(int idTable, String  colum) {
         try {

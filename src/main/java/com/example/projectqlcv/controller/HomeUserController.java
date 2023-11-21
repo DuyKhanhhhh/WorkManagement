@@ -20,7 +20,8 @@ import java.io.PrintWriter;
 import java.util.*;
 
 @WebServlet(name = "AddGroupController", value = "/homeUser")
-public class HomeUserController extends HttpServlet {
+public class
+HomeUserController extends HttpServlet {
     private UserDAO userDAO;
 
     @Override
@@ -50,6 +51,54 @@ public class HomeUserController extends HttpServlet {
             case "search":
                 searchUser(request, response);
                 break;
+            case "updatePermissionTablePublic":
+                updatePermissionTablePublic(request, response);
+                break;
+            case "updatePermissionTableGroup":
+                updatePermissionTableGroup(request, response);
+                break;
+            case "updatePermissionTablePrivate":
+                updatePermissionTablePrivate(request, response);
+                break;
+        }
+    }
+
+    private void updatePermissionTablePublic(HttpServletRequest request, HttpServletResponse response) {
+        int idTable = Integer.parseInt(request.getParameter("idTable"));
+        userDAO.updatePermissionTablePublic(idTable);
+        Table table = userDAO.findTableById(idTable);
+        HttpSession session = request.getSession();
+        session.setAttribute("tables",table);
+        try {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (IOException | ServletException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void updatePermissionTableGroup(HttpServletRequest request, HttpServletResponse response) {
+        int idTable = Integer.parseInt(request.getParameter("idTable"));
+        userDAO.updatePermissionTableGroup(idTable);
+        Table table = userDAO.findTableById(idTable);
+        HttpSession session = request.getSession();
+        session.setAttribute("tables",table);
+        try {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (IOException | ServletException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void updatePermissionTablePrivate(HttpServletRequest request, HttpServletResponse response) {
+        int idTable = Integer.parseInt(request.getParameter("idTable"));
+        userDAO.updatePermissionTablePrivate(idTable);
+        Table table = userDAO.findTableById(idTable);
+        HttpSession session = request.getSession();
+        session.setAttribute("tables",table);
+        try {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (IOException | ServletException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -196,8 +245,6 @@ public class HomeUserController extends HttpServlet {
     }
 
 
-
-
     private void showMember(HttpServletRequest request, HttpServletResponse response) {
         try {
             int idUser = Integer.parseInt(request.getParameter("idUser"));
@@ -208,7 +255,7 @@ public class HomeUserController extends HttpServlet {
             List<Member> member = userDAO.selectGroupMember(idGroup);
             session.setAttribute("member", member);
             Member roleMember = userDAO.findRoleUserToMember(idUser);
-            session.setAttribute("roleMember",roleMember);
+            session.setAttribute("roleMember", roleMember);
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
 
         } catch (ServletException e) {
@@ -304,18 +351,18 @@ public class HomeUserController extends HttpServlet {
             }
         });
         List<Group> groupFromUser = new ArrayList<>();
-        for (Group item : groups){
-            Member member = userDAO.findUserToGroup(item.getId(),id);
-                if (member != null) {
+        for (Group item : groups) {
+            Member member = userDAO.findUserToGroup(item.getId(), id);
+            if (member != null) {
+                groupFromUser.add(item);
+            } else {
+                if (item.getPermission().equals("Public")) {
                     groupFromUser.add(item);
-                }else {
-                    if (item.getPermission().equals("Public")){
-                        groupFromUser.add(item);
-                    }
                 }
             }
+        }
         session.setAttribute("tables", tables);
-        session.setAttribute("groups",groupFromUser);
+        session.setAttribute("groups", groupFromUser);
         session.setAttribute("user", user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("homeUser.jsp");
         try {
