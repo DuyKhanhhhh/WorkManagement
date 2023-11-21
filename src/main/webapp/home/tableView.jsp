@@ -497,12 +497,12 @@
         width: 200px;
         height: 200px;
         background-color: #fff;
+    }
 
     /*#clickContent{*/
     /*    display: none;*/
     /*}*/
     .filter {
-        margin-left: 70%;
     }
 
     .searchCard {
@@ -588,8 +588,6 @@
                      </span>
                     </div>
                 </span>
-                </c:if>
-            </c:forEach>
             <div class="filter" onclick="showSearchCard()">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <button id="buttonSearchCard" style="margin-left: 2px">Search</button>
@@ -679,13 +677,9 @@
                     </form>
                     <c:forEach items="${listCard}" var="cardItem">
                         <c:if test="${listColumn.id eq cardItem.getIdColumn()}">
-                            <a href="/column?action=showCard&idCard=${cardItem.getId()}">
+                            <a href="/column?action=showCard&idCard=${cardItem.id}">
                                 <div class="showCard">
-
                                     <span>${cardItem.getName()}</span>
-
-                                    <span onclick="event.stopPropagation();">${cardItem.getName()}</span>
-
                                 </div>
                             </a>
                         </c:if>
@@ -700,8 +694,7 @@
                                 <div class="mb-3">
                                     <input type="text" class="form-control" name="name"
                                            placeholder="Enter a list title">
-                                    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Card
-                                    </button>
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Card</button>
                                 </div>
                             </form>
                         </div>
@@ -726,20 +719,16 @@
                 <div class=cardLeft>
                     <span class="closebtn" onclick="closeFormContent()">&times;</span>
                     <div class="contentHead">
-
                         <i class="fa-solid fa-window-maximize" style="color: #000000; font-size: 26px"></i>
-
-                        <span><i class="fa-solid fa-window-maximize" style="color: #000000;">${card.name}</i></span>
                         <br>
+                        <div class="contentTitle">
+                            <h2>${card.name}</h2>
+                        </div>
                         <c:forEach items="${userToCard}" var="userToCard">
                             <div class="circleMember">
                                 <img src="${userToCard.avatar}" alt="Avatar">
                             </div>
                         </c:forEach>
-
-                        <div class="contentTitle">
-                            <h2>${card.name}</h2>
-                        </div>
                     </div>
                     <div class="content">
                         <i class="fa-solid fa-bars" style="color: #000000;"></i>
