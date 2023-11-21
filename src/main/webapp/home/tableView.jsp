@@ -313,10 +313,12 @@
         position: fixed;
         background-color: #8f979f;
         border-radius: 8px;
-        height: 70%;
         width: 36%;
+        height: 830px;
         margin-left: 33%;
-        margin-top: 66px;
+        margin-top: 35px;
+        max-height: 830px;
+        overflow-y: auto;
     }
 
     .formContent .closebtn {
@@ -392,8 +394,11 @@
         margin-left: 20px;
     }
 
+    .boxIconCard span {
+        margin-left: 50px;
+    }
+
     .comment {
-        display: flex;
         margin-top: 20px;
     }
 
@@ -405,10 +410,75 @@
 
     .comment button {
         width: 20%;
-        margin-left: 14px;
-        margin-top: 110px;
+        margin-top: 10px;
+        margin-left: 30px;
     }
 
+    .comment-item {
+        display: flex;
+        align-items: center;
+        background-color: #dfdfdf;
+        border-radius: 4px;
+        margin-bottom: 4px;
+        margin-top: 2px;
+        width: 666px;
+    }
+
+    .avatar {
+        width: 36px;
+        height: 35px;
+        margin-right: 10px;
+        border-radius: 50%;
+        margin-left: 3px;
+    }
+
+    .comment-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .comment-name {
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .comment-text {
+        margin-top: 5px;
+        font-size: 18px;
+    }
+
+    #inputComment {
+        width: 120%;
+        margin-left: 30px;
+        margin-top: 8px;
+    }
+
+    .formEdit {
+        display: none;
+        width: 260px;
+        position: fixed;
+        background-color: #e9ecef;
+        overflow-x: hidden;
+        padding-top: 24px;
+        border-radius: 7px;
+    }
+
+    .formEdit .closebtn {
+        position: absolute;
+        top: -16px;
+        right: 8px;
+        font-size: 40px;
+    }
+    .iconComment{
+        display: flex;
+    }
+    .textIcon{
+        font-size: 16px;
+        text-decoration: none;
+        color: black;
+        margin-right: -35px;
+        margin-left: 46px;
+    }
     #my-div {
         position: absolute;
         top: 0;
@@ -453,6 +523,7 @@
     #search {
         margin-top: 50px;
     }
+
 </style>
 <body>
 <div class="container-fluid">
@@ -610,7 +681,11 @@
                         <c:if test="${listColumn.id eq cardItem.getIdColumn()}">
                             <a href="/column?action=showCard&idCard=${cardItem.getId()}">
                                 <div class="showCard">
+
+                                    <span>${cardItem.getName()}</span>
+
                                     <span onclick="event.stopPropagation();">${cardItem.getName()}</span>
+
                                 </div>
                             </a>
                         </c:if>
@@ -618,8 +693,10 @@
                     <div class="boxAddCart">
                         <span onclick="openFormCard(${listColumn.id})">+</span>
                         <div id="formAddCard${listColumn.id}" class="addCard">
-                            <form method="post" action="/column?action=addCart&idColumn=${listColumn.id}">
-                                <a href="javascript:void(0)" class="closebtn" onclick="closeFormCard(${listColumn.id})">&times;</a>
+                            <form method="post"
+                                  action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
+                                <a href="javascript:void(0)" class="closebtn"
+                                   onclick="closeFormCard(${listColumn.id})">&times;</a>
                                 <div class="mb-3">
                                     <input type="text" class="form-control" name="name"
                                            placeholder="Enter a list title">
@@ -649,6 +726,9 @@
                 <div class=cardLeft>
                     <span class="closebtn" onclick="closeFormContent()">&times;</span>
                     <div class="contentHead">
+
+                        <i class="fa-solid fa-window-maximize" style="color: #000000; font-size: 26px"></i>
+
                         <span><i class="fa-solid fa-window-maximize" style="color: #000000;">${card.name}</i></span>
                         <br>
                         <c:forEach items="${userToCard}" var="userToCard">
@@ -656,8 +736,9 @@
                                 <img src="${userToCard.avatar}" alt="Avatar">
                             </div>
                         </c:forEach>
+
                         <div class="contentTitle">
-                            <h2 id="textName"></h2>
+                            <h2>${card.name}</h2>
                         </div>
                     </div>
                     <div class="content">
@@ -675,15 +756,36 @@
                             <%--                        </c:if>--%>
                     </div>
                     <div class="comment">
-                        <i class="fa-solid fa-list-ul" style="color: #000000;"></i>
-                        <form>
-                            <div class="form-floating">
-                            <textarea class="form-control" name="comment" placeholder="Leave a comment here"
-                                      id="floatingTextarea2"
-                                      style="height: 150px"></textarea>
-                                <label for="floatingTextarea2">Comments</label>
+                        <span><i class="fa-solid fa-list-ul" style="color: #000000;"></i>  Comment</span>
+                        <c:forEach var="comment" items="${listComment}">
+                            <div class="comment-item">
+                                <img src="${comment.avatar}" alt="Avatar" class="avatar">
+                                <div class="comment-content">
+                                    <span class="comment-name">${comment.name}</span>
+                                    <span class="comment-text">${comment.comment}</span>
+                                </div>
                             </div>
-                            <button type="button" class="btn btn-secondary">Submit</button>
+                            <div class="iconComment">
+                                <span onclick="openFormEdit()" class="textIcon"><u>Edit</u></span>
+                                <a href="/column?action=deleteComment&idCard=${comment.id}">
+                                   <span class="textIcon"><u>Delete</u></span>
+                                </a>
+                            </div>
+                            <div id="formEdit" class="formEdit">
+                                <span class="closebtn" onclick="closeFormEdit()">&times;</span>
+                                <form method="post" action="/column?action=updateComment&id=${comment.id}">
+                                    <div class="mb-3">
+                                        <input type="text" name="comment" value="${comment.comment}" class="form-control">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </c:forEach>
+                        <form method="post" action="/column?action=addComment&id=${card.id}">
+                            <div class="mb-3">
+                                <input id="inputComment" type="text" name="comment" class="form-control">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -726,6 +828,13 @@
     //     document.getElementById("formShowCard").style.display = "block";
     //     document.getElementById("textName").innerText = name;
     // }
+    function openFormEdit() {
+        document.getElementById("formEdit").style.display = "block";
+    }
+
+    function closeFormEdit() {
+        document.getElementById("formEdit").style.display = "none";
+    }
 
     function closeFormContent() {
         document.getElementById("formShowCard").style.display = "none";

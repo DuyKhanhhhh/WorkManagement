@@ -7,6 +7,11 @@ import com.example.projectqlcv.DAO.IColumDAO;
 import com.example.projectqlcv.DAO.IUserDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 
+import com.example.projectqlcv.model.Column;
+import com.example.projectqlcv.model.SelectComment;
+import com.example.projectqlcv.model.Table;
+
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,8 +46,11 @@ public class ColumnWorkController extends HttpServlet {
             case "addCart":
                 createCart(request, response);
                 break;
-            case "showCard":
-                showCard(request,response);
+            case "addComment":
+                createComment(request,response);
+                break;
+            case "updateComment":
+                updateComment(request,response);
                 break;
             case "editContent":
                 editContent(request,response);
@@ -53,6 +61,15 @@ public class ColumnWorkController extends HttpServlet {
         }
 
     }
+
+
+    private void updateComment(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String comment = request.getParameter("comment");
+        iColumDAO.updateComment(comment,id);
+        try {
+            response.sendRedirect("/column");
+        } catch (IOException e) {
 
     private void searchCard(HttpServletRequest request, HttpServletResponse response) {
             int idTable =Integer.parseInt(request.getParameter("idTable"));
@@ -91,18 +108,36 @@ public class ColumnWorkController extends HttpServlet {
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
         } catch (ServletException | IOException e) {
+
             throw new RuntimeException(e);
         }
     }
 
+    private void createComment(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String comment = request.getParameter("comment");
+        Card card = new Card();
+        card.setId(id);
+        card.setComment(comment);
+        iColumDAO.addComment(card);
+        try {
+            response.sendRedirect("/column");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     private void createCart(HttpServletRequest request, HttpServletResponse response) {
         try {
             int idColumn = Integer.parseInt(request.getParameter("idColumn"));
+            int idUser = Integer.parseInt(request.getParameter("idUser"));
             String name = request.getParameter("name");
             Card card = new Card();
             card.setIdColumn(idColumn);
             card.setName(name);
             iColumDAO.addCard(card);
+            iColumDAO.addUserToCard(idUser,card.getId());
             response.sendRedirect("/column");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -133,17 +168,46 @@ public class ColumnWorkController extends HttpServlet {
             case "showCard":
                 showCard(request,response);
                 break;
+
+            case "deleteComment":
+                deleteComment(request,response);
+
             case "showMemberToTable":
 //                showMemberToTable(request,response);
                 break;
             case "addMemberToCard":
                 addMemberToCard(request,response);
+
                 break;
             default:
                 showAllColumn(request,response);
                 break;
         }
     }
+
+
+    private void deleteComment(HttpServletRequest request, HttpServletResponse response) {
+        int idCard = Integer.parseInt(request.getParameter("idCard"));
+        iColumDAO.deleteComment(idCard);
+        try {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showCard(HttpServletRequest request, HttpServletResponse response) {
+        int idCard = Integer.parseInt(request.getParameter("idCard"));
+        Card card = iColumDAO.findCardById(idCard);
+        List<SelectComment> listComment = iColumDAO.selectCommentByIdCard(idCard);
+        HttpSession session = request.getSession();
+        session.setAttribute("card",card);
+        session.setAttribute("listComment", listComment);
+        try {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (ServletException | IOException e) {
 
     private void addMemberToCard(HttpServletRequest request, HttpServletResponse response) {
         int idUser = Integer.parseInt(request.getParameter("idUser"));
@@ -160,23 +224,11 @@ public class ColumnWorkController extends HttpServlet {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ServletException e) {
+
             throw new RuntimeException(e);
         }
     }
 
-//    private void showMemberToTable(HttpServletRequest request, HttpServletResponse response) {
-//        int idTable = Integer.parseInt(request.getParameter("idTable"));
-//        List<AddUserToTable> member = userDAO.findUserToTable(idTable);
-//        HttpSession session = request.getSession();
-//        session.setAttribute("listMember",member);
-//        try {
-//            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
-//        } catch (ServletException e) {
-//            throw new RuntimeException(e);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     private void deleteColumn(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
