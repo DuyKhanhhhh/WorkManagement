@@ -1,6 +1,7 @@
 package com.example.projectqlcv.DAO;
 
 import com.example.projectqlcv.model.Column;
+import com.example.projectqlcv.model.SelectComment;
 import com.example.projectqlcv.model.Table;
 import com.example.projectqlcv.model.Card;
 
@@ -14,11 +15,14 @@ public class ColumnDAO implements IColumDAO{
     private static final String SELECT_ALL_COLUMN= "SELECT * FROM columnWork";
     private static final String DELETE_COLUMN_SQL = "DELETE FROM columnWork where id = ?";
     private static final String ADD_CARD_TO_SQL = "INSERT INTO card(idColumn, name) VALUES(?, ?)";
+    private static final String ADD_USER_TO_CARD = "INSERT INTO userToCard(idUser, idCard) VALUES(?, ?)";
     private static final String SELECT_ALL_CARD = "SELECT * FROM card";
     private static final String FIND_CARD_BY_ID = "SELECT * FROM card WHERE id = ?";
     private static final String SELECT_COLUMN_ID= "SELECT * FROM columnWork WHERE id=?";
-
-
+    private static final String ADD_COMMENT_TO_SQL = "INSERT INTO comment (idCard, comment) VALUES(?, ?)";
+    private static final String SELECT_COMMENT_BY_ID_CARD = "select cm.id, u.name, u.avatar, cm.comment from userToCard uc join user u on uc.idUser = u.id join card c on uc.idCard = c.id join comment cm on cm.idCard = c.id where cm.idCard = ?";
+    private static final String DELETE_COMMENT_BY_ID= "DELETE FROM comment WHERE id = ?";
+    private static final String UPDATE_COMMENT_BY_ID= "UPDATE comment set comment = ? WHERE id = ?";
     @Override
     public void addColumnWork(int idTable, String  colum) {
         try {
@@ -35,7 +39,7 @@ public class ColumnDAO implements IColumDAO{
     public void addCard(Card card) {
         try {
             Connection connection = DataConnector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(ADD_CARD_TO_SQL, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_CARD_TO_SQL, Statement.RETURN_GENERATED_KEYS );
             preparedStatement.setInt(1, card.getIdColumn());
             preparedStatement.setString(2,card.getName());
             preparedStatement.executeUpdate();
@@ -44,11 +48,97 @@ public class ColumnDAO implements IColumDAO{
             if (resultSet.next()) {
                 idCard = resultSet.getInt(1);
             }
-            System.out.println(idCard);
             card.setId(idCard);
         }  catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void addUserToCard(int idUser, int idCard) {
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER_TO_CARD);
+            preparedStatement.setInt(1, idUser);
+            preparedStatement.setInt(2, idCard);
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void addComment(Card card) {
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_COMMENT_TO_SQL);
+            preparedStatement.setInt(1, card.getId());
+            preparedStatement.setString(2, card.getComment());
+            preparedStatement.executeUpdate();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public List<SelectComment> selectCommentByIdCard(int id) {
+        List<SelectComment> cardList = new ArrayList<>();
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_COMMENT_BY_ID_CARD);
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int idComment = rs.getInt("id");
+                String name = rs.getString("name");
+                String avatar = rs.getString("avatar");
+                String comment = rs.getString("comment");
+                cardList.add(new SelectComment(idComment,name,avatar,comment));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return cardList;
+    }
+
+    @Override
+    public boolean deleteComment(int id) {
+        boolean rowDelete;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_COMMENT_BY_ID);
+            preparedStatement.setInt(1, id);
+            rowDelete = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDelete;
+    }
+
+    @Override
+    public boolean updateComment(String name, int id) {
+        boolean rowUpdate;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_COMMENT_BY_ID);
+            preparedStatement.setString(1, name);
+            preparedStatement.setInt(2,id);
+            rowUpdate = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return rowUpdate;
     }
 
     @Override
@@ -63,8 +153,7 @@ public class ColumnDAO implements IColumDAO{
                 int idColumn = rs.getInt("idColumn");
                 String name = rs.getString("name");
                 String content = rs.getString("content");
-                String comment = rs.getString("comment");
-                listCard.add(new Card(id,idColumn,name,content,comment));
+                listCard.add(new Card(id,idColumn,name,content));
             }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -139,9 +228,8 @@ public class ColumnDAO implements IColumDAO{
                 int idColumn = resultSet.getInt("idColumn");
                 String name = resultSet.getString("name");
                 String content = resultSet.getString("content");
-                String comment = resultSet.getString("comment");
                 String label = resultSet.getString("label");
-                card = new Card(idCard,idColumn,name,content,comment,label);
+                card = new Card(idCard,idColumn,name,content,label);
             }
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);

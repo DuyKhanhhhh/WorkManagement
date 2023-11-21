@@ -2,6 +2,7 @@ package com.example.projectqlcv.model;
 
 public class Card {
     private int id;
+    private int idUser;
     private int idColumn;
     private String name;
     private String content;
@@ -13,6 +14,20 @@ public class Card {
 
     public Card(int id) {
         this.id = id;
+    }
+
+    public Card(int id, int idColumn, String name, String content) {
+        this.id = id;
+        this.idColumn = idColumn;
+        this.name = name;
+        this.content = content;
+    }
+
+    public Card(int id, int idUser, int idColumn, String comment) {
+        this.id = id;
+        this.idUser = idUser;
+        this.idColumn = idColumn;
+        this.comment = comment;
     }
 
     public Card(String name) {
@@ -43,6 +58,14 @@ public class Card {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public int getIdColumn() {
