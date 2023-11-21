@@ -408,6 +408,9 @@
         margin-left: 14px;
         margin-top: 110px;
     }
+    /*#clickContent{*/
+    /*    display: none;*/
+    /*}*/
 </style>
 <body>
 <div class="container-fluid">
@@ -570,14 +573,16 @@
                     </div>
                     <div class="content">
                         <i class="fa-solid fa-bars" style="color: #000000;"></i>
-                        <form id="myForm" method="post">
-                            <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
-                                      style="height: 200px"></textarea>
-                                <label for="floatingTextarea1">Content</label>
-                            </div>
-                            <button type="button" class="btn btn-secondary">Submit</button>
-                        </form>
+<%--                        <c:if test="${(roleUser.role).equals('Admin') || (roleUser.role).equals('User')}">--%>
+                            <form id="myForm" method="post" action="/column?action=editContent&idCard=${card.getId()}">
+                                <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1" name="newContent"
+                                      style="height: 200px">${card.getContent()}</textarea>
+                                    <label for="floatingTextarea1">Content</label>
+                                </div>
+                                <button type="submit" class="btn btn-secondary" >Submit</button>
+                            </form>
+<%--                        </c:if>--%>
                     </div>
                     <div class="comment">
                         <i class="fa-solid fa-list-ul" style="color: #000000;"></i>
@@ -725,6 +730,14 @@
             document.getElementById("buttonColumn").click();
         }
     }
+    // function showButton(){
+    //     var button = document.getElementById("clickContent");
+    //     if (button.style.display === "none"){
+    //         button.style.display = "block";
+    //     }else {
+    //         button.style.display ="none";
+    //     }
+    // }
 </script>
 </body>
 </html>
