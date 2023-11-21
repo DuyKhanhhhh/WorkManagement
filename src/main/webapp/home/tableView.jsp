@@ -608,12 +608,10 @@
                     <div class="contentHead">
                         <span><i class="fa-solid fa-window-maximize" style="color: #000000;">${card.name}</i></span>
                         <br>
-                        <c:forEach items="${listMember}" var="listMember">
-                            <a href="/column?action=addMemberToCard&idUser=${user.id}&idCard=${card.id}">
-                                <div class="circleMember">
-                                    <img src="${listMember.avatar}" alt="Avatar">
-                                </div>
-                            </a>
+                        <c:forEach items="${userToCard}" var="userToCard">
+                            <div class="circleMember">
+                                <img src="${userToCard.avatar}" alt="Avatar">
+                            </div>
                         </c:forEach>
                         <div class="contentTitle">
                             <h2 id="textName"></h2>
@@ -663,13 +661,12 @@
                 </div>
                 <div id="member" style="display: none;">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
-                    <c:forEach items="${listMember}" var="listMember">
-                        <a href="/column?action=addMemberToCard&idUser=${user.id}&idCard=${card.id}">
+                    <c:forEach var="userToTable" items="${userToTable}">
+                        <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}">
                             <div class="circleMember">
-                                <img src="${listMember.avatar}" alt="Avatar">
+                                <img src="${userToTable.avatar}" alt="Avatar">
                             </div>
-                            <p>${listMember.nameUser}</p>
-
+                            <p>${userToTable.nameUser}</p>
                         </a>
                     </c:forEach>
                 </div>

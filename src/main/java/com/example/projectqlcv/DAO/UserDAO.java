@@ -38,6 +38,7 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
     private static final String SELECT_TABLE_CARD = "select * from card where id = ?";
     private static final String SELECT_USER_TO_TABLE = "select u.email, m.id, u.name, m.idTable, m.idUser, m.role, u.avatar, t.idGroup, m.status from userToTable m join user u on m.idUser = u.id join tableWork t on m.idTable = t.id where t.id =?";
+    private static final String SELECT_MEMBER_FOR_CARD = "select m.id,m.idUser, u.email, u.name,u.avatar from userToCard m join user u on m.idUser = u.id join card c on m.idCard = c.id where c.id = ?";
     private static final String DELETE_USER_TO_TABLE = "delete from userToTable where id = ?";
     private static final String EDIT_NAME_TABLE = "UPDATE tableWork SET name = ? WHERE id= ?";
     private static final String DELETE_ID_TABLE_USER_TO_TABLE = "delete from userToTable where idTable = ?";
@@ -109,6 +110,28 @@ public class UserDAO implements IUserDAO {
             throw new RuntimeException(e);
         }
         return addUserToTable;
+    }
+    @Override
+    public List<UserToCard> findMemberToCard(int idCard) {
+        List<UserToCard> userToCards = new ArrayList<>();
+        try (Connection connection = DataConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_MEMBER_FOR_CARD)) {
+            preparedStatement.setInt(1, idCard);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int idUser = rs.getInt("idUser");
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String email = rs.getString("email");
+                String avatar = rs.getString("avatar");
+                userToCards.add(new UserToCard(id,idUser,idCard,name,email,avatar));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return userToCards;
     }
 
     @Override

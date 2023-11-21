@@ -90,5 +90,6 @@ public interface IUserDAO {
     boolean updatePermissionTablePrivate(int id);
     void addUserInCard(int idUser, int idCard);
     Card findCardById(int idCard);
+    List<UserToCard> findMemberToCard(int idCard);
 
 }

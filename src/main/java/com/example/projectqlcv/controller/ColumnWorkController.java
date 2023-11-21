@@ -2,13 +2,10 @@ package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.ColumnDAO;
 
-import com.example.projectqlcv.model.AddUserToTable;
-import com.example.projectqlcv.model.Card;
+import com.example.projectqlcv.model.*;
 import com.example.projectqlcv.DAO.IColumDAO;
 import com.example.projectqlcv.DAO.IUserDAO;
 import com.example.projectqlcv.DAO.UserDAO;
-import com.example.projectqlcv.model.Column;
-import com.example.projectqlcv.model.Table;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,7 +51,10 @@ public class ColumnWorkController extends HttpServlet {
     private void showCard(HttpServletRequest request, HttpServletResponse response) {
         int idCard = Integer.parseInt(request.getParameter("idCard"));
         Card card = iColumDAO.findCardById(idCard);
-        request.setAttribute("card",card);
+        HttpSession session = request.getSession();
+        session.setAttribute("card",card);
+        List<UserToCard> userToCard = userDAO.findMemberToCard(idCard);
+        session.setAttribute("userToCard",userToCard);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
         } catch (ServletException | IOException e) {
@@ -117,7 +117,7 @@ public class ColumnWorkController extends HttpServlet {
         int idCard = Integer.parseInt(request.getParameter("idCard"));
         userDAO.addUserInCard(idUser,idCard);
         try {
-            response.sendRedirect("home/tableView.jsp");
+            response.sendRedirect("/column");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
