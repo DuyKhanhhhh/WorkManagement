@@ -16,9 +16,14 @@ public interface IColumDAO {
     boolean deleteColumnWork(int id);
     Column selectColumn(int idColumn);
     Card findCardById(int idCard);
+
     void addComment(Card card);
     List<SelectComment> selectCommentByIdCard(int id);
     boolean deleteComment(int id);
     boolean updateComment(String name, int id);
+
+
+    boolean updateContentInCard(int idCard , String newContent);
+    List<Card> searchCard(int idTable ,String search);
 
 }

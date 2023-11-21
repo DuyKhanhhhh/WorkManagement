@@ -479,6 +479,50 @@
         margin-right: -35px;
         margin-left: 46px;
     }
+    #my-div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 200px;
+        background-color: #fff;
+        margin-left: 20rem;
+        margin-top: 6rem;
+    }
+
+    #member {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200px;
+        height: 200px;
+        background-color: #fff;
+
+    /*#clickContent{*/
+    /*    display: none;*/
+    /*}*/
+    .filter {
+        margin-left: 70%;
+    }
+
+    .searchCard {
+        width: 400px;
+        height: 150px;
+        background-color: #b4b4b4;
+        margin-left: 79%;
+        position: fixed;
+        display: none;
+    }
+
+    #buttonSearchCard {
+        background: none;
+        border: none;
+        outline: none;
+    }
+
+    #search {
+        margin-top: 50px;
+    }
 
 </style>
 <body>
@@ -514,26 +558,42 @@
     </div>
     <div class="row">
         <div class="title">
-            <c:forEach var="listTable" items="${listTable}">
-                <c:if test="${(tables.id).equals(listTable.id)}">
-                    <c:if test="${(roleUser.role).equals('Admin')}">
-                        <div id="nameTable">
-                            <form id="edit" action="/addUserToTable" method="post">
-                                <input name="nameUpdate" type="text" class="title" id="title" value="${listTable.name}"
-                                       style="border: none">
-                                <input name="action" value="editNameTable" type="hidden">
-                                <input name="idTable" value="${tables.id}" type="hidden">
-                                <input type="submit" class="button" id="buttonEdit"
-                                       style="display: none ; border: none "
-                                       hidden="hidden">
-                            </form>
-                        </div>
+            <div>
+                <c:forEach var="listTable" items="${listTable}">
+                    <c:if test="${(tables.id).equals(listTable.id)}">
+                        <c:if test="${(roleUser.role).equals('Admin')}">
+                            <div id="nameTable">
+                                <form id="edit" action="/addUserToTable" method="post">
+                                    <input name="nameUpdate" type="text" class="title" id="title"
+                                           value="${listTable.name}"
+                                           style="border: none">
+                                    <input name="action" value="editNameTable" type="hidden">
+                                    <input name="idTable" value="${tables.id}" type="hidden">
+                                    <input type="submit" class="button" id="buttonEdit"
+                                           style="display: none ; border: none "
+                                           hidden="hidden">
+                                </form>
+                            </div>
+                        </c:if>
+                        <c:if test="${(roleUser.role).equals('User') || (roleUser.role).equals(null)}">
+                            <label style="">${listTable.name}</label>
+                        </c:if>
                     </c:if>
-                    <c:if test="${(roleUser.role).equals('User') || (roleUser.role).equals(null)}">
-                        <label style="">${listTable.name}</label>
-                    </c:if>
+                </c:forEach>
+            </div>
+            <span id="">
+                    <div class="nav">
+                     <span onclick="openPermission()">
+                         <label style="display: inline-block;margin-right: 80rem;">${tables.permission}</label>
+                     </span>
+                    </div>
+                </span>
                 </c:if>
             </c:forEach>
+            <div class="filter" onclick="showSearchCard()">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <button id="buttonSearchCard" style="margin-left: 2px">Search</button>
+            </div>
 
             <div class="titleRight">
                 <div id="setting" class="sidenav">
@@ -550,6 +610,19 @@
                             Join table</a>
                     </c:if>
                 </div>
+                <div id="my-div" style="display: none;">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closePermission()">×</a>
+                    <form action="/homeUser?action=updatePermissionTablePublic&idTable=${tables.id}" method="post">
+                        <input type="submit" value="Public"/>
+                    </form>
+                    <form action="/homeUser?action=updatePermissionTableGroup&idTable=${tables.id}" method="post">
+                        <input type="submit" value="Group"/>
+                    </form>
+                    <form action="/homeUser?action=updatePermissionTablePrivate&idTable=${tables.id}" method="post">
+                        <input type="submit" value="Private"/>
+                    </form>
+                </div>
+
                 <span id="rightTitle">
                     <div class="nav">
                      <span onclick="openNav()">
@@ -568,7 +641,18 @@
         </div>
     </div>
     <div class="row">
+
         <c:forEach items="${listColumn}" var="listColumn">
+            <div class="searchCard" id="searchCard">
+                <div id="search">
+                    <form class="d-flex" method="post"
+                          action="/column?action=searchCard&idTable=${tables.id}">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                               name="search">
+                        <button class="btn btn-secondary" type="submit" name="search">Search</button>
+                    </form>
+                </div>
+            </div>
             <c:if test="${tables.id eq listColumn.idTable}">
                 <div id="formDelete" class="formDelete">
                     <span class="closebtn" onclick="closeFormDelete()">&times;</span>
@@ -576,6 +660,7 @@
                         <input type="submit" class="btn btn-primary" value="Delete">
                     </a>
                 </div>
+
                 <div class="columnContent">
                     <form id="editColumn" action="/addUserToTable" method="post">
                         <div class="contentTable">
@@ -596,7 +681,11 @@
                         <c:if test="${listColumn.id eq cardItem.getIdColumn()}">
                             <a href="/column?action=showCard&idCard=${cardItem.getId()}">
                                 <div class="showCard">
+
                                     <span>${cardItem.getName()}</span>
+
+                                    <span onclick="event.stopPropagation();">${cardItem.getName()}</span>
+
                                 </div>
                             </a>
                         </c:if>
@@ -632,26 +721,39 @@
                 </form>
             </div>
         </div>
-        <c:if test="${card != null}">
+        <c:if test="${card != null  }">
             <div id="formShowCard" class="formContent">
                 <div class=cardLeft>
                     <span class="closebtn" onclick="closeFormContent()">&times;</span>
                     <div class="contentHead">
+
                         <i class="fa-solid fa-window-maximize" style="color: #000000; font-size: 26px"></i>
+
+                        <span><i class="fa-solid fa-window-maximize" style="color: #000000;">${card.name}</i></span>
+                        <br>
+                        <c:forEach items="${userToCard}" var="userToCard">
+                            <div class="circleMember">
+                                <img src="${userToCard.avatar}" alt="Avatar">
+                            </div>
+                        </c:forEach>
+
                         <div class="contentTitle">
                             <h2>${card.name}</h2>
                         </div>
                     </div>
                     <div class="content">
                         <i class="fa-solid fa-bars" style="color: #000000;"></i>
-                        <form id="myForm" method="post">
+                            <%--                        <c:if test="${(roleUser.role).equals('Admin') || (roleUser.role).equals('User')}">--%>
+                        <form id="myForm" method="post" action="/column?action=editContent&idCard=${card.getId()}">
                             <div class="form-floating">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
-                                      style="height: 200px"></textarea>
+                                      name="newContent"
+                                      style="height: 200px">${card.getContent()}</textarea>
                                 <label for="floatingTextarea1">Content</label>
                             </div>
-                            <button type="button" class="btn btn-secondary">Submit</button>
+                            <button type="submit" class="btn btn-secondary">Submit</button>
                         </form>
+                            <%--                        </c:if>--%>
                     </div>
                     <div class="comment">
                         <span><i class="fa-solid fa-list-ul" style="color: #000000;"></i>  Comment</span>
@@ -690,9 +792,11 @@
                 <div class="cardRight">
                     <h2>Option</h2>
                     <hr>
-                    <div class="boxIconCard">
-                        <i class="fa-solid fa-user" style="color: #000000;"></i>
-                        <span>Member</span>
+                    <div onclick="openMember()" class="boxIconCard">
+                        <a>
+                            <i class="fa-solid fa-user" style="color: #000000;"></i>
+                            <span>Member</span>
+                        </a>
                     </div>
                     <div class="boxIconCard">
                         <i class="fa-solid fa-tag" style="color: #000000;"></i>
@@ -702,6 +806,17 @@
                         <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
                         <span>Attach</span>
                     </div>
+                </div>
+                <div id="member" style="display: none;">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
+                    <c:forEach var="userToTable" items="${userToTable}">
+                        <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}" onclick="closeFormContent()">
+                            <div class="circleMember">
+                                <img src="${userToTable.avatar}" alt="Avatar">
+                            </div>
+                            <p>${userToTable.nameUser}</p>
+                        </a>
+                    </c:forEach>
                 </div>
             </div>
         </c:if>
@@ -757,12 +872,28 @@
         }
     }
 
+    function openMember() {
+        document.getElementById("member").style.display = "block";
+    }
+
+    function closeMember() {
+        document.getElementById("member").style.display = "none";
+    }
+
     function openNav() {
         document.getElementById("setting").style.display = "block";
     }
 
     function closeNav() {
         document.getElementById("setting").style.display = "none";
+    }
+
+    function openPermission() {
+        document.getElementById("my-div").style.display = "block";
+    }
+
+    function closePermission() {
+        document.getElementById("my-div").style.display = "none";
     }
 
     const inputElement = document.getElementById("title");
@@ -827,6 +958,24 @@
             document.getElementById("buttonColumn").click();
         }
     }
+
+    function showSearchCard() {
+        var button = document.getElementById("searchCard");
+        if (button.style.display === "none") {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
+        }
+    }
+
+    // function showButton(){
+    //     var button = document.getElementById("clickContent");
+    //     if (button.style.display === "none"){
+    //         button.style.display = "block";
+    //     }else {
+    //         button.style.display ="none";
+    //     }
+    // }
 </script>
 </body>
 </html>
