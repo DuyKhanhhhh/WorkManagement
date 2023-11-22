@@ -1,10 +1,6 @@
 package com.example.projectqlcv.DAO;
 
-import com.example.projectqlcv.model.Column;
-import com.example.projectqlcv.model.SelectComment;
-import com.example.projectqlcv.model.Table;
-import com.example.projectqlcv.model.Card;
-
+import com.example.projectqlcv.model.*;
 import java.sql.*;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
@@ -18,6 +14,7 @@ public class ColumnDAO implements IColumDAO{
     private static final String ADD_USER_TO_CARD = "INSERT INTO userToCard(idUser, idCard) VALUES(?, ?)";
     private static final String SELECT_ALL_CARD = "SELECT * FROM card";
     private static final String FIND_CARD_BY_ID = "SELECT * FROM card WHERE id = ?";
+    private static final String FIND_COMMENT_BY_ID = "SELECT * FROM comment WHERE id = ?";
     private static final String SELECT_COLUMN_ID= "SELECT * FROM columnWork WHERE id=?";
 
     private static final String ADD_COMMENT_TO_SQL = "INSERT INTO comment (idCard, comment) VALUES(?, ?)";
