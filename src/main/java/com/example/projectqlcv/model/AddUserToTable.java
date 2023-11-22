@@ -13,8 +13,9 @@ public class AddUserToTable {
     private String avatar;
     private String status;
 
-    public AddUserToTable(int idTable,String role) {
+    public AddUserToTable(int idUser,int idTable,String role) {
         this.role = role;
+        this.idUser = idUser;
         this.idTable = idTable;
     }
 

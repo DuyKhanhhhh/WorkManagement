@@ -478,8 +478,7 @@
         font-size: 16px;
         text-decoration: none;
         color: black;
-        margin-right: -35px;
-        margin-left: 46px;
+        padding-left:33px;
     }
 
     #my-div {
@@ -607,7 +606,7 @@
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
                     <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
-                    <c:if test="${roleUser.role.equals('Admin') && rolerUser.idTable eq tables.id}">
+                    <c:if test="${roleUser.role.equals('Admin') && roleUser.idTable eq tables.id}">
                         <a onclick="showConfirmation()" style="color: white">Delete table</a>
                     </c:if>
                     <c:if test="${roleUser.idUser != memberToGroup.idUser}">
@@ -721,7 +720,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+      </div>
         <c:if test="${card != null}">
             <div id="formShowCard" class="formContent">
                 <div class=cardLeft>
@@ -763,6 +762,7 @@
                                 </div>
                             </div>
                             <div class="iconComment">
+
                                 <span onclick="openFormEdit()" class="textIcon"><u>Edit</u></span>
                                 <a href="/column?action=deleteComment&idCard=${comment.id}">
                                     <span class="textIcon"><u>Delete</u></span>
@@ -777,6 +777,23 @@
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
+
+<%--                                Edit Comment--%>
+                                <a  onclick="openFormEdit()" class="textIcon"><u>Edit</u></a>
+                                <div id="formEdit" class="formEdit">
+                                    <span class="closebtn" onclick="closeFormEdit()">&times;</span>
+                                    <form method="post" action="/column?action=updateComment&id=${comment.id}&idCard=${card.id}">
+                                        <div class="mb-3">
+                                            <input type="text" name="comment" value="${comment.comment}" class="form-control">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+<%--                                Delete comment--%>
+                                <a href="/column?action=deleteComment&id=${comment.id}&idCard=${card.id}">
+                                   <span class="textIcon"><u>Delete</u></span>
+                                </a>
+
                             </div>
                         </c:forEach>
                         <form method="post" action="/column?action=addComment&id=${card.id}">
@@ -808,8 +825,11 @@
                 <div id="member" style="display: none;">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
                     <c:forEach var="userToTable" items="${userToTable}">
+
                         <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}"
                            onclick="closeFormContent()">
+
+                        
                             <div class="circleMember">
                                 <img src="${userToTable.avatar}" alt="Avatar">
                             </div>
@@ -819,6 +839,7 @@
                 </div>
             </div>
         </c:if>
+
     </div>
 </div>
 <script>
