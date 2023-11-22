@@ -189,7 +189,6 @@ public class ColumnWorkController extends HttpServlet {
         }
     }
 
-
     private void deleteComment(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         int idCard = Integer.parseInt(request.getParameter("idCard"));

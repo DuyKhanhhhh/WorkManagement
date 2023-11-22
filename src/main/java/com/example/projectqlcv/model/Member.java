@@ -7,6 +7,11 @@ public class Member {
     private String role;
     private String nameUser;
 
+    public Member(int idUser, String role) {
+        this.idUser = idUser;
+        this.role = role;
+    }
+
     public int getId() {
         return id;
     }
