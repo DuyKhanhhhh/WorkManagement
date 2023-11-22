@@ -476,8 +476,7 @@
         font-size: 16px;
         text-decoration: none;
         color: black;
-        margin-right: -35px;
-        margin-left: 46px;
+        padding-left:33px;
     }
     #my-div {
         position: absolute;
@@ -714,9 +713,10 @@
                 </form>
             </div>
         </div>
-<c:forEach items="${listColumn}" var="listColumn">
 
-        <c:if test="${card.idColumn eq listColumn.id}">
+
+        <c:if test="${card != null}">
+
             <div id="formShowCard" class="formContent">
                 <div class=cardLeft>
                     <span class="closebtn" onclick="closeFormContent()">&times;</span>
@@ -757,19 +757,22 @@
                                 </div>
                             </div>
                             <div class="iconComment">
-                                <span onclick="openFormEdit()" class="textIcon"><u>Edit</u></span>
-                                <a href="/column?action=deleteComment&idCard=${comment.id}">
+<%--                                Edit Comment--%>
+                                <a  onclick="openFormEdit()" class="textIcon"><u>Edit</u></a>
+                                <div id="formEdit" class="formEdit">
+                                    <span class="closebtn" onclick="closeFormEdit()">&times;</span>
+                                    <form method="post" action="/column?action=updateComment&id=${comment.id}&idCard=${card.id}">
+                                        <div class="mb-3">
+                                            <input type="text" name="comment" value="${comment.comment}" class="form-control">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+<%--                                Delete comment--%>
+                                <a href="/column?action=deleteComment&id=${comment.id}&idCard=${card.id}">
                                    <span class="textIcon"><u>Delete</u></span>
                                 </a>
-                            </div>
-                            <div id="formEdit" class="formEdit">
-                                <span class="closebtn" onclick="closeFormEdit()">&times;</span>
-                                <form method="post" action="/column?action=updateComment&id=${comment.id}">
-                                    <div class="mb-3">
-                                        <input type="text" name="comment" value="${comment.comment}" class="form-control">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
-                                </form>
+
                             </div>
                         </c:forEach>
                         <form method="post" action="/column?action=addComment&id=${card.id}">
@@ -811,7 +814,7 @@
                 </div>
             </div>
         </c:if>
-</c:forEach>
+
     </div>
 </div>
 <script>
