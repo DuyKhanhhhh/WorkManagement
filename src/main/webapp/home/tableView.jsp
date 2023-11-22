@@ -247,7 +247,7 @@
     }
 
     #nameTable {
-        margin-top: 5px;
+        margin-top: 20px;
         border: none;
         font-size: 20px;
     }
@@ -469,16 +469,19 @@
         right: 8px;
         font-size: 40px;
     }
-    .iconComment{
+
+    .iconComment {
         display: flex;
     }
-    .textIcon{
+
+    .textIcon {
         font-size: 16px;
         text-decoration: none;
         color: black;
         margin-right: -35px;
         margin-left: 46px;
     }
+
     #my-div {
         position: absolute;
         top: 0;
@@ -508,10 +511,12 @@
     .searchCard {
         width: 400px;
         height: 150px;
-        background-color: #b4b4b4;
+        background-color: #aeaeae;
         margin-left: 79%;
         position: fixed;
         display: none;
+        border-radius: 10px;
+        margin-top: 3px;
     }
 
     #buttonSearchCard {
@@ -522,6 +527,12 @@
 
     #search {
         margin-top: 50px;
+    }
+    .buttonPermission{
+        display: inline-block;
+        margin-right: 72rem;
+        border: none;
+        background: none;
     }
 
 </style>
@@ -581,16 +592,12 @@
                     </c:if>
                 </c:forEach>
             </div>
-            <span id="">
-                    <div class="nav">
-                     <span onclick="openPermission()">
-                         <label style="display: inline-block;margin-right: 80rem;">${tables.permission}</label>
-                     </span>
-                    </div>
-                </span>
+            <div class="nav">
+                         <button onclick="openPermission()" class="buttonPermission" >${tables.permission}</button>
+            </div>
             <div class="filter" onclick="showSearchCard()">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <button id="buttonSearchCard" style="margin-left: 2px">Search</button>
+                <button id="buttonSearchCard" style="margin-left: 2px">Filter</button>
             </div>
 
             <div class="titleRight">
@@ -664,9 +671,9 @@
                         <div class="contentTable">
                             <input name="nameColumnUpdate" type="text" class="titleColumn" id="titleColumn"
                                    value="${listColumn.name}"
-                                   style="border: none; max-width: 220px;cursor: pointer;background-color: #ced4da">
+                                   style="border: none; max-width: 215px;cursor: pointer;background-color: #ced4da">
                             <div onclick="openFormDelete()">
-                                <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                <i class="fa-solid fa-ellipsis-vertical" style="color: #000000; margin-right: 5px"></i>
                             </div>
                         </div>
                         <input name="action" value="editNameColumn" type="hidden">
@@ -694,7 +701,8 @@
                                 <div class="mb-3">
                                     <input type="text" class="form-control" name="name"
                                            placeholder="Enter a list title">
-                                    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Card</button>
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Card
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -714,7 +722,7 @@
                 </form>
             </div>
         </div>
-        <c:if test="${card != null  }">
+        <c:if test="${card != null}">
             <div id="formShowCard" class="formContent">
                 <div class=cardLeft>
                     <span class="closebtn" onclick="closeFormContent()">&times;</span>
@@ -740,7 +748,7 @@
                                       style="height: 200px">${card.getContent()}</textarea>
                                 <label for="floatingTextarea1">Content</label>
                             </div>
-                            <button type="submit" class="btn btn-secondary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </form>
                             <%--                        </c:if>--%>
                     </div>
@@ -757,14 +765,15 @@
                             <div class="iconComment">
                                 <span onclick="openFormEdit()" class="textIcon"><u>Edit</u></span>
                                 <a href="/column?action=deleteComment&idCard=${comment.id}">
-                                   <span class="textIcon"><u>Delete</u></span>
+                                    <span class="textIcon"><u>Delete</u></span>
                                 </a>
                             </div>
                             <div id="formEdit" class="formEdit">
                                 <span class="closebtn" onclick="closeFormEdit()">&times;</span>
                                 <form method="post" action="/column?action=updateComment&id=${comment.id}">
                                     <div class="mb-3">
-                                        <input type="text" name="comment" value="${comment.comment}" class="form-control">
+                                        <input type="text" name="comment" value="${comment.comment}"
+                                               class="form-control">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                 </form>
@@ -799,7 +808,8 @@
                 <div id="member" style="display: none;">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
                     <c:forEach var="userToTable" items="${userToTable}">
-                        <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}" onclick="closeFormContent()">
+                        <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}"
+                           onclick="closeFormContent()">
                             <div class="circleMember">
                                 <img src="${userToTable.avatar}" alt="Avatar">
                             </div>

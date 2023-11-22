@@ -165,11 +165,11 @@ public class ColumnWorkController extends HttpServlet {
     }
     private void showCard(HttpServletRequest request, HttpServletResponse response) {
         int idCard = Integer.parseInt(request.getParameter("idCard"));
-        Card card = iColumDAO.findCardById(idCard);
         HttpSession session = request.getSession();
-        session.setAttribute("card", card);
         List<UserToCard> userToCard = userDAO.findMemberToCard(idCard);
         List<SelectComment> listComment = iColumDAO.selectCommentByIdCard(idCard);
+        Card card = iColumDAO.findCardById(idCard);
+        session.setAttribute("card", card);
         session.setAttribute("listComment",listComment);
         session.setAttribute("userToCard", userToCard);
         try {
