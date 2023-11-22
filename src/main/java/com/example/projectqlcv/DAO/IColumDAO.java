@@ -25,5 +25,7 @@ public interface IColumDAO {
 
     boolean updateContentInCard(int idCard , String newContent);
     List<Card> searchCard(int idTable ,String search);
+    void addCardLink(Card card);
+
 
 }

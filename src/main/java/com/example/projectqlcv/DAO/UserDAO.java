@@ -39,10 +39,9 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_TABLE_CARD = "select * from card where id = ?";
     private static final String SELECT_USER_TO_TABLE = "select u.email, m.id, u.name, m.idTable, m.idUser, m.role, u.avatar, t.idGroup, m.status from userToTable m join user u on m.idUser = u.id join tableWork t on m.idTable = t.id where t.id =?";
     private static final String SELECT_MEMBER_FOR_CARD = "select m.id,m.idUser, u.email, u.name,u.avatar from userToCard m join user u on m.idUser = u.id join card c on m.idCard = c.id where c.id = ?";
-    private static final String DELETE_USER_TO_TABLE = "delete from userToTable where id = ?";
     private static final String EDIT_NAME_TABLE = "UPDATE tableWork SET name = ? WHERE id= ?";
     private static final String DELETE_ID_TABLE_USER_TO_TABLE = "delete from userToTable where idTable = ?";
-    private static final String DELETE_TABLE_TO_SQL = "delete from tableWork where id = ?";
+    private  static  final  String DELETE_TABLE_TO_SQL= "DELETE FROM tableWork WHERE id = ?";
     private static final String FIND_USER_TO_TABLE_BY_ID = "select * from userToTable where idTable = ?";
     private static final String DELETE_ID_COLUMN = "delete from columnWork where idTable = ?";
     private static final String EDIT_NAME_COLUMN = "UPDATE columnWork SET name = ? WHERE id= ?";
@@ -538,7 +537,9 @@ public class UserDAO implements IUserDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_TABLE_TO_SQL);
             preparedStatement.setInt(1, id);
             rowDelete = preparedStatement.executeUpdate() > 0;
-        } catch (SQLException | ClassNotFoundException e) {
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return rowDelete;
