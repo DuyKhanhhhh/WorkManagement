@@ -179,7 +179,6 @@ public class ColumnWorkController extends HttpServlet {
         }
     }
 
-
     private void deleteComment(HttpServletRequest request, HttpServletResponse response) {
         int idCard = Integer.parseInt(request.getParameter("idCard"));
         iColumDAO.deleteComment(idCard);
