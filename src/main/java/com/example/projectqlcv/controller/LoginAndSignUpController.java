@@ -106,6 +106,4 @@ public class LoginAndSignUpController extends HttpServlet {
                 break;
         }
     }
-
-
 }
