@@ -1,0 +1,417 @@
+﻿1.Đặc tả (khảo sát) hệ thống
+   .Hoạt động nhiệm vụ của cửa hàng:
+-Trong bài toán này nhân viên bán hàng sẽ tính tiền số sách mà khách hàng đã mua và lập hoá đơn giao cho khách hàng thanh toán. Khách hàng gồm khách vip và khách hàng bình thường. Khách vip sẽ được hưởng những ưu đãi của cửa hàng, khách vip là những khách hàng thường xuyên mua sách và số tiền mỗi lần mua >100.000 VND. Những khách vip sẽ được lưu trong hệ thống và nhận được thẻ khách hàng vip, tuỳ theo đợt khuyến mãi của cửa hàng khách vip sẽ được nhận những phần quà từ cửa hàng.
+-Thủ kho sẽ quản lý việc nhập, xuất sách và kiểm tra sách của cửa hàng. Khi bán sách số lượng lớn với đối tác trực tiếp hay cần xuất hàng lên quầy thì thủ kho sẽ lập phiếu xuất hàng. Khi hết loại sách nào đó cần nhập thêm,hay nhập thêm loại sách mới thì thủ kho sẽ tiến hành tạo phiếu nhập hàng .Trong 2 phiếu này, thủ kho phải ghi rõ thông tin trên phiếu về ngày tháng năm nhập-xuất,loại,số lượng…Trong quá trình kiểm tra sách nếu phát hiện thấy sách không đạt tiêu chuẩn thì lập phiếu trả sách.
+-Nhân viên kế toán ghi nhận trong sổ kế toán những dữ liệu giao dịch có thể đo lường bằng tiền, từ đó tiến hành thống kê doanh thu, số sách đã bán, số sách tồn kho…Những việc này thường thống kê theo từng kỳ,ngày,tháng hoặc theo quý
+-Bên cạnh đó, quản lý là người trực tiếp liên hệ với các nhà xuất bản để nhập sách, cũng như quan hệ với đối tác để bán sách.Công việc của người quản lý là quản lý nhân viên, những khách hàng vip và quản lý doanh thu của cửa hàng, quản lý việc nhập xuất sách
+-Nhân viên và người quản lý muốn thực hiện được nhiệm vụ của mình thì phải đăng nhập vào hệ thống theo usename và password riêng.
+-Khách hàng nếu có gian lận trong việc mua sách sẽ phải chịu phạt theo những quy định mà cửa hàng đã đến ra từ trước.
+   .Yêu cầu hệ thống:
+-Cung cấp cho nhân viên bán hàng những thông tin về sách, giúp nhân viên bán hàng có thể tìm kiếm sách theo yêu cầu của cửa hàng.
+-Hỗ trợ cho thủ kho trong việc cập nhật thông tin sách mới khi có sách được nhập vào cửa hàng.
+-Giúp nhân viên kế toán trong việc thống kê doanh thu của cửa hàng, thống kê sách tồn kho, thống kê sách đã bán…
+-Giúp thủ kho dễ dàng hơn trong việc nhập sách mới khi cửa hàng hết sách hay xuất sách cho khách hàng khi khách hàng mua với số lượng lớn trong việc lập phiếu nhập- xuất sách, cũng như giúp việc kiểm tra sách đầy đủ chính xác hơn.
+-Dựa vào những thông tin đầy đủ trong hệ thống hỗ trợ người quản lý trong việc quản lý cửa hàng sách, quản lý doanh thu, quản lý khách hàng, quản lý nhân viên, các chính sách khuyến mãi dành cho khách hàng…
+Các yêu cầu phi chức năng .
+              -Hệ thống có thể đưa được vào trang web của cửa hàng.
+              -Khách hàng có thể tra cứu sách trên môi trường mạng, có thể đặt sách và thanh toán mà không cần đến cửa hàng.
+              -Thông tin thống kê phải đảm bảo chính xác, đầy đủ, khách quan.
+
+
+
+
+
+
+Usecase: Đặt hàng.
+
+
+
+Tên Usecase 	Đặt hàng 
+Tác nhân chính 	Khách hàng 
+Tiền điều kiện 	Khách hàng đăng nhập vào hệ thống 
+Đảm bảo thành công 	Đợn đặt hàng được lưu vào hệ thống.
+Kích hoạt 	Khách hàng chọn chức năng đặt hàng.
+Chuỗi sự kiện chính:
+Khách hàng chọn chức năng đặt hàng.
+Hệ thống hiện thị from đặt hàng và yêu cầu khách hàng nhập đầy đủ thông tin cá nhân.
+Khách hàng nhập đầy đủ thông tin cá nhân.
+Hệ thống kiểm tra xem thông tin khách hàng vừa nhập và xác nhân thông tin hợp lệ.
+Hệ thống yêu cầu khách hàng nhập tên sách, số lượng sách… cần mua.
+Khách hàng nhập tên sách và số lương sách.
+Hệ thống kiểm tra số lượng sách trong cửa hàng có đáp ứng nhu cầu của khách hàng hay không và đưa ra thông báo.
+Hệ thống yêu cầu khách hàng chọn hình thức thanh toán ( Nhận sách xong thanh toán , chuyển khoản, thanh toán trực tiếp tại cửa hàng)
+Khách hàng chọn hình thức thanh toán.
+Hệ thống yêu cầu cần khách hàng chọn thời gian nhận sách ( sau 5h, sau 24h)
+Khách hàng chọn thời gian nhận hàng và thoát khỏi chức năng đặt hàng.
+Ngoại lệ:
+Hệ thống thông báo thông tin khách hàng vừa nhập không hợp lệ.
+        1.1. Hệ thống yêu cầu nhập lại thông tin của mình.
+        1.2.Khách hàng nhập lại thông tin của mình.
+Hệ thống thông báo không đủ số lượng sách trong cửa hàng.
+        2.1. Hệ thống hỏi khách hàng có mua sách nữa hay không.
+        2.2. Khách hàng không mua sách khác và thoát khỏi hệ thống.
+Hệ thống thông báo không có tên sách trong cửa hàng.
+        3.1.Hệ thống hỏi khách hàng có muốn mua sách khác không.
+        3.2.Khách hàng không muốn mua sách khác và thoát khỏi hệ thống. 
+
+
+
+
+
+
+Usecase: Thêm khách hàng 
+
+
+Tên Usecase
+	Thêm khách hàng
+	Tác nhân chính
+	Nhân viên bán hàng
+	Tiền điều kiện
+	Nhân viên đăng nhập vào hệ thống 
+	Đảm bảo thành công 
+	Thông tin về khách hàng mới được bổ sung vào CSDL
+	Kích hoạt
+	Nhân viên chọn chức năng cập nhật thông tin khách hàng trong menu
+	Chuỗi sự kiện chính:
+1. Nhân viên kích hoạt yêu cầu thêm khách hàng.
+2. Hệ thống hiện thị from thêm khách hàng và yêu cầu nhân viên nhập thông tin khách háng.
+3. Nhân viên nhập thông tin khách hàng mới và nhấn chấp nhận.
+4. Hệ thống kiểm tra thông tin khách hàng và xác nhận thông tin không hợp lệ.
+5. Hệ thống cập nhật thông tin khách hàng mới và thêm vào CSDL.
+6. Hệ thống thông báo nhập thành công.
+7. Nhân viên thoát khỏi chức năng thêm khách hàng.
+	Ngoiaj lệ:
+1. Hệ thống thông báo đã có khách hàng trong CSDL.
+       1.2. Nhân viên không thêm khách hàng nữa.
+       1.2.Hệ thống thông báo nhập không thành công.
+2. Hệ thống thông báo thông tin khách hàng không hợp lệ.
+       2.1. Hệ thống thông báo nhân viên nhập lại thông tin khách hàng.
+       2.2. Nhân viên nhập lại thông tin khách hàng.
+3. Hệ thống thông báo bộ nhớ đã đầy và yêu cầu nhân viên xử lý.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+Usecase: Sửa thông tin khách hàng.
+
+
+
+Tên usecase
+	Sửa thông tin khách hàng
+	Tác nhân chính 
+	Nhân viên bán hàng
+	Tiền điều kiện
+	Nhân viên bán hàng đăng nhập vào hệ thống
+	Đảm bảo thành công
+	Thông tin về khách hàng đã sửa được bổ sung vào CSDL
+	Kíc hoạt
+	Nhân viên bán hàng chọn chức năng cập nhật khách hàng trong menu
+	Chuỗi sự kiện chính:
+1. Nhân viên kích hoạt yêu cầu sửa thông tin khách hàng.
+2. Hệ thống hiện from sửa thông tin khách hàng và yêu cầu nhân viên nhập tên khách hàng cần sửa thông tin.
+3. Nhân viên nhập tên khách hàng.
+4. Hệ thống kiểm tra tên khách hàng mà nhân viên đã nhập và hiện thị thông tin của khách hàng.
+5. Nhân viên sửa thông tin khách hàng và nhấn chấp nhận.
+6. Hệ thống kiểm tra thông tin khách hàng vừa được sửa và xác nhận thông tin hợp lệ.
+7. Hệ thống thông tin khách hàng đã được sửa vào CSDL.
+8. Hệ thống thông báo sửa thành công.
+9. Nhân viên thoát khỏi chức năng sửa thông tin khách hàng.
+	Ngoại lệ:
+1. Hệ thống thông báo không có tên khách hàng trong CSDL.
+       1.1. Hệ thống hỏi nhân viên có nhập lại tên khách hàng nữa hay không.
+       1.2. Nhân viên nhập lại tên khách hàng.
+2. hệ thống thông báo có nhiều tên khách hàng giống nhau.
+       2.1. Hệ thống yêu cầu nhân viên nhập mã mời khách hàng.
+       2.2. Nhân viên nhập mã khách hàng.
+3. Hệ thống thông báo thông tin khách hàng được sửa không hợp lệ.
+       3.1. Hệ thống yêu cầu  nhân viên nhập lại thông tin khách hàng.
+       3.2. Nhân viên nhập lại thông tin khách hàng.
+       3.3. Hệ thống bảo sửa thành công.
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Usecase: Xóa khách hàng.
+
+
+
+
+Tên usecase 
+	Xóa khách hàng
+	Tác nhân chính
+	Nhân viên bán hàng
+	Tiền điều kiện 
+	Nhân viên bán hàng đăng nhập vào hệ thống 
+	Đảm bảo thành công
+	Thông tin về khách được xóa khỏi CSDL
+	Kích hoạt
+	Nhân viên chọn các chức năng khách hàng quan trọng
+	Chuỗi sự kiện chính:
+1. Nhân viên kích hoạt yêu cầu xóa khách hàng.
+2. Hệ thống hiện thị from xóa khách hàng và yêu cầu nhân viên nhập tên khách mong muốn xóa.
+3. Nhân viên nhập tên khách hàng muốn xóa và nhấn xóa.
+4. Hệ thống kiểm tra tên của khách hàng muốn xóa và xác nhận hợp lệ.
+5. Hệ thống hỏi nhân viên có chắc chắn muốn xóa khách hàng hay không ? và hiện thị tùy chọn có hoặc không.
+6. Nhân viên chọn có.
+7. Hệ thống xóa khách hàng khỏi CSDL.
+8. Hệ thống thông báo xóa thành công
+9. Nhân viên thoát khỏi chức năng xóa khách hàng 
+	Ngoại lệ:
+1. Hệ thống thông báo có tên khách hàng trong cơ CSDL.
+       1.1. Hệ thống hỏi nhân viên có nhập tên khách hay không.
+       1.2.Nhân viên nhập tên khách hàng khác 
+2. Hệ thống thông báo tên khách hàng muốn xóa không hợp lệ.
+       2.1. Hệ thống yêu cầu nhân viên nhập lại tên khách hàng.
+       2.2. Nhân viên nhập lại tên khách hàng.
+3. Hệ thống thông báo có nhiều tên khách hàng giống nhau.
+       3.1. Hệ thống yêu cầu nhân viên nhập mã khách hàng.
+       3.2. Nhân viên nhập mã khách hàng.
+4. Nhân viên chọn không.
+       4.1. Hệ thống quay lại bước trước.
+    
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Usecase: Tìm kiếm khách hàng
+
+
+Tên usecase
+	Tìm kiếm 
+	Tác nhân chính
+	Nhân viên
+	Tiền điều kiện
+	Nhân viên đăng nhập vào hệ thống 
+	Đảm bảo thành công
+	Hiện thị thông tin cần tìm kiếm
+	Kích hoạt 
+	Nhân viên chọn chức năng tìm kiếm trong menu
+	Chuỗi sự kiện chính:
+1. Nhân viên kích hoạt yêu cầu tìm kiếm.
+2. Hệ thống hiện thị from tìm kiems và yêu cầu nhân viên nhập từ khóa tìm kiếm.
+3. Nhân viên nhập từ khóa tìm kiếm và nhấn chấp nhận.
+4. Hệ thống kiểm tra từ khóa nhân viên đã nhập và xác nhân từ khóa hợp lệ.
+
+5. Hệ thống hiện thị kết quả tìm được.
+6. Nhân viên thoát khỏi chức năng tìm kiếm.
+	Ngoại lệ:
+1. Hệ thống thông báo không có thông tin cần tìm kiếm trong CSDL.
+       1.1. Hệ thống hỏi nhân viên có muốn tìm kiếm thông tin khách hàng không.
+       1.2. Nhân viên nhập thông tin cần tìm khác.
+       1.3. Hệ thống đưa đơn ra kết quả cần tìm khác 
+2. Hệ thống thông báo từ khóa cần tìm không hợp lệ.
+       2.1. hệ thống yêu cầu nhân viên nhập từ khóa hợp lệ.
+       2.2. Nhân viên nhập lại từ khóa cần tìm .
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+Usecase: Lập hóa đơn
+
+
+
+Tên usecase
+	Lập hóa đơn
+	Tác nhân chính
+	Nhân viên 
+	Tiền điều kiện 
+	Nhân viên bán hàng đăng nhập vào hệ thống 
+	Đảm bảo thành công 
+	Khahcs hàng nhận được hóa đơn thanh toán đầy đủ và đúng các mặt hàng đã mua.
+	Kích hoạt
+	Nhân viên bán hàng chọn chức năng lập hóa đơn bán hàng 
+	Chuỗi sự kiện chính: 
+1. Nhân vien kích hoạt yêu cầu lập hóa đơn.
+2. Hệ thống hiện thị from lập hóa đơn và yêu cầu nhân viên nhập tên, địa chỉ khách hàng, ngày lập hóa đơn… 
+3. Nhân viên nhập đầy đủ thông tin cần thiết và nhấn chấp nhận.
+4. Hệ thống kiểm tra thông tin đã nhập và yêu cầu nhân viên quét mã vạch của từng sách.
+5. Nhân viên quét mã vạch của từng sách.
+6. Hệ thống tự động kiểm tra tích hợp lệ của mã vách và tính tông số tiền mà khách hàng phải trả dựa trên số lượng, đơn giá của từng sách và thuế giá trị tăng được lưu trong hệ thống.
+7. Nhân viên in hóa đơn cho khách hàng.
+8. Nhân viên thoát khỏi chức năng lập hóa đơn.
+	Ngoại lệ:
+1. Hệ thống thông báo thông báo tin đac nhập không hợp lệ
+       1.1. Hệ thống yêu cầu nhân viên nhập lại thông tin khách hàng.
+       1.2. Nhân viên nhập lại thông tin khách hàng.
+       1.3. Hệ thống thông báo nhập đứng và yêu cầu cần thực hiện tiếp công việc.
+2. Hệ thống thông báo đây là thông tin khách hàng vip.
+       2.1. hệ thống yêu cầu nhân viên kiểm tra thẻ khách hàng vip và đưa vào máy quét mã vạch.
+       2.2. Hệ thống sẽ cộng điểm cho khách hàng nếu tổng số số tiền mua sách >=100000VND
+       2.3.Hệ thống thông báo mã vạch không hợp lê và yêu cầu nhân viên xử lý
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Usecase: Thêm sách 
+
+
+
+Tên usecase	Thêm sách
+Tác nhân chính	Thủ kho 
+Tiền điều kiện	Thủ kho đăng nhập vào hệ thống
+Đảm bảo thành công 	Thông tin sách mới được cập nhật vào cơ sở dữ liệu
+Kích hoạt	Thủ kho chọn chức năng cập nhật sách trong menu
+Kích hoạt 	Thủ kho chọn chức năng cập nhật sách trong menu
+Chuỗi sự kiện chính:
+Thủ kho kích hoạt yêu cầu thêm sách.
+Hệ thống hiện thị from thêm sách và yêu cầu thủ kho nhập thông tin sách.
+Thủ kho nhập thông tin về sách mới và nhấn chấp nhận.
+Hệ thống kiểm thông tin sách và xác nhận thông tin hợp lệ.
+Thủ kho nhập thông tin sách mới vào CSDL.
+Hệ thống thông báo đã nhập thành công.
+Thủ thư thoát khỏi chức năng thêm sách.
+Ngoại lệ:
+Hệ thống thông báo sách đã có trong CSDL.
+       1.1. Thủ kho thêm số lượng sách.
+       1.2. Hệ thống thêm số lượng sách đã có.
+       1.3. Hệ thống thông báo nhập thành công.
+Hệ thống thông báo thông tin sách không hợp lệ.
+       2.1. Hệ thống yêu cầu thủ kho nhận lại thông tin sách.
+       2.2. Thủ kho nhập lại thông tin sách.
+Hệ thống thông báo bộ nhớ đầy và yêu cầu thủ kho xử lý.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Usecase: Sửa thông tin sách.
+
+
+
+Tên usecase 	Sử thông tin sách
+Tác nhân chính	Thủ kho
+Tiền điều kiện	Thủ kho đăng nhập vào hệ thống
+Đảm bảo thành công 	Thông tin sách vừa được cập nhật vào CSDL.
+Kích hoạt 	Thủ kho chọn chức năng cập nhật sách trong menu
+Chuỗi sự kiện chính:
+Thủ kho kích hoạt yêu cầu sửa thông tin sách.
+Hệ thống hiện thị from sửa thông tin và yêu cầu nhập tên sách cần sửa.
+Hệ thống kiểm tra tên sách mà thủ kho đã nhập và hiện thị thông tin của sách.
+Thủ kho sửa thông tin sách và  nhấn chấp nhận.
+Hệ thống kiểm tra thông tin sách được sửa và xác nhận thông tin hợp lệ.
+Hệ thống thông báo sửa thành công.
+Thủ kho thoát khỏi chức năng sửa thông tin sách. 
+ 
+Ngoại lệ:
+Hệ thống thông báo không có tên sách mà thủ kho đã nhập.
+        1.1 Hệ thống hỏi thủ kho có nhập tên sách khác hay không.
+        1.2. Thủ kho nhập tên sách khác.
+        1.3. Hệ thống hiện thị thông tin của sách.
+        1.4. Hệ thống thông báo sửa thành công.
+Hệ thống thông báo thông tin sách được sửa không hợp lệ.
+        2.1. Hệ thống yêu cầu thủ kho nhập lại thông tin sách cần sửa.
+        2.2. Thủ kho nhập lại thông tin sách.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Usecase: Xóa sách
+
+
+
+Tên usecase	Xóa sách
+Tác nhân chính	Thủ kho 
+Tiền điều kiện 	Thủ kho đăng nhập vào hệ thống.
+Đảm bảo thành công	Thông tin về sách dã được xóa khỏi CSDL
+Kích hoạt	Thủ kho chọn chức năng cập nhật sách trong menu.
+Chuỗi sự kiện chính:
+Thủ kho kích hoạt yêu cầu xóa sách.
+Hệ thống hiện thị from xóa sách và yều cầu thủ kho nhập tên sách muốn xóa.
+Thủ kho nhập tên sách muốn xóa và xác nhận hợp lệ 
+Hệ thống kiểm tra tên của sách muốn xóa và xác nhập hợp lệ 
+Hệ thống hỏi thủ kho có chắc chắn muốn xóa sách khỏi CSDL hay không? và hiện thị chọn có hoặc không.
+Thủ kho chọn có.
+Hệ thống thoát khỏi chức năng xóa sách.
+Thủ kho thoát khỏi chức năng xóa sach.
+Ngoại lệ:
+Hệ thống thông báo không có tên sách trong CSDL.
+       1.1. Hệ thống hỏi thủ kho có nhập tên khác không.
+       1.2. Thủ kho nhập tên sách khác.
+       1.3. Hệ thống thông báo xóa sách thành công.
+Hệ thống thông báo tên sách muốn xóa không hợp lệ.
+       2.1. Hệ thống yếu cầu thủ kho nhập lại tên sách.
+       2.2. Thủ kho nhập lại tên sách.
+Thủ kho chọn không.
+       3.1. Hệ thống quay lại bước trước.

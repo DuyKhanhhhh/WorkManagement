@@ -120,13 +120,13 @@ public class ColumnWorkController extends HttpServlet {
     private void createCart(HttpServletRequest request, HttpServletResponse response) {
         try {
             int idColumn = Integer.parseInt(request.getParameter("idColumn"));
-            int idUser = Integer.parseInt(request.getParameter("idUser"));
+//            int idUser = Integer.parseInt(request.getParameter("idUser"));
             String name = request.getParameter("name");
             Card card = new Card();
             card.setIdColumn(idColumn);
             card.setName(name);
             iColumDAO.addCard(card);
-            iColumDAO.addUserToCard(idUser, card.getId());
+//            iColumDAO.addUserToCard(idUser, card.getId());
             response.sendRedirect("/column");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -183,7 +183,11 @@ public class ColumnWorkController extends HttpServlet {
         request.setAttribute("userToCard", userToCard);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+<<<<<<< HEAD
         } catch (IOException e) {
+=======
+        } catch (IOException | ServletException e) {
+>>>>>>> 3eee77b14bb276c6857caa31e3f39b1673a857c5
             throw new RuntimeException(e);
         } catch (ServletException e) {
             throw new RuntimeException(e);
