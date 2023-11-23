@@ -1,9 +1,6 @@
 package com.example.projectqlcv.DAO;
 
-import com.example.projectqlcv.model.Column;
-import com.example.projectqlcv.model.SelectComment;
-import com.example.projectqlcv.model.User;
-import com.example.projectqlcv.model.Card;
+import com.example.projectqlcv.model.*;
 
 import java.util.List;
 
@@ -26,6 +23,5 @@ public interface IColumDAO {
     boolean updateContentInCard(int idCard , String newContent);
     List<Card> searchCard(int idTable ,String search);
     void addCardLink(Card card);
-
 
 }

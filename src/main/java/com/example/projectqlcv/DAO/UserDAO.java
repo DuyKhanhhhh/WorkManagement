@@ -21,7 +21,7 @@ public class UserDAO implements IUserDAO {
     private static final String ADD_TABLE_TO_SQL = "INSERT INTO tableWork(idGroup, name, permission) VALUES( ?, ?, ?) ";
     private static final String SELECT_GROUP_BY_ID = "SELECT * FROM groupWork where id = ?";
     private static final String SELECT_TABLE_BY_ID = "SELECT * FROM tableWork where id = ?";
-    private static final String DELETE_GROUP_SQL = "DELETE FROM groupWork where id = ?";
+    private static final String DELETE_GROUP_SQL = "DELETE groupWork,tableWork, FROM  where id = ?";
     private static final String DELETE_MEMBER_OF_GROUP = "DELETE FROM member where id = ?";
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
     private static final String SEARCH_NAME_PRODUCT = "SELECT * FROM user WHERE id NOT IN (select u.id  from member m join user u on m.idUser = u.id where idGroup = ? ) AND (name LIKE ? || email LIKE ?)";
@@ -774,7 +774,7 @@ public class UserDAO implements IUserDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 String role = resultSet.getString("role");
-                member = new Member(role);
+                member = new Member(idUser,role);
             }
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
@@ -813,7 +813,7 @@ public class UserDAO implements IUserDAO {
             while (resultSet.next()){
                 int idTable = resultSet.getInt("idTable");
                 String role = resultSet.getString("role");
-                addUserToTable = new AddUserToTable(idTable,role);
+                addUserToTable = new AddUserToTable(idUser,idTable,role);
             }
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);

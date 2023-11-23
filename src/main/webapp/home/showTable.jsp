@@ -128,7 +128,8 @@
         float: left;
         margin-bottom: 20px;
     }
-    #permission{
+
+    #permission {
         margin-left: 120px;
     }
 
@@ -140,8 +141,10 @@
         <nav class="navbar navbar-expand-lg navbar-dark" id="header">
             <div class="container-fluid">
                 <div class="headImg">
-                    <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
-                         width="100" height="50">
+                    <a href="/homeUser">
+                        <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
+                             width="100" height="50">
+                    </a>
                 </div>
 
                 <div class="headRight">
@@ -175,13 +178,15 @@
                                 <c:choose>
                                     <c:when test="${groups.permission.equals('Public')}">
                                         <div style="float:left; margin-bottom: 100px;">
-                                            <small><i class="fa-solid fa-earth-asia"></i></small>
+                                                <small><i style="font-size: small"
+                                                          class="fa-solid fa-earth-asia"></i></small>
                                         </div>
                                     </c:when>
                                     <c:otherwise>
-                                        <div style="float:left; margin-bottom: 100px;">
-                                            <small><i class="fa-solid fa-lock"></i></small>
+                                             <div style="float:left; margin-bottom: 100px;">
+                                            <small><i style="font-size: small" class="fa-solid fa-lock"></i></small>
                                         </div>
+
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -196,8 +201,10 @@
                 </div>
                 <div class="add_member">
                     <a href="/addMembers?action=addMember&groupId=<c:out value="${groups.id}"></c:out>">
-                        <button style="margin-left: 12% ; height: 45px; border-radius: 5px; background: #268aeb ; color: white"
-                                type="submit"><i style="margin-left: 7px ; margin-right: 6px" class="fa-solid fa-user-plus"></i>Invite members to the workspace
+                        <button style="margin-left: 60% ; height: 40px; border-radius: 5px; background: #268aeb ; color: white; border: none"
+                                type="submit"><i style="margin-left: 7px ; margin-right: 6px ; font-size: initial"
+                                                 class="fa-solid fa-user-plus"></i>
+                            Share
                         </button>
                     </a>
                 </div>

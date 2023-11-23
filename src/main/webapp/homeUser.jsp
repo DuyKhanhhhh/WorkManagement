@@ -281,7 +281,7 @@
                                 </a>
 
                                 <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}" class="icon">
-                                    <i class="fa-solid fa-user-group" ></i>
+                                    <i class="fa-solid fa-user-group"></i>
 
                                     <span style="font-size: 20px">Member</span>
                                 </a>
@@ -293,30 +293,30 @@
                             </div>
                         </div>
                     </div>
-                        <c:forEach items="${tables}" var="table">
-                            <c:if test="${group.id eq table.idGroup}">
+                    <c:forEach items="${tables}" var="table">
+                        <c:if test="${group.id eq table.idGroup}">
+                            <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
+                               style="text-decoration: none; color: black; margin-top: 1rem;">
                             <div class="groupContent">
-                                <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
-                                   style="text-decoration: none; color: black">
-                                    <div class="table_create">
-                                        <h4>${table.name}</h4>
-                                    </div>
-                                </a>
+                                <div class="table_create">
+                                    <h4>${table.name}</h4>
+                                </div>
                             </div>
-                            </c:if>
-                        </c:forEach>
+                            </a>
+                        </c:if>
+                    </c:forEach>
                     <div class="groupContent">
                         <c:forEach var="listTable" items="${listTable}">
                             <c:if test="${group.id eq table.idGroup}">
-                            <div class="table_create">
-                                <h4 style="padding-top: 15px">${listTable.name}</h4>
-                            </div>
+                                <div>
+                                    <h4 >${listTable.name}</h4>
+                                </div>
                             </c:if>
                         </c:forEach>
                         <a href="/homeUser?action=addTableToSQL&id=${group.id}"
                            style="text-decoration: none; color: black">
-                            <div class="table_create">
-                                <span style="text-align: center;font-size: 110px">+</span>
+                            <div>
+                                <span style="font-size: 110px">+</span>
                             </div>
                         </a>
                     </div>
