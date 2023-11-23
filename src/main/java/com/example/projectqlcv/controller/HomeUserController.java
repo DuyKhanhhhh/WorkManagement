@@ -67,8 +67,7 @@ HomeUserController extends HttpServlet {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         userDAO.updatePermissionTablePublic(idTable);
         Table table = userDAO.findTableById(idTable);
-        HttpSession session = request.getSession();
-        session.setAttribute("tables",table);
+        request.setAttribute("tables",table);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
         } catch (IOException | ServletException e) {
@@ -80,8 +79,7 @@ HomeUserController extends HttpServlet {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         userDAO.updatePermissionTableGroup(idTable);
         Table table = userDAO.findTableById(idTable);
-        HttpSession session = request.getSession();
-        session.setAttribute("tables",table);
+        request.setAttribute("tables",table);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
         } catch (IOException | ServletException e) {
@@ -93,8 +91,7 @@ HomeUserController extends HttpServlet {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         userDAO.updatePermissionTablePrivate(idTable);
         Table table = userDAO.findTableById(idTable);
-        HttpSession session = request.getSession();
-        session.setAttribute("tables",table);
+        request.setAttribute("tables",table);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
         } catch (IOException | ServletException e) {
@@ -250,12 +247,11 @@ HomeUserController extends HttpServlet {
             int idUser = Integer.parseInt(request.getParameter("idUser"));
             int idGroup = Integer.parseInt(request.getParameter("idGroup"));
             Group group = userDAO.findGroupById(idGroup);
-            HttpSession session = request.getSession();
-            session.setAttribute("groups", group);
+            request.setAttribute("groups", group);
             List<Member> member = userDAO.selectGroupMember(idGroup);
-            session.setAttribute("member", member);
+            request.setAttribute("member", member);
             Member roleMember = userDAO.findRoleUserToMember(idUser);
-            session.setAttribute("roleMember", roleMember);
+            request.setAttribute("roleMember", roleMember);
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
 
         } catch (ServletException e) {

@@ -45,12 +45,11 @@ public class AddMemberToGroupController extends HttpServlet {
         int idMember = Integer.parseInt(request.getParameter("idMember"));
         int idGroup = Integer.parseInt(request.getParameter("idGroup"));
 
-        HttpSession session = request.getSession();
         Member roleMember = iUserDAO.findRoleUserToMember(idUser);
         request.setAttribute("roleMember",roleMember);
         iUserDAO.updatePermissionMember(idMember);
         List<Member> member = iUserDAO.selectGroupMember(idGroup);
-        session.setAttribute("member", member);
+        request.setAttribute("member", member);
         try {
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
@@ -113,10 +112,9 @@ public class AddMemberToGroupController extends HttpServlet {
             iUserDAO.deleteMember(idMember);
             request.setAttribute("message", "Delete success !");
             Group group = iUserDAO.findGroupById(idGroup);
-            HttpSession session = request.getSession();
-            session.setAttribute("groups", group);
+            request.setAttribute("groups", group);
             List<Member> member = iUserDAO.selectGroupMember(idGroup);
-            session.setAttribute("member", member);
+            request.setAttribute("member", member);
         }
         try {
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
