@@ -88,24 +88,23 @@
     }
 
     .sidenav {
-        display: none;
-        height: 36%;
-        width: 222px;
+        height: 100%;
+        width: 0;
         position: fixed;
         z-index: 1;
+        top: 50px;
         right: 0;
-        background-color: #8c8c8c;
+        background-color: #111;
         overflow-x: hidden;
         transition: 0.5s;
         padding-top: 60px;
-        margin-top: -13px;
     }
 
     .sidenav a {
         padding: 8px 8px 8px 32px;
         text-decoration: none;
         font-size: 25px;
-        color: #ffffff;
+        color: #f1f1f1;
         display: block;
         transition: 0.3s;
     }
@@ -120,6 +119,16 @@
         right: 25px;
         font-size: 36px;
         margin-left: 50px;
+    }
+
+    #main {
+        transition: margin-left .5s;
+        padding: 16px;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
     }
 
     #rightTitle {
@@ -580,7 +589,7 @@
                     </c:if>
                 </c:forEach>
             </div>
-            <span id="">
+            <span id="main">
                     <div class="nav">
                      <span onclick="openPermission()">
                          <label style="display: inline-block;margin-right: 80rem;">${tables.permission}</label>
@@ -593,8 +602,8 @@
             </div>
 
             <div class="titleRight">
-                <div id="setting" class="sidenav">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <h2 style="text-align: center;color: white">Menu</h2>
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
@@ -683,8 +692,8 @@
                             </a>
                         </c:if>
                     </c:forEach>
-                    <div class="boxAddCart">
-                        <span onclick="openFormCard(${listColumn.id})">+</span>
+                    <div class="boxAddCart" onclick="openFormCard(${listColumn.id})">
+                        <span>+</span>
                         <div id="formAddCard${listColumn.id}" class="addCard">
                             <form method="post"
                                   action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
@@ -701,8 +710,8 @@
                 </div>
             </c:if>
         </c:forEach>
-        <div class="boxAdd">
-            <span onclick="openForm()" style="font-size: 20px">+ Add list</span>
+        <div class="boxAdd" onclick="openForm()">
+            <span style="font-size: 20px">+ Add list</span>
             <div id="formAdd" class="formAdd">
                 <form method="post" action="/column?action=addColumn&idTable=${tables.id}">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeForm()">&times;</a>
@@ -748,7 +757,7 @@
                         <c:forEach var="comment" items="${listComment}">
                             <div class="comment-item">
                                 <img src="${comment.avatar}" alt="Avatar" class="avatar">
-                                <div class="comment-content">
+                                <div class="comment-content">1
                                     <span class="comment-name">${comment.name}</span>
                                     <span class="comment-text">${comment.comment}</span>
                                 </div>
@@ -833,7 +842,6 @@
 
     function openFormCard(idColum) {
         document.getElementById("formAddCard" + idColum).style.display = "block";
-
     }
 
     function closeFormCard(idColum) {
@@ -872,11 +880,15 @@
     }
 
     function openNav() {
-        document.getElementById("setting").style.display = "block";
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginRight = "250px";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
     }
 
     function closeNav() {
-        document.getElementById("setting").style.display = "none";
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginRight= "0";
+        document.body.style.backgroundColor = "white";
     }
 
     function openPermission() {
