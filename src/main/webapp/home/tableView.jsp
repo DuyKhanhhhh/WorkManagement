@@ -256,7 +256,7 @@
     }
 
     #nameTable {
-        margin-top: 5px;
+        margin-top: 20px;
         border: none;
         font-size: 20px;
     }
@@ -478,15 +478,18 @@
         right: 8px;
         font-size: 40px;
     }
-    .iconComment{
+
+    .iconComment {
         display: flex;
     }
-    .textIcon{
+
+    .textIcon {
         font-size: 16px;
         text-decoration: none;
         color: black;
         padding-left:33px;
     }
+
     #my-div {
         position: absolute;
         top: 0;
@@ -516,10 +519,12 @@
     .searchCard {
         width: 400px;
         height: 150px;
-        background-color: #b4b4b4;
+        background-color: #aeaeae;
         margin-left: 79%;
         position: fixed;
         display: none;
+        border-radius: 10px;
+        margin-top: 3px;
     }
 
     #buttonSearchCard {
@@ -530,6 +535,12 @@
 
     #search {
         margin-top: 50px;
+    }
+    .buttonPermission{
+        display: inline-block;
+        margin-right: 72rem;
+        border: none;
+        background: none;
     }
 
 </style>
@@ -596,9 +607,10 @@
                      </span>
                     </div>
                 </span>
+
             <div class="filter" onclick="showSearchCard()">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <button id="buttonSearchCard" style="margin-left: 2px">Search</button>
+                <button id="buttonSearchCard" style="margin-left: 2px">Filter</button>
             </div>
 
             <div class="titleRight">
@@ -608,7 +620,10 @@
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
                     <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
+                    <a href="/addUserToTable?action=deleteTable&idTable=${tables.id}&groupId=${groups.id}">Delete table</a>
+
                     <c:if test="${roleUser.role.equals('Admin') && rolerUser.idTable eq tables.id}">
+
                         <a onclick="showConfirmation()" style="color: white">Delete table</a>
                     </c:if>
                     <c:if test="${roleUser.idUser != memberToGroup.idUser}">
@@ -672,9 +687,9 @@
                         <div class="contentTable">
                             <input name="nameColumnUpdate" type="text" class="titleColumn" id="titleColumn"
                                    value="${listColumn.name}"
-                                   style="border: none; max-width: 220px;cursor: pointer;background-color: #ced4da">
+                                   style="border: none; max-width: 215px;cursor: pointer;background-color: #ced4da">
                             <div onclick="openFormDelete()">
-                                <i class="fa-solid fa-ellipsis-vertical" style="color: #000000;"></i>
+                                <i class="fa-solid fa-ellipsis-vertical" style="color: #000000; margin-right: 5px"></i>
                             </div>
                         </div>
                         <input name="action" value="editNameColumn" type="hidden">
@@ -702,7 +717,8 @@
                                 <div class="mb-3">
                                     <input type="text" class="form-control" name="name"
                                            placeholder="Enter a list title">
-                                    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Card</button>
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Card
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -721,7 +737,7 @@
                     </div>
                 </form>
             </div>
-        </div>
+      </div>
         <c:if test="${card != null}">
             <div id="formShowCard" class="formContent">
                 <div class=cardLeft>
@@ -748,7 +764,7 @@
                                       style="height: 200px">${card.getContent()}</textarea>
                                 <label for="floatingTextarea1">Content</label>
                             </div>
-                            <button type="submit" class="btn btn-secondary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </form>
                             <%--                        </c:if>--%>
                     </div>
@@ -763,6 +779,22 @@
                                 </div>
                             </div>
                             <div class="iconComment">
+
+                                <span onclick="openFormEdit()" class="textIcon"><u>Edit</u></span>
+                                <a href="/column?action=deleteComment&idCard=${comment.id}">
+                                    <span class="textIcon"><u>Delete</u></span>
+                                </a>
+                            </div>
+                            <div id="formEdit" class="formEdit">
+                                <span class="closebtn" onclick="closeFormEdit()">&times;</span>
+                                <form method="post" action="/column?action=updateComment&id=${comment.id}">
+                                    <div class="mb-3">
+                                        <input type="text" name="comment" value="${comment.comment}"
+                                               class="form-control">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+
 <%--                                Edit Comment--%>
                                 <a  onclick="openFormEdit()" class="textIcon"><u>Edit</u></a>
                                 <div id="formEdit" class="formEdit">
@@ -802,15 +834,30 @@
                         <i class="fa-solid fa-tag" style="color: #000000;"></i>
                         <span>Label</span>
                     </div>
-                    <div class="boxIconCard">
-                        <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
-                        <span>Attach</span>
-                    </div>
+                    <form method="POST" action="FileUploadServlet" enctype="multipart/form-data" id="uploadForm">
+                        <div class="boxIconCard">
+                            <label for="fileInput">
+                                <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
+                                <span>Attach</span>
+                            </label>
+                            <input type="file" name="file" id="fileInput" style="display:none;" onchange="displayFileName()" />
+                        </div>
+
+                        <div id="fileNameContainer" style="display: none;">
+                            <p>File Name:</p>
+                            <span id="fileName"></span>
+                        </div>
+
+                        <!-- Thêm nút để kích hoạt sự kiện submit của form -->
+                        <input type="button" value="Upload" onclick="uploadFile()" />
+                    </form>
                 </div>
                 <div id="member" style="display: none;">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
                     <c:forEach var="userToTable" items="${userToTable}">
-                        <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}" onclick="closeFormContent()">
+
+                        <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}"
+                           onclick="closeFormContent()">
                             <div class="circleMember">
                                 <img src="${userToTable.avatar}" alt="Avatar">
                             </div>
@@ -820,10 +867,27 @@
                 </div>
             </div>
         </c:if>
+
     </div>
 </div>
 <script>
 
+
+
+    function displayFileName() {
+        var fileInput = document.getElementById('fileInput');
+        var fileNameContainer = document.getElementById('fileNameContainer');
+        var fileNameSpan = document.getElementById('fileName');
+
+        // Hiển thị tên file
+        fileNameSpan.textContent = fileInput.files[0].name;
+        fileNameContainer.style.display = 'block';
+    }
+
+    function uploadFile() {
+        // Kích hoạt sự kiện submit của form
+        document.getElementById('uploadForm').submit();
+    }
     // function openFormContent(id, name) {
     //     document.getElementById("formShowCard").style.display = "block";
     //     document.getElementById("textName").innerText = name;

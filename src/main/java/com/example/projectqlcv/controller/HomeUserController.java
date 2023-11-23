@@ -60,6 +60,7 @@ HomeUserController extends HttpServlet {
             case "updatePermissionTablePrivate":
                 updatePermissionTablePrivate(request, response);
                 break;
+
         }
         }
 

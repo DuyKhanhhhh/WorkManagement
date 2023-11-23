@@ -258,8 +258,9 @@
             </div>
             <div class="add_member">
                 <a href="/addMembers?action=addMember&groupId=<c:out value="${groups.id}"></c:out>">
-                    <button style="margin-left: 20% ; height: 45px; border-radius: 15px; background: #4799e2 ; color: white"
-                            type="submit">Invite members to the workspace
+                    <button style="margin-left: 60% ; height: 40px; border-radius: 5px; background: #268aeb ; color: white ; border: none"
+                            type="submit"><i style="margin-left: 7px ; margin-right: 6px ; font-size: initial"  class="fa-solid fa-user-plus"></i>
+                        Share
                     </button>
                 </a>
             </div>

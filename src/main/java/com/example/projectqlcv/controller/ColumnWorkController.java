@@ -120,13 +120,13 @@ public class ColumnWorkController extends HttpServlet {
     private void createCart(HttpServletRequest request, HttpServletResponse response) {
         try {
             int idColumn = Integer.parseInt(request.getParameter("idColumn"));
-            int idUser = Integer.parseInt(request.getParameter("idUser"));
+//            int idUser = Integer.parseInt(request.getParameter("idUser"));
             String name = request.getParameter("name");
             Card card = new Card();
             card.setIdColumn(idColumn);
             card.setName(name);
             iColumDAO.addCard(card);
-            iColumDAO.addUserToCard(idUser, card.getId());
+//            iColumDAO.addUserToCard(idUser, card.getId());
             response.sendRedirect("/column");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -175,20 +175,19 @@ public class ColumnWorkController extends HttpServlet {
 
     private void showCard(HttpServletRequest request, HttpServletResponse response) {
         int idCard = Integer.parseInt(request.getParameter("idCard"));
-        Card card = iColumDAO.findCardById(idCard);
-        HttpSession session = request.getSession();
-        session.setAttribute("card", card);
         List<UserToCard> userToCard = userDAO.findMemberToCard(idCard);
         List<SelectComment> listComment = iColumDAO.selectCommentByIdCard(idCard);
-        session.setAttribute("listComment", listComment);
-        session.setAttribute("userToCard", userToCard);
+
+        Card card = iColumDAO.findCardById(idCard);
+        request.setAttribute("card", card);
+        request.setAttribute("listComment",listComment);
+        request.setAttribute("userToCard", userToCard);
         try {
-            response.sendRedirect("/column");
-        } catch (IOException e) {
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+        } catch (IOException | ServletException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     private void deleteComment(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
