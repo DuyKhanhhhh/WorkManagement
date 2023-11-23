@@ -71,6 +71,8 @@ public class AddUserToTableController extends HttpServlet {
             nameUpdate = table.getName();
         }
         userDAO.editNameTable(idTable,nameUpdate);
+//        HttpSession session = request.getSession();
+//        session.setAttribute("tables",table);
         try {
             response.sendRedirect("/column");
         } catch (IOException e) {
@@ -82,11 +84,12 @@ public class AddUserToTableController extends HttpServlet {
     private void updatePermissionUser(HttpServletRequest request, HttpServletResponse response) {
         int idUserToTable = Integer.parseInt(request.getParameter("id"));
         int idTable = Integer.parseInt(request.getParameter("idTable"));
+        HttpSession session = request.getSession();
         userDAO.updatePermissionUserToTable(idUserToTable);
         Table table = userDAO.findTableById(idTable);
         List<AddUserToTable> addUserToTables = userDAO.findUserToTable(idTable);
-        request.setAttribute("tables", table);
-        request.setAttribute("userToTable", addUserToTables);
+        session.setAttribute("tables", table);
+        session.setAttribute("userToTable", addUserToTables);
         try {
             request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);
         } catch (ServletException e) {
@@ -113,28 +116,29 @@ public class AddUserToTableController extends HttpServlet {
     }
 
     private void showTable(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
         int idGroup = Integer.parseInt(request.getParameter("id"));
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         int idUser = Integer.parseInt(request.getParameter("idUser"));
         List<AddUserToTable> addUserToTable = userDAO.findUserToTable(idTable);
-        request.setAttribute("userToTable", addUserToTable);
+        session.setAttribute("userToTable", addUserToTable);
         AddUserToTable addUserToTable1 = userDAO.findUserToTableById(idTable);
-        request.setAttribute("userOfTable",addUserToTable1);
+        session.setAttribute("userOfTable",addUserToTable1);
         Table table = userDAO.findTableById(idTable);
-        request.setAttribute("tables", table);
+        session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
-        request.setAttribute("groups", group);
+        session.setAttribute("groups", group);
         AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(idUser);
-        request.setAttribute("roleUser",userToTable);
+        session.setAttribute("roleUser",userToTable);
         Member member = userDAO.findRoleUserToMember(idUser);
-        request.setAttribute("memberToGroup",member);
+        session.setAttribute("memberToGroup",member);
         List<Column> listColumn= columnDAO.selectAllColumn();
         List<Card> listCard = columnDAO.selectAllCard();
         List<AddUserToTable> memberToTable = userDAO.findUserToTable(idTable);
-        request.setAttribute("listMember",memberToTable);
+        session.setAttribute("listMember",memberToTable);
         try {
-            request.setAttribute("listCard",listCard);
-            request.setAttribute("listColumn", listColumn);
+            session.setAttribute("listCard",listCard);
+            session.setAttribute("listColumn", listColumn);
             request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
@@ -198,32 +202,35 @@ public class AddUserToTableController extends HttpServlet {
     }
 
     private void joinTable(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        int idGroup = Integer.parseInt(request.getParameter("idGroup"));
         int id = Integer.parseInt(request.getParameter("id"));
         int idTable = Integer.parseInt(request.getParameter("idTable"));
-        int idGroup = Integer.parseInt(request.getParameter("idGroup"));
         User user = userDAO.selectAllUserId(id);
         userDAO.addUserToTable(idTable, user);
         List<AddUserToTable> addUserToTable = userDAO.findUserToTable(idTable);
-        request.setAttribute("userToTable", addUserToTable);
+        session.setAttribute("userToTable", addUserToTable);
         AddUserToTable addUserToTable1 = userDAO.findUserToTableById(idTable);
-        request.setAttribute("userOfTable",addUserToTable1);
+        session.setAttribute("userOfTable",addUserToTable1);
         Table table = userDAO.findTableById(idTable);
-        request.setAttribute("tables", table);
+        session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
-        request.setAttribute("groups", group);
+        session.setAttribute("groups", group);
         AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(user.getId());
-        request.setAttribute("roleUser",userToTable);
+        session.setAttribute("roleUser",userToTable);
         Member member = userDAO.findRoleUserToMember(user.getId());
-        request.setAttribute("memberToGroup",member);
+        session.setAttribute("memberToGroup",member);
         List<Column> listColumn= columnDAO.selectAllColumn();
         List<Card> listCard = columnDAO.selectAllCard();
         List<AddUserToTable> memberToTable = userDAO.findUserToTable(idTable);
-        request.setAttribute("listMember",memberToTable);
+        session.setAttribute("listMember",memberToTable);
         try {
-            request.setAttribute("listCard",listCard);
-            request.setAttribute("listColumn", listColumn);
+            session.setAttribute("listCard",listCard);
+            session.setAttribute("listColumn", listColumn);
             request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
-        } catch (IOException | ServletException e) {
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -245,11 +252,12 @@ public class AddUserToTableController extends HttpServlet {
         int idUserToTable = Integer.parseInt(request.getParameter("id"));
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         userDAO.deleteUserToTable(idUserToTable);
+        HttpSession session = request.getSession();
         request.setAttribute("message", "Delete success !");
         List<AddUserToTable> addUserToTables = userDAO.findUserToTable(idTable);
         Table table = userDAO.findTableById(idTable);
-        request.setAttribute("userToTable", addUserToTables);
-        request.setAttribute("tables", table);
+        session.setAttribute("userToTable", addUserToTables);
+        session.setAttribute("tables", table);
         try {
             request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);
         } catch (ServletException e) {
@@ -263,11 +271,12 @@ public class AddUserToTableController extends HttpServlet {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         int idUser = Integer.parseInt(request.getParameter("idUser"));
         List<AddUserToTable> addUserToTables = userDAO.findUserToTable(idTable);
-        request.setAttribute("userToTable", addUserToTables);
+        HttpSession session = request.getSession();
+        session.setAttribute("userToTable", addUserToTables);
         Table table = userDAO.findTableById(idTable);
-        request.setAttribute("tables", table);
+        session.setAttribute("tables", table);
         AddUserToTable addUserToTable = userDAO.findRoleUserToUserToTable(idUser);
-        request.setAttribute("member",addUserToTable);
+        session.setAttribute("member",addUserToTable);
         try {
             request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);
         } catch (ServletException e) {
@@ -280,7 +289,8 @@ public class AddUserToTableController extends HttpServlet {
     private void showAllUserToTable(HttpServletRequest request, HttpServletResponse response) {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         List<AddUserToTable> addUserToTable = userDAO.findUserToTable(idTable);
-        request.setAttribute("userToTable", addUserToTable);
+        HttpSession session = request.getSession();
+        session.setAttribute("userToTable", addUserToTable);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
         } catch (ServletException e) {

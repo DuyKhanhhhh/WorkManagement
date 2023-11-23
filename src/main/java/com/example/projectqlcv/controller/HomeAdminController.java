@@ -63,7 +63,8 @@ public class HomeAdminController extends HttpServlet {
                     request.getRequestDispatcher("/homeAdmin").forward(request, response);
                 }
             } else {
-                request.setAttribute("message", "Create success !");
+                HttpSession session = request.getSession();
+                session.setAttribute("message", "Create success !");
                 response.sendRedirect("/homeAdmin");
             }
 

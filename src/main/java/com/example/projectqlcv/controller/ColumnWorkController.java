@@ -208,11 +208,12 @@ public class ColumnWorkController extends HttpServlet {
         int idUser = Integer.parseInt(request.getParameter("idUser"));
         int idCard = Integer.parseInt(request.getParameter("idCard"));
         int idTable = Integer.parseInt(request.getParameter("idTable"));
+        HttpSession session = request.getSession();
         userDAO.addUserInCard(idUser, idCard);
         List<AddUserToTable> memberToTable = userDAO.findUserToTable(idTable);
-        request.setAttribute("listMember", memberToTable);
+        session.setAttribute("listMember", memberToTable);
         List<UserToCard> userToCard = userDAO.findMemberToCard(idCard);
-        request.setAttribute("userToCard", userToCard);
+        session.setAttribute("userToCard", userToCard);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
         } catch (IOException e) {
@@ -242,11 +243,12 @@ public class ColumnWorkController extends HttpServlet {
         List<Column> listColumn = iColumDAO.selectAllColumn();
         List<Card> listCard = iColumDAO.selectAllCard();
         List<Table> listTable = userDAO.selectAllTable();
+        HttpSession session = request.getSession();
 
         try {
-            request.setAttribute("listCard", listCard);
-            request.setAttribute("listColumn", listColumn);
-            request.setAttribute("listTable", listTable);
+            session.setAttribute("listCard", listCard);
+            session.setAttribute("listColumn", listColumn);
+            session.setAttribute("listTable", listTable);
             request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
