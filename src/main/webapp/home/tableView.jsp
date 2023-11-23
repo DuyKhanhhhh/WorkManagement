@@ -606,7 +606,10 @@
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
                     <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
-                    <c:if test="${roleUser.role.equals('Admin') && roleUser.idTable eq tables.id}">
+                    <a href="/addUserToTable?action=deleteTable&idTable=${tables.id}&groupId=${groups.id}">Delete table</a>
+
+                    <c:if test="${roleUser.role.equals('Admin') && rolerUser.idTable eq tables.id}">
+
                         <a onclick="showConfirmation()" style="color: white">Delete table</a>
                     </c:if>
                     <c:if test="${roleUser.idUser != memberToGroup.idUser}">
@@ -817,10 +820,23 @@
                         <i class="fa-solid fa-tag" style="color: #000000;"></i>
                         <span>Label</span>
                     </div>
-                    <div class="boxIconCard">
-                        <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
-                        <span>Attach</span>
-                    </div>
+                    <form method="POST" action="FileUploadServlet" enctype="multipart/form-data" id="uploadForm">
+                        <div class="boxIconCard">
+                            <label for="fileInput">
+                                <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
+                                <span>Attach</span>
+                            </label>
+                            <input type="file" name="file" id="fileInput" style="display:none;" onchange="displayFileName()" />
+                        </div>
+
+                        <div id="fileNameContainer" style="display: none;">
+                            <p>File Name:</p>
+                            <span id="fileName"></span>
+                        </div>
+
+                        <!-- Thêm nút để kích hoạt sự kiện submit của form -->
+                        <input type="button" value="Upload" onclick="uploadFile()" />
+                    </form>
                 </div>
                 <div id="member" style="display: none;">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
@@ -842,6 +858,22 @@
 </div>
 <script>
 
+
+
+    function displayFileName() {
+        var fileInput = document.getElementById('fileInput');
+        var fileNameContainer = document.getElementById('fileNameContainer');
+        var fileNameSpan = document.getElementById('fileName');
+
+        // Hiển thị tên file
+        fileNameSpan.textContent = fileInput.files[0].name;
+        fileNameContainer.style.display = 'block';
+    }
+
+    function uploadFile() {
+        // Kích hoạt sự kiện submit của form
+        document.getElementById('uploadForm').submit();
+    }
     // function openFormContent(id, name) {
     //     document.getElementById("formShowCard").style.display = "block";
     //     document.getElementById("textName").innerText = name;
