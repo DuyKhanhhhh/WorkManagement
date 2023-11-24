@@ -157,7 +157,6 @@ public class ColumnWorkController extends HttpServlet {
             case "showCard":
                 showCard(request, response);
                 break;
-
             case "deleteComment":
                 deleteComment(request, response);
                 break;
@@ -184,7 +183,13 @@ public class ColumnWorkController extends HttpServlet {
         request.setAttribute("userToCard", userToCard);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+<<<<<<< HEAD
+        } catch (IOException e) {
+=======
         } catch (IOException | ServletException e) {
+>>>>>>> 3eee77b14bb276c6857caa31e3f39b1673a857c5
+            throw new RuntimeException(e);
+        } catch (ServletException e) {
             throw new RuntimeException(e);
         }
     }

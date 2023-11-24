@@ -200,6 +200,12 @@
         display: flex;
         align-items: center;
         justify-content: center;
+<<<<<<< HEAD
+    }
+    th{
+        vertical-align: middle;
+=======
+>>>>>>> 3eee77b14bb276c6857caa31e3f39b1673a857c5
     }
 
     .formAddGroup {
@@ -439,7 +445,7 @@
                                 <h2>Create Group</h2>
                             </div>
 
-                            <div class="form-outline mb-4" id="inputName">
+                            <div class="form-outline mb-4" >
                                 <label style="float: left;font-size: 20px">Name(<span style="color:red;">*</span>)</label>
                                 <input type="text" name="name" class="form-control form-control-lg"
                                        placeholder="Name" required/>
@@ -508,7 +514,7 @@
                                     <span style="font-size: 20px">Table</span>
                                 </a>
 
-                                <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}" class="icon">
+                                <a href="/addMembers?action=null&idGroup=${group.id}&idUser=${user.id}" class="icon">
                                     <i class="fa-solid fa-user-group"></i>
 
                                     <span style="font-size: 20px">Member</span>

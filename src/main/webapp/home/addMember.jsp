@@ -141,37 +141,7 @@
             </div>
         </nav>
     </div>
-    <div class="row">
-        <div class="col-10">
-            <div id="member">
-                <h2 style="text-align: center; margin-top: 40px">Search member </h2>
-            </div>
-            <div id="search">
-                <form class="d-flex" method="post"
-                      action="/homeUser?action=search&idGroup=<c:out value="${groups.id}"></c:out>">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                           name="search">
-                    <button class="btn btn-secondary" type="submit" name="search">Search</button>
-                </form>
-            </div>
-            <div class="table_all">
-                <table class="table table-bordered">
-                    <c:forEach var="user" items="${list}">
-                        <tr>
-                            <td><img width="80px" height="80px" src="${user.avatar}"></td>
-                            <td>${user.name}</td>
-                            <td>${user.email}</td>
-                            <td>
-                                <a href="/addMembers?action=addUser&id=${user.id}&idGroup=<c:out value="${groups.id}"></c:out>">
-                                    <button type="button" class="btn btn-danger">Add</button>
-                                </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </div>
-        </div>
-    </div>
+
 </div>
 </div>
 </body>

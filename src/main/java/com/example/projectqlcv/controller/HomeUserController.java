@@ -109,9 +109,8 @@ HomeUserController extends HttpServlet {
         List<User> userList = userDAO.searchNameUser(idGroup, name);
         request.setAttribute("list", userList);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("home/addMember.jsp");
         try {
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("home/showMember.jsp").forward(request,response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -215,9 +214,6 @@ HomeUserController extends HttpServlet {
             case "editUser":
                 showEditFormUser(request, response);
                 break;
-            case "member":
-                showMember(request, response);
-                break;
             case "table":
                 showTableInGroup(request, response);
                 break;
@@ -243,25 +239,25 @@ HomeUserController extends HttpServlet {
     }
 
 
-    private void showMember(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            int idUser = Integer.parseInt(request.getParameter("idUser"));
-            int idGroup = Integer.parseInt(request.getParameter("idGroup"));
-            Group group = userDAO.findGroupById(idGroup);
-            HttpSession session = request.getSession();
-            session.setAttribute("groups", group);
-            List<Member> member = userDAO.selectGroupMember(idGroup);
-            session.setAttribute("member", member);
-            Member roleMember = userDAO.findRoleUserToMember(idUser);
-            session.setAttribute("roleMember", roleMember);
-            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
-
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    private void showMember(HttpServletRequest request, HttpServletResponse response) {
+//        try {
+//            int idUser = Integer.parseInt(request.getParameter("idUser"));
+//            int idGroup = Integer.parseInt(request.getParameter("idGroup"));
+//            Group group = userDAO.findGroupById(idGroup);
+//            HttpSession session = request.getSession();
+//            session.setAttribute("groups", group);
+//            List<Member> member = userDAO.selectGroupMember(idGroup);
+//            session.setAttribute("member", member);
+//            Member roleMember = userDAO.findRoleUserToMember(idUser);
+//            session.setAttribute("roleMember", roleMember);
+//            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
+//
+//        } catch (ServletException e) {
+//            throw new RuntimeException(e);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     private void showEditFormUser(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));

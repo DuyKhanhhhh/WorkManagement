@@ -95,7 +95,7 @@
     }
 
     .table_all {
-        width: 90%;
+        width: 700px;
         margin: 90px auto;
     }
 

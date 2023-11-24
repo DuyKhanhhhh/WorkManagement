@@ -200,10 +200,8 @@
                     </div>
                 </div>
                 <div class="add_member">
-                    <a href="/addMembers?action=addMember&groupId=<c:out value="${groups.id}"></c:out>">
-                        <button style="margin-left: 60% ; height: 40px; border-radius: 5px; background: #268aeb ; color: white; border: none"
-                                type="submit"><i style="margin-left: 7px ; margin-right: 6px ; font-size: initial"
-                                                 class="fa-solid fa-user-plus"></i>
+                    <a href="/addMembers?action=addMember&groupId=${groups.id}">
+                        <button style="margin-left: 60% ; height: 40px; border-radius: 5px; background: #268aeb ; color: white ; border: none" type="submit"><i style="margin-left: 7px ; margin-right: 6px ; font-size: initial"  class="fa-solid fa-user-plus"></i>
                             Share
                         </button>
                     </a>
@@ -223,7 +221,6 @@
                     </div>
                 </a>
             </c:forEach>
-
         </div>
     </div>
 </div>
