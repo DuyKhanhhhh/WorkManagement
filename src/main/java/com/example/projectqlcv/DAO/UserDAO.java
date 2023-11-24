@@ -46,7 +46,7 @@ public class UserDAO implements IUserDAO {
     private static final String DELETE_ID_COLUMN = "delete from columnWork where idTable = ?";
     private static final String EDIT_NAME_COLUMN = "UPDATE columnWork SET name = ? WHERE id= ?";
     private static final String UPDATE_PERMISSION_TABLE = "update tableWork set permission = ? where id = ?";
-    private static final String COUNT_AVATAR = "select count(id) as avatar from userToTable";
+    private static final String COUNT_AVATAR = "select count(id) as avatar from userToTable where idTable = ?";
 
     @Override
     public Member findMemberById(int id) {
@@ -69,10 +69,11 @@ public class UserDAO implements IUserDAO {
         return member;
     }
     @Override
-    public AddUserToTable setCountAvatar(){
+    public AddUserToTable setCountAvatar(int idTable){
         AddUserToTable user = null;
         try(Connection connection = DataConnector.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(COUNT_AVATAR);) {
+            preparedStatement.setInt(1,idTable);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()){
                 int countAvatar = rs.getInt("avatar");

@@ -136,7 +136,7 @@ public class AddUserToTableController extends HttpServlet {
         List<Card> listCard = columnDAO.selectAllCard();
         List<AddUserToTable> memberToTable = userDAO.findUserToTable(idTable);
         session.setAttribute("listMember",memberToTable);
-        AddUserToTable toTable = userDAO.setCountAvatar();
+        AddUserToTable toTable = userDAO.setCountAvatar(idTable);
         try {
             request.setAttribute("toTable",toTable);
             session.setAttribute("listCard",listCard);
