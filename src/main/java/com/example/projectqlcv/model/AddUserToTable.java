@@ -12,11 +12,24 @@ public class AddUserToTable {
     private String emailUser;
     private String avatar;
     private String status;
+    private int countAvatar;
 
     public AddUserToTable(int idUser,int idTable,String role) {
         this.role = role;
         this.idUser = idUser;
         this.idTable = idTable;
+    }
+
+    public AddUserToTable(int countAvatar) {
+        this.countAvatar = countAvatar;
+    }
+
+    public int getCountAvatar() {
+        return countAvatar;
+    }
+
+    public void setCountAvatar(int countAvatar) {
+        this.countAvatar = countAvatar;
     }
 
     public AddUserToTable(int id, int idTable, int idUser, int idGroup, String role, String avatar, String name, String emailUser , String status) {

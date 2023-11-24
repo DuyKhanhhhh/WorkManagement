@@ -15,6 +15,11 @@
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
 </head>
 <style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
     body {
         background-color: #f8f9fa;
     }
@@ -76,11 +81,12 @@
     }
 
     .title {
-        margin-top: 2.6%;
+        margin-top: 2.4%;
         background-color: #adb5bd;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        height: 55px;
     }
 
     .titleRight {
@@ -132,7 +138,9 @@
         height: 40px;
         border-radius: 50%;
         overflow: hidden;
-        margin-right: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .circleMember img {
@@ -478,7 +486,7 @@
         font-size: 16px;
         text-decoration: none;
         color: black;
-        padding-left:33px;
+        padding-left: 33px;
     }
 
     #my-div {
@@ -527,7 +535,8 @@
     #search {
         margin-top: 50px;
     }
-    .buttonPermission{
+
+    .buttonPermission {
         display: inline-block;
         margin-right: 72rem;
         border: none;
@@ -552,12 +561,14 @@
                     <div class="collapse navbar-collapse">
                       <i class="fa-solid fa-bell" style="color: #ffffff; margin-right: 15px"></i>
                         <span class="dropdown">
-                            <button style="font-size: 15px" class="btn btn-light"><c:out value="${user.name}"/></button>
+                            <div class="circleMember">
+                                <img src="${user.getAvatar()}" alt="Avatar">
+                            </div>
                             <div class="dropdown-content">
-                                <div><a href="#">Setting</a></div>
-                                <div><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></div>
-                                <div><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></div>
-                                <div><a href="login.jsp">Logout</a></div>
+                                <a href="#"><div> Setting</div></a>
+                                <a href="/homeUser?action=editUser&id=${user.id}"><div>Edit</div></a>
+                                <a href="/updatePassword?login=updatePassword&id=${user.id}"><div>Change PassWord</div></a>
+                                <a href="login.jsp"><div>Logout</div></a>
                             </div>
                         </span>
                     </div>
@@ -592,7 +603,7 @@
                 </c:forEach>
             </div>
             <div class="nav">
-                         <button onclick="openPermission()" class="buttonPermission" >${tables.permission}</button>
+                <button onclick="openPermission()" class="buttonPermission">${tables.permission}</button>
             </div>
             <div class="filter" onclick="showSearchCard()">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -634,11 +645,16 @@
                      </span>
                     </div>
                     <div class="member">
-                        <c:forEach var="userToTable" items="${userToTable}">
+                            <c:forEach var="userToTable" items="${userToTable}" begin="0" end="2">
                             <div class="circleMember">
                                 <img src="${userToTable.avatar}" alt="Avatar">
                             </div>
-                        </c:forEach>
+                            </c:forEach>
+                        <c:if test="${toTable.countAvatar > 3}">
+                                    <div class="circleMember">
+                                        <span style="font-size: 20px; color:  #0000008a">+${toTable.countAvatar - 3 }</span>
+                                    </div>
+                        </c:if>
                     </div>
                 </span>
             </div>
@@ -720,7 +736,7 @@
                     </div>
                 </form>
             </div>
-      </div>
+        </div>
         <c:if test="${card != null}">
             <div id="formShowCard" class="formContent">
                 <div class=cardLeft>
@@ -778,20 +794,22 @@
                                     </div>
                                 </form>
 
-<%--                                Edit Comment--%>
-                                <a  onclick="openFormEdit()" class="textIcon"><u>Edit</u></a>
+                                    <%--                                Edit Comment--%>
+                                <a onclick="openFormEdit()" class="textIcon"><u>Edit</u></a>
                                 <div id="formEdit" class="formEdit">
                                     <span class="closebtn" onclick="closeFormEdit()">&times;</span>
-                                    <form method="post" action="/column?action=updateComment&id=${comment.id}&idCard=${card.id}">
+                                    <form method="post"
+                                          action="/column?action=updateComment&id=${comment.id}&idCard=${card.id}">
                                         <div class="mb-3">
-                                            <input type="text" name="comment" value="${comment.comment}" class="form-control">
+                                            <input type="text" name="comment" value="${comment.comment}"
+                                                   class="form-control">
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </div>
                                     </form>
                                 </div>
-<%--                                Delete comment--%>
+                                    <%--                                Delete comment--%>
                                 <a href="/column?action=deleteComment&id=${comment.id}&idCard=${card.id}">
-                                   <span class="textIcon"><u>Delete</u></span>
+                                    <span class="textIcon"><u>Delete</u></span>
                                 </a>
 
                             </div>

@@ -136,10 +136,12 @@ public class AddUserToTableController extends HttpServlet {
         List<Card> listCard = columnDAO.selectAllCard();
         List<AddUserToTable> memberToTable = userDAO.findUserToTable(idTable);
         session.setAttribute("listMember",memberToTable);
+        AddUserToTable toTable = userDAO.setCountAvatar();
         try {
+            request.setAttribute("toTable",toTable);
             session.setAttribute("listCard",listCard);
             session.setAttribute("listColumn", listColumn);
-            request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
+            request.getRequestDispatcher("/column").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

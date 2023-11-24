@@ -79,7 +79,7 @@
                                 </div>
 
                                 <p class="text-center text-muted mt-5 mb-0">Do not have an account?
-                                    <a href="signUp.jsp" class="fw-bold text-body"><u>SignUp here</u></a>
+                                    <a href="/loginAndSignUp?login=signUp" class="fw-bold text-body"><u>SignUp here</u></a>
                                 </p>
                             </form>
 

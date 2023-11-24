@@ -39,7 +39,6 @@ public class LoginAndSignUpController extends HttpServlet {
         }
     }
 
-
     private void loginUser(HttpServletRequest request, HttpServletResponse response) {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
@@ -103,7 +102,42 @@ public class LoginAndSignUpController extends HttpServlet {
         }
         switch (login) {
             case "login":
+                showFormLogin(request,response);
                 break;
+            case "signUp":
+                showFormSignUp(request,response);
+                break;
+            case "logout":
+                logout(request,response);
+                break;
+        }
+    }
+
+    private void logout(HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        try {
+            request.getRequestDispatcher("login.jsp").forward(request,response);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showFormSignUp(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("signUp.jsp").forward(request,response);
+        } catch (IOException | ServletException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showFormLogin(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.getRequestDispatcher("login.jsp").forward(request,response);
+        } catch (IOException | ServletException e) {
+            throw new RuntimeException(e);
         }
     }
 

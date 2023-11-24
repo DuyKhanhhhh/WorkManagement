@@ -96,7 +96,7 @@
                                 </div>
 
                                 <p class="text-center text-muted mt-5 mb-0">Have already an account?
-                                    <a href="login.jsp" class="fw-bold text-body"><u>Login here</u></a>
+                                    <a href="/loginAndSignUp?login=login" class="fw-bold text-body"><u>Login here</u></a>
                                 </p>
 
                             </form>

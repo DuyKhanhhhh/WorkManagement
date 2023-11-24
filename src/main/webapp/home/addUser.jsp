@@ -61,12 +61,6 @@
         margin-left: 1rem;
         margin-top: 1rem;
     }
-
-    .dropdown {
-        display: inline-block;
-        position: relative;
-    }
-
     button {
         border: none;
         border-radius: 5px;
@@ -77,34 +71,6 @@
 
     button:hover {
         background-color: #ddd;
-    }
-
-    .dropdown-options {
-        display: none;
-        position: absolute;
-        overflow: auto;
-        background-color: #646464;
-        border-radius: 5px;
-        box-shadow: 0px 10px 10px 0px rgba(255, 255, 255, 0.4);
-    }
-
-    .dropdown:hover .dropdown-options {
-        display: block;
-    }
-
-    .dropdown-options a {
-        float: left;
-        display: block;
-        color: #000000;
-        padding: 5px;
-        text-decoration: none;
-        padding: 20px 20px;
-    }
-
-    .dropdown-options a:hover {
-        color: #0a0a23;
-        background-color: #ddd;
-        border-radius: 5px;
     }
 
     .main_input {
