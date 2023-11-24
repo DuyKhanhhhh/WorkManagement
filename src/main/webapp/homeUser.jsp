@@ -15,6 +15,11 @@
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
 </head>
 <style>
+    *{
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
     body {
         background-color: #f8f9fa;
     }
@@ -291,7 +296,20 @@
         color: #000000;
         display: block;
     }
+    .circleMember {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .circleMember img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
     .formAddTable .closebtn {
         position: absolute;
         top: -20px;
@@ -314,12 +332,14 @@
                     <div class="collapse navbar-collapse">
                       <i class="fa-solid fa-bell" style="color: #ffffff; margin-right: 15px"></i>
                         <span class="dropdown">
-                            <button style="font-size: 15px" class="btn btn-light"><c:out value="${user.name}"/></button>
+                             <div class="circleMember">
+                                <img src="${user.getAvatar()}" alt="Avatar">
+                            </div>
                             <div class="dropdown-content">
-                                <div><a href="#">Setting</a></div>
-                                <div><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></div>
-                                <div><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></div>
-                                <div><a href="login.jsp">Logout</a></div>
+                                <a href="#"><div> Setting</div></a>
+                                <a href="/homeUser?action=editUser&id=${user.id}"><div>Edit</div></a>
+                                <a href="/updatePassword?login=updatePassword&id=${user.id}"><div>Change PassWord</div></a>
+                                <a href="/loginAndSignUp?login=logout"><div>Logout</div></a>
                             </div>
                         </span>
                     </div>
@@ -328,6 +348,7 @@
             </div>
         </nav>
     </div>
+
     <div class="row" id="fullLeft">
         <div class="col-2" id="boxLeft">
             <div class="table">
