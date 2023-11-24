@@ -60,8 +60,9 @@ HomeUserController extends HttpServlet {
             case "updatePermissionTablePrivate":
                 updatePermissionTablePrivate(request, response);
                 break;
+
         }
-    }
+        }
 
     private void updatePermissionTablePublic(HttpServletRequest request, HttpServletResponse response) {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
@@ -208,9 +209,6 @@ HomeUserController extends HttpServlet {
             case "deleteGroup":
                 showDeleteGroup(request, response);
                 break;
-            case "addTableToSQL":
-                showNewFromTable(request, response);
-                break;
             case "informationGroup":
                 showNewFormByIdOfGroup(request, response);
                 break;
@@ -300,24 +298,6 @@ HomeUserController extends HttpServlet {
         request.setAttribute("listGroup", group);
         try {
             request.getRequestDispatcher("home/updateGroup.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    private void showNewFromTable(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            int id = Integer.parseInt(request.getParameter("id"));
-//            List<Table> tableList = userDAO.selectAllTable();
-//            List<Group> groups = userDAO.selectGroupFromSQL();
-//            request.setAttribute("table", tableList);
-            Group group = new Group();
-            group.setId(id);
-            request.setAttribute("groups", group);
-            request.getRequestDispatcher("home/addTable.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

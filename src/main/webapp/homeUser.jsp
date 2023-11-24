@@ -59,14 +59,12 @@
         margin-top: 1%;
         margin-left: 16%;
         padding-left: 3.5%;
-        margin-bottom: 9%;
     }
 
-    #footer {
-        bottom: 0;
-        left: 0;
-        right: 0;
-        position: fixed;
+    .textTable {
+        font-size: 28px;
+        margin-left: 22px;
+        font-weight: bold;
     }
 
     .textSpan {
@@ -125,6 +123,7 @@
         height: auto;
         float: left;
         padding-left: 8.8%;
+        padding-bottom: 20px;
     }
 
     a {
@@ -168,14 +167,18 @@
         display: block;
     }
 
+    .table_create {
+        margin-top: -22px;
+    }
+
     .group_main {
         width: 100%;
-        height: 18%;
+        height: auto;
     }
 
     .name_group {
         width: 85%;
-        margin-left: 15%;
+        margin-left: 16%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -185,7 +188,6 @@
         width: 100%;
         height: 3rem;
     }
-
     .groupContent {
         width: 200px;
         height: 140px;
@@ -198,9 +200,102 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
     }
 
+    .formAddGroup {
+        display: none;
+        position: fixed;
+        border: 3px solid #9b9b9b;
+        width: 67%;
+        height: 608px;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        border-radius: 2%;
+        background-color: #e9ecef;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+
+    .formAddGroup a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #000000;
+        display: block;
+    }
+
+    .formAddGroup .closebtn {
+        position: absolute;
+        top: -18px;
+        right: 12px;
+        font-size: 50px;
+    }
+
+    .select {
+        width: 70%;
+        height: 110px;
+        margin: 0 auto;
+    }
+
+    .group_type {
+        width: 50%;
+        height: 40px;
+        float: left;
+    }
+
+    .permission {
+        width: 50%;
+        height: 40px;
+        float: left;
+    }
+
+    .title_h2 {
+        margin-top: 40px;
+    }
+
+    #inputName {
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+
+    .modal-open {
+        overflow: hidden;
+    }
+
+    .modal-open::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 9998;
+    }
+
+    .formAddTable {
+        display: none;
+        position: fixed;
+        border: 3px solid #d8ceff;
+        top: 22%;
+        left: 43%;
+        width: 24%;
+        height: 259px;
+        border-radius: 2%;
+        background-color: #959595;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        text-align: center;
+    }
+
+    .formAddTable a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 25px;
+        color: #000000;
+        display: block;
+    }
     .circleMember {
         width: 40px;
         height: 40px;
@@ -215,6 +310,11 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+    .formAddTable .closebtn {
+        position: absolute;
+        top: -20px;
+        right: 2px;
+        font-size: 38px;
     }
 </style>
 <body>
@@ -254,7 +354,7 @@
             <div class="table">
                 <div class="d-flex align-items-center">
                     <i class="fa-solid fa-table"></i>
-                    <span class="textSpan">Table</span>
+                    <span class="textTable">Table</span>
                 </div>
             </div>
             <div class="group">
@@ -264,7 +364,7 @@
                         <span class="textSpan">Group</span>
                     </div>
                     <div class="group_add">
-                        <a href="/homeUser?action=addGroup">
+                        <a onclick="openFormGroup()">
                             <i class="fa-regular fa-square-plus"></i>
                         </a>
                     </div>
@@ -277,6 +377,111 @@
             </c:forEach>
         </div>
         <div class="col-10" id="content">
+
+            <%--            Form Add Group--%>
+            <div id="formAddGroup" class="formAddGroup">
+                <form method="post" action="/homeUser?action=addGroup">
+                    <div>
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeFormGroup()">&times;</a>
+                        <div class="title_h2">
+                            <h2>Create Group</h2>
+                        </div>
+
+                        <div class="form-outline mb-4" id="inputName">
+                            <label style="float: left;font-size: 20px">Name(<span style="color:red;">*</span>)</label>
+                            <input type="text" name="name" class="form-control form-control-lg"
+                                   placeholder="Name" required/>
+                        </div>
+
+                        <div class="select">
+                            <div class="group_type">
+                                <label style="float: left;font-size: 20px">Group Type(<span
+                                        style="color:red;">*</span>)</label>
+                                <select class="form-select" name="groupType"
+                                        style="width: 380px;height: 45px;" required>
+                                    <option></option>
+                                    <option>Manage</option>
+                                    <option>Accountant</option>
+                                    <option>Plan</option>
+                                </select>
+                            </div>
+                            <div class="permission">
+                                <label style="float: left;margin-left: 15px;font-size: 20px">Permission(<span
+                                        style="color:red;">*</span>)</label>
+                                <select class="form-select" name="permission"
+                                        style="width: 380px;height: 45px;margin-left: 4%;" required>
+                                    <option>Public</option>
+                                    <option>Private</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div style="margin-left: 15% ">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" name="information"
+                                          style="height: 180px;width: 82%;"></textarea>
+                                <label style="font-size: 20px; margin-right: 55rem">Information</label>
+                            </div>
+                        </div>
+                        <div>
+                            <button style="width: 190px;height: 50px;margin-top: 25px" class="btn btn-light"
+                                    type="submit">Create
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+<%--        INFORMATION--%>
+                <div id="formIFORMATION" class="formAddGroup">
+                    <form method="post" action="/homeUser?action=addGroup">
+                        <div>
+                            <a href="javascript:void(0)" class="closebtn" onclick="closeFormGroup()">&times;</a>
+                            <div class="title_h2">
+                                <h2>Create Group</h2>
+                            </div>
+
+                            <div class="form-outline mb-4" id="inputName">
+                                <label style="float: left;font-size: 20px">Name(<span style="color:red;">*</span>)</label>
+                                <input type="text" name="name" class="form-control form-control-lg"
+                                       placeholder="Name" required/>
+                            </div>
+
+                            <div class="select">
+                                <div class="group_type">
+                                    <label style="float: left;font-size: 20px">Group Type(<span
+                                            style="color:red;">*</span>)</label>
+                                    <select class="form-select" name="groupType"
+                                            style="width: 380px;height: 45px;" required>
+                                        <option></option>
+                                        <option>Manage</option>
+                                        <option>Accountant</option>
+                                        <option>Plan</option>
+                                    </select>
+                                </div>
+                                <div class="permission">
+                                    <label style="float: left;margin-left: 15px;font-size: 20px">Permission(<span
+                                            style="color:red;">*</span>)</label>
+                                    <select class="form-select" name="permission"
+                                            style="width: 380px;height: 45px;margin-left: 4%;" required>
+                                        <option>Public</option>
+                                        <option>Private</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="margin-left: 15% ">
+                                <div class="form-floating">
+                                <textarea class="form-control" placeholder="Leave a comment here" name="information"
+                                          style="height: 180px;width: 82%;"></textarea>
+                                    <label style="font-size: 20px; margin-right: 55rem">Information</label>
+                                </div>
+                            </div>
+                            <div>
+                                <button style="width: 190px;height: 50px;margin-top: 25px" class="btn btn-light"
+                                        type="submit">Create
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             <div class="d-flex  align-items-center" id="contentTitle">
                 <i class="fa-solid fa-user-group"></i>
                 <span class="textSpan">Your group</span>
@@ -319,34 +524,66 @@
                     <c:forEach items="${tables}" var="table">
                         <c:if test="${group.id eq table.idGroup}">
                             <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
-                               style="text-decoration: none; color: black; margin-top: 1rem;">
-                            <div class="groupContent">
-                                <div class="table_create">
-                                    <h4>${table.name}</h4>
+                               style="text-decoration: none; color: black">
+                                <div class="groupContent">
+                                    <div class="table_create">
+                                        <h4 style="padding-top: 26px">${table.name}</h4>
+                                    </div>
                                 </div>
-                            </div>
                             </a>
                         </c:if>
                     </c:forEach>
-                    <div class="groupContent">
-                        <c:forEach var="listTable" items="${listTable}">
-                            <c:if test="${group.id eq table.idGroup}">
-                                <div>
-                                    <h4 >${listTable.name}</h4>
-                                </div>
-                            </c:if>
-                        </c:forEach>
-                        <a href="/homeUser?action=addTableToSQL&id=${group.id}"
-                           style="text-decoration: none; color: black">
-                            <div>
-                                <span style="font-size: 110px">+</span>
+                    <div class="groupContent" onclick="openFormCreateTable(${group.id})">
+                        <div class="table_create">
+                            <span style="text-align: center;font-size: 110px">+</span>
+                        </div>
+                    </div>
+                        <%--                ADD TABLE--%>
+                    <div class="formAddTable" id="formAddTable${group.id}">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeFormCreateTable(${group.id})">&times;</a>
+                        <form method="post" action="/homeUser?action=addTable&id=${group.id}">
+                            <h3>Create New Table</h3>
+                            <div class="form-outline mb-3">
+                                <span style="margin: 8px" class="input-group-text">
+                                    <input type="text" name="name" class="form-control form-control-lg"
+                                           placeholder="Enter Your Name" required/>
+                                </span>
                             </div>
-                        </a>
+                            <div class="form-outline mb-4">
+                                 <span style="margin: 8px" class="input-group-text">
+                                    <select class="form-select" aria-label="Default select example" name="permission">
+                                    <option>Public</option>
+                                    <option>Private</option>
+                                    </select>
+                                 </span>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-light btn-lg gradient-custom-4 text-body">
+                                Add
+                            </button>
+                        </form>
                     </div>
                 </div>
             </c:forEach>
         </div>
     </div>
 </div>
+<script>
+    function openFormCreateTable(id) {
+        document.getElementById("formAddTable" + id).style.display = "block";
+    }
+    function closeFormCreateTable(id) {
+        document.getElementById("formAddTable" + id).style.display = "none";
+    }
+
+    function openFormGroup() {
+        document.getElementById("formAddGroup").style.display = "block";
+        document.body.classList.add("modal-open");
+    }
+
+    function closeFormGroup() {
+        document.getElementById("formAddGroup").style.display = "none";
+        document.body.classList.remove("modal-open");
+    }
+</script>
 </body>
 </html>

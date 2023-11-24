@@ -8,6 +8,26 @@ public class Card {
     private String content;
     private String comment;
     private String label;
+    private String link;
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public Card(int id, int idUser, int idColumn, String name, String content, String comment, String label, String link) {
+        this.id = id;
+        this.idUser = idUser;
+        this.idColumn = idColumn;
+        this.name = name;
+        this.content = content;
+        this.comment = comment;
+        this.label = label;
+        this.link = link;
+    }
 
     public Card() {
     }

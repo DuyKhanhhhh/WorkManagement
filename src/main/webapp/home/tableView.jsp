@@ -94,24 +94,23 @@
     }
 
     .sidenav {
-        display: none;
-        height: 36%;
-        width: 222px;
+        height: 100%;
+        width: 0;
         position: fixed;
         z-index: 1;
+        top: 50px;
         right: 0;
-        background-color: #8c8c8c;
+        background-color: #111;
         overflow-x: hidden;
         transition: 0.5s;
         padding-top: 60px;
-        margin-top: -13px;
     }
 
     .sidenav a {
         padding: 8px 8px 8px 32px;
         text-decoration: none;
         font-size: 25px;
-        color: #ffffff;
+        color: #f1f1f1;
         display: block;
         transition: 0.3s;
     }
@@ -126,6 +125,16 @@
         right: 25px;
         font-size: 36px;
         margin-left: 50px;
+    }
+
+    #main {
+        transition: margin-left .5s;
+        padding: 16px;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sidenav {padding-top: 15px;}
+        .sidenav a {font-size: 18px;}
     }
 
     #rightTitle {
@@ -605,19 +614,29 @@
             <div class="nav">
                 <button onclick="openPermission()" class="buttonPermission">${tables.permission}</button>
             </div>
+            <span id="main">
+                    <div class="nav">
+                     <span onclick="openPermission()">
+                         <label style="display: inline-block;margin-right: 80rem;">${tables.permission}</label>
+                     </span>
+                    </div>
+                </span>
             <div class="filter" onclick="showSearchCard()">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <button id="buttonSearchCard" style="margin-left: 2px">Filter</button>
             </div>
 
             <div class="titleRight">
-                <div id="setting" class="sidenav">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                <div id="mySidenav" class="sidenav">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
                     <h2 style="text-align: center;color: white">Menu</h2>
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
                     <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
-                    <c:if test="${roleUser.role.equals('Admin') && roleUser.idTable eq tables.id}">
+                    <a href="/addUserToTable?action=deleteTable&idTable=${tables.id}&groupId=${groups.id}">Delete table</a>
+
+                    <c:if test="${roleUser.role.equals('Admin') && rolerUser.idTable eq tables.id}">
+
                         <a onclick="showConfirmation()" style="color: white">Delete table</a>
                     </c:if>
                     <c:if test="${roleUser.idUser != memberToGroup.idUser}">
@@ -706,8 +725,8 @@
                             </a>
                         </c:if>
                     </c:forEach>
-                    <div class="boxAddCart">
-                        <span onclick="openFormCard(${listColumn.id})">+</span>
+                    <div class="boxAddCart" onclick="openFormCard(${listColumn.id})">
+                        <span>+</span>
                         <div id="formAddCard${listColumn.id}" class="addCard">
                             <form method="post"
                                   action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
@@ -725,8 +744,8 @@
                 </div>
             </c:if>
         </c:forEach>
-        <div class="boxAdd">
-            <span onclick="openForm()" style="font-size: 20px">+ Add list</span>
+        <div class="boxAdd" onclick="openForm()">
+            <span style="font-size: 20px">+ Add list</span>
             <div id="formAdd" class="formAdd">
                 <form method="post" action="/column?action=addColumn&idTable=${tables.id}">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeForm()">&times;</a>
@@ -772,7 +791,7 @@
                         <c:forEach var="comment" items="${listComment}">
                             <div class="comment-item">
                                 <img src="${comment.avatar}" alt="Avatar" class="avatar">
-                                <div class="comment-content">
+                                <div class="comment-content">1
                                     <span class="comment-name">${comment.name}</span>
                                     <span class="comment-text">${comment.comment}</span>
                                 </div>
@@ -835,10 +854,23 @@
                         <i class="fa-solid fa-tag" style="color: #000000;"></i>
                         <span>Label</span>
                     </div>
-                    <div class="boxIconCard">
-                        <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
-                        <span>Attach</span>
-                    </div>
+                    <form method="POST" action="FileUploadServlet" enctype="multipart/form-data" id="uploadForm">
+                        <div class="boxIconCard">
+                            <label for="fileInput">
+                                <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
+                                <span>Attach</span>
+                            </label>
+                            <input type="file" name="file" id="fileInput" style="display:none;" onchange="displayFileName()" />
+                        </div>
+
+                        <div id="fileNameContainer" style="display: none;">
+                            <p>File Name:</p>
+                            <span id="fileName"></span>
+                        </div>
+
+                        <!-- Thêm nút để kích hoạt sự kiện submit của form -->
+                        <input type="button" value="Upload" onclick="uploadFile()" />
+                    </form>
                 </div>
                 <div id="member" style="display: none;">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
@@ -860,6 +892,22 @@
 </div>
 <script>
 
+
+
+    function displayFileName() {
+        var fileInput = document.getElementById('fileInput');
+        var fileNameContainer = document.getElementById('fileNameContainer');
+        var fileNameSpan = document.getElementById('fileName');
+
+        // Hiển thị tên file
+        fileNameSpan.textContent = fileInput.files[0].name;
+        fileNameContainer.style.display = 'block';
+    }
+
+    function uploadFile() {
+        // Kích hoạt sự kiện submit của form
+        document.getElementById('uploadForm').submit();
+    }
     // function openFormContent(id, name) {
     //     document.getElementById("formShowCard").style.display = "block";
     //     document.getElementById("textName").innerText = name;
@@ -878,7 +926,6 @@
 
     function openFormCard(idColum) {
         document.getElementById("formAddCard" + idColum).style.display = "block";
-
     }
 
     function closeFormCard(idColum) {
@@ -917,11 +964,15 @@
     }
 
     function openNav() {
-        document.getElementById("setting").style.display = "block";
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginRight = "250px";
+        document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
     }
 
     function closeNav() {
-        document.getElementById("setting").style.display = "none";
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginRight= "0";
+        document.body.style.backgroundColor = "white";
     }
 
     function openPermission() {

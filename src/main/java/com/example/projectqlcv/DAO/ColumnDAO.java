@@ -25,6 +25,7 @@ public class ColumnDAO implements IColumDAO{
     private static final String UPDATE_CONTENT_IN_CARD = "UPDATE card SET content = ? WHERE id = ?";
     private static final String FIND_CARD_WHERE_NAME = "SELECT c.id,c.idColumn,c.name,c.content,c.label FROM card c JOIN columnWork l ON c.idColumn = l.id JOIN tableWork t ON l.idTable = t.id WHERE c.name LIKE ? AND idTable = ?;";
 
+    private static final String ADD_LINK_TO_SQL= "INSERT INTO card (name, link) VALUES (?,?)";
 
     @Override
     public void addColumnWork(int idTable, String  colum) {
@@ -278,5 +279,25 @@ public class ColumnDAO implements IColumDAO{
             throw new RuntimeException(e);
         }
         return cardList;
+    }
+    @Override
+    public void addCardLink(Card card) {
+        try {
+            Connection connection = DataConnector.getConnection();
+
+            // Tiếp tục thêm vào bảng card
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_LINK_TO_SQL, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, card.getName());
+            preparedStatement.setString(2, card.getLink());
+            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            int idCard = 0;
+            if (resultSet.next()) {
+                idCard = resultSet.getInt(1);
+            }
+            card.setId(idCard);
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
