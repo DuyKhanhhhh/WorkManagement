@@ -61,10 +61,13 @@ public class AddMemberToGroupController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         int idGroup = Integer.parseInt(request.getParameter("idGroup"));
         User user = iUserDAO.selectAllUserId(id);
+        HttpSession session = request.getSession();
         iUserDAO.addMemberToGroup(idGroup, user);
-        request.setAttribute("message", "Add member success");
+        List<Member> member = iUserDAO.selectGroupMember(idGroup);
+        session.setAttribute("member", member);
+        session.setAttribute("message", "Add member success");
         try {
-            request.getRequestDispatcher("home/addMember.jsp").forward(request, response);
+            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -89,6 +92,28 @@ public class AddMemberToGroupController extends HttpServlet {
             case "deleteMember":
                 deleteMember(request, response);
                 break;
+            default:
+                showMember(request,response);
+                break;
+        }
+    }
+    private void showMember(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            int idUser = Integer.parseInt(request.getParameter("idUser"));
+            int idGroup = Integer.parseInt(request.getParameter("idGroup"));
+            Group group = iUserDAO.findGroupById(idGroup);
+            HttpSession session = request.getSession();
+            session.setAttribute("groups", group);
+            List<Member> member = iUserDAO.selectGroupMember(idGroup);
+            session.setAttribute("member", member);
+            Member roleMember = iUserDAO.findRoleUserToMember(idUser);
+            session.setAttribute("roleMember", roleMember);
+            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
+
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -97,7 +122,7 @@ public class AddMemberToGroupController extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("groupId"));
             Group group = iUserDAO.findGroupById(id);
             request.setAttribute("groups", group);
-            request.getRequestDispatcher("home/addMember.jsp").forward(request, response);
+            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

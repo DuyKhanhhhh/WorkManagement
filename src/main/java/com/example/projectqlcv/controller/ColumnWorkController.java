@@ -157,7 +157,6 @@ public class ColumnWorkController extends HttpServlet {
             case "showCard":
                 showCard(request, response);
                 break;
-
             case "deleteComment":
                 deleteComment(request, response);
                 break;
@@ -175,17 +174,18 @@ public class ColumnWorkController extends HttpServlet {
 
     private void showCard(HttpServletRequest request, HttpServletResponse response) {
         int idCard = Integer.parseInt(request.getParameter("idCard"));
-        HttpSession session = request.getSession();
         List<UserToCard> userToCard = userDAO.findMemberToCard(idCard);
         List<SelectComment> listComment = iColumDAO.selectCommentByIdCard(idCard);
 
         Card card = iColumDAO.findCardById(idCard);
-        session.setAttribute("card", card);
-        session.setAttribute("listComment",listComment);
-        session.setAttribute("userToCard", userToCard);
+        request.setAttribute("card", card);
+        request.setAttribute("listComment",listComment);
+        request.setAttribute("userToCard", userToCard);
         try {
-            response.sendRedirect("/column");
+            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ServletException e) {
             throw new RuntimeException(e);
         }
     }

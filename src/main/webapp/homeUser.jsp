@@ -193,7 +193,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
+    }
+    th{
+        vertical-align: middle;
     }
 
 </style>
@@ -280,7 +282,7 @@
                                     <span style="font-size: 20px">Table</span>
                                 </a>
 
-                                <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}" class="icon">
+                                <a href="/addMembers?action=null&idGroup=${group.id}&idUser=${user.id}" class="icon">
                                     <i class="fa-solid fa-user-group"></i>
 
                                     <span style="font-size: 20px">Member</span>

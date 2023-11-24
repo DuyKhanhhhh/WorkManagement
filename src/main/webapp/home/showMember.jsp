@@ -217,6 +217,30 @@
         font-size: 40px;
     }
 
+    #searchMember {
+        width: 700px;
+        height: 200px;
+        background: #b4b4b4;
+        left: 32%;
+        top: 30%;
+        display: none;
+        border-radius: 10px;
+        position: absolute;
+    }
+    .tableSearch{
+        width: 700px;
+        margin: 30px auto;
+    }
+
+    .closebtn {
+        background: none;
+        border: none;
+        margin-left: 97%;
+    }
+    td{
+        vertical-align: middle;
+    }
+
     /* ends */
 
 </style>
@@ -257,17 +281,17 @@
                 <h2 style=" margin-top: 50px ; margin-left: 60%"><c:out value="${groups.name}"></c:out></h2>
             </div>
             <div class="add_member">
-                <a href="/addMembers?action=addMember&groupId=<c:out value="${groups.id}"></c:out>">
-                    <button style="margin-left: 60% ; height: 40px; border-radius: 5px; background: #268aeb ; color: white ; border: none"
-                            type="submit"><i style="margin-left: 7px ; margin-right: 6px ; font-size: initial"  class="fa-solid fa-user-plus"></i>
-                        Share
-                    </button>
-                </a>
+                <button onclick="showSearchMember()"
+                        style="margin-left: 60% ; height: 40px; border-radius: 5px; background: #268aeb ; color: white ; border: none"
+                        type="submit"><i style="margin-left: 7px ; margin-right: 6px ; font-size: initial"
+                                         class="fa-solid fa-user-plus"></i>
+                    Share
+                </button>
             </div>
         </div>
 
         <div class="table_all">
-            <table class="table table-hover">
+            <table class="table table-sm">
                 <tr>
                     <th>Name member</th>
                     <th>Email</th>
@@ -284,7 +308,7 @@
                         <td>${member.nameUser}</td>
                         <td>${member.emailUser}</td>
                         <td>
-                            <div class="menu-wrapper menu-gold">
+                            <div class="table table-borderless">
 
                                 <ul class="menu">
                                     <li>
@@ -306,7 +330,6 @@
                                                 </ul>
                                             </c:when>
                                         </c:choose>
-
                                     </li>
                                 </ul>
                             </div>
@@ -337,8 +360,58 @@
                     </script>
                 </c:forEach>
             </table>
+            <div class="row">
+                    <div id="searchMember">
+                        <div class="buttonClose">
+                            <button class="closebtn" onclick="closeFormEdit()">x</button>
+                        </div>
+                        <div class="titleSearchMember">
+                            <h2 style="text-align: center; margin-top: 40px">Search member </h2>
+                        </div>
+                        <div id="search">
+                            <form class="d-flex" method="post"
+                                  action="/homeUser?action=search&idGroup=<c:out value="${groups.id}"></c:out>">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                                       name="search">
+                                <button class="btn btn-secondary" type="submit" name="search">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                <c:if test="${list != null}">
+                    <div class="tableSearch">
+                        <table class="table table-bordered">
+                            <c:forEach var="user" items="${list}">
+                                <tr>
+                                    <td><img width="80px" height="80px" src="${user.avatar}"></td>
+                                    <td>${user.name}</td>
+                                    <td>${user.email}</td>
+                                    <td>
+                                        <a href="/addMembers?action=addUser&id=${user.id}&idGroup=<c:out value="${groups.id}"></c:out>">
+                                            <button type="button" class="btn btn-danger">Add</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </c:if>
+            </div>
         </div>
     </div>
 </div>
+<script>
+    function showSearchMember() {
+        var button = document.getElementById("searchMember");
+        if (button.style.display === "none") {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
+        }
+    }
+
+    function closeFormEdit() {
+        document.getElementById("searchMember").style.display = "none";
+    }
+</script>
 </body>
 </html>

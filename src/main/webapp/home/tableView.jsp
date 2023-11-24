@@ -829,7 +829,7 @@
                         <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}"
                            onclick="closeFormContent()">
 
-                        
+
                             <div class="circleMember">
                                 <img src="${userToTable.avatar}" alt="Avatar">
                             </div>

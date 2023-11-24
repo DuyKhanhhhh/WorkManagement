@@ -15,6 +15,10 @@
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
 </head>
 <style>
+    *{
+        padding: 0;
+        margin: 0;
+    }
     body {
         background-color: #f8f9fa;
     }
