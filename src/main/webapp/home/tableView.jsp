@@ -15,11 +15,12 @@
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
 </head>
 <style>
-    *{
+    * {
         padding: 0;
         margin: 0;
         box-sizing: border-box;
     }
+
     body {
         background-color: #f8f9fa;
     }
@@ -133,8 +134,13 @@
     }
 
     @media screen and (max-height: 450px) {
-        .sidenav {padding-top: 15px;}
-        .sidenav a {font-size: 18px;}
+        .sidenav {
+            padding-top: 15px;
+        }
+
+        .sidenav a {
+            font-size: 18px;
+        }
     }
 
     #rightTitle {
@@ -180,18 +186,15 @@
     }
 
     .formAdd a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
         color: #818181;
-        display: block;
+        padding-top: 10px;
     }
 
     .formAdd .closebtn {
         position: absolute;
-        top: -25px;
-        right: -2px;
-        font-size: 40px;
+        top: 21px;
+        right: 103px;
+        font-size: 39px;
     }
 
     .formDelete {
@@ -243,7 +246,7 @@
     }
 
     .contentTable {
-        border: 1px solid;
+        border: none;
         background-color: #ced4da;
         display: flex;
         justify-content: space-between;
@@ -254,6 +257,7 @@
         height: auto;
         padding-left: 5px;
         word-wrap: break-word;
+        margin-bottom: 9px;
     }
 
     .nav {
@@ -304,14 +308,12 @@
         color: #818181;
         display: block;
     }
-
     .addCard .closebtn {
         position: absolute;
-        top: -25px;
-        right: 4px;
+        top: 22px;
+        right: 126px;
         font-size: 40px;
     }
-
     .showCard {
         width: 234px;
         height: auto;
@@ -551,7 +553,13 @@
         border: none;
         background: none;
     }
+.mb-3{
 
+    margin-bottom: 1rem!important;
+    position: relative;
+    top: -30px;
+
+}
 </style>
 <body>
 <div class="container-fluid">
@@ -596,7 +604,7 @@
                                 <form id="edit" action="/addUserToTable" method="post">
                                     <input name="nameUpdate" type="text" class="title" id="title"
                                            value="${listTable.name}"
-                                           style="border: none">
+                                           style="border: none;height: auto; margin-bottom: 1rem;margin-left: 1rem;">
                                     <input name="action" value="editNameTable" type="hidden">
                                     <input name="idTable" value="${tables.id}" type="hidden">
                                     <input type="submit" class="button" id="buttonEdit"
@@ -614,13 +622,7 @@
             <div class="nav">
                 <button onclick="openPermission()" class="buttonPermission">${tables.permission}</button>
             </div>
-            <span id="main">
-                    <div class="nav">
-                     <span onclick="openPermission()">
-                         <label style="display: inline-block;margin-right: 80rem;">${tables.permission}</label>
-                     </span>
-                    </div>
-                </span>
+
             <div class="filter" onclick="showSearchCard()">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <button id="buttonSearchCard" style="margin-left: 2px">Filter</button>
@@ -633,7 +635,8 @@
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
                     <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
-                    <a href="/addUserToTable?action=deleteTable&idTable=${tables.id}&groupId=${groups.id}">Delete table</a>
+                    <a href="/addUserToTable?action=deleteTable&idTable=${tables.id}&groupId=${groups.id}">Delete
+                        table</a>
 
                     <c:if test="${roleUser.role.equals('Admin') && rolerUser.idTable eq tables.id}">
 
@@ -705,10 +708,11 @@
                         <div class="contentTable">
                             <input name="nameColumnUpdate" type="text" class="titleColumn" id="titleColumn"
                                    value="${listColumn.name}"
-                                   style="border: none; max-width: 215px;cursor: pointer;background-color: #ced4da">
+                                   style="border: none; max-width: 180px;cursor: pointer;background-color: #ced4da">
                             <div onclick="openFormDelete()">
-                                <i class="fa-solid fa-ellipsis-vertical" style="color: #000000; margin-right: 5px"></i>
+                                <i class="fa-solid fa-ellipsis" style="color: #000000; margin-right: 5px"></i>
                             </div>
+
                         </div>
                         <input name="action" value="editNameColumn" type="hidden">
                         <input name="idColumn" value="${listColumn.id}" type="hidden">
@@ -730,13 +734,13 @@
                         <div id="formAddCard${listColumn.id}" class="addCard">
                             <form method="post"
                                   action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
-                                <a href="javascript:void(0)" class="closebtn"
-                                   onclick="closeFormCard(${listColumn.id})">&times;</a>
                                 <div class="mb-3">
                                     <input type="text" class="form-control" name="name"
                                            placeholder="Enter a list title">
                                     <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Card
                                     </button>
+                                    <a href="javascript:void(0)" class="closebtn"
+                                       onclick="closeFormCard(${listColumn.id})">&times;</a>
                                 </div>
                             </form>
                         </div>
@@ -748,10 +752,11 @@
             <span style="font-size: 20px">+ Add list</span>
             <div id="formAdd" class="formAdd">
                 <form method="post" action="/column?action=addColumn&idTable=${tables.id}">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeForm()">&times;</a>
+
                     <div class="mb-3">
                         <input type="text" class="form-control" name="name" placeholder="Enter a list title">
                         <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Column</button>
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeForm()">&times;</a>
                     </div>
                 </form>
             </div>
@@ -860,7 +865,8 @@
                                 <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
                                 <span>Attach</span>
                             </label>
-                            <input type="file" name="file" id="fileInput" style="display:none;" onchange="displayFileName()" />
+                            <input type="file" name="file" id="fileInput" style="display:none;"
+                                   onchange="displayFileName()"/>
                         </div>
 
                         <div id="fileNameContainer" style="display: none;">
@@ -869,7 +875,7 @@
                         </div>
 
                         <!-- Thêm nút để kích hoạt sự kiện submit của form -->
-                        <input type="button" value="Upload" onclick="uploadFile()" />
+                        <input type="button" value="Upload" onclick="uploadFile()"/>
                     </form>
                 </div>
                 <div id="member" style="display: none;">
@@ -893,7 +899,6 @@
 <script>
 
 
-
     function displayFileName() {
         var fileInput = document.getElementById('fileInput');
         var fileNameContainer = document.getElementById('fileNameContainer');
@@ -908,6 +913,7 @@
         // Kích hoạt sự kiện submit của form
         document.getElementById('uploadForm').submit();
     }
+
     // function openFormContent(id, name) {
     //     document.getElementById("formShowCard").style.display = "block";
     //     document.getElementById("textName").innerText = name;
@@ -971,7 +977,7 @@
 
     function closeNav() {
         document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("main").style.marginRight= "0";
+        document.getElementById("main").style.marginRight = "0";
         document.body.style.backgroundColor = "white";
     }
 

@@ -16,7 +16,7 @@ public interface IUserDAO {
     User findUserById(int id);
 
     User selectAllUserId(int id);
-    AddUserToTable setCountAvatar();
+    AddUserToTable setCountAvatar(int idTable);
 
     void editPassWordUser(String email, String rePassword);
 
