@@ -19,6 +19,7 @@
         box-sizing: border-box;
         font-family: Arial, sans-serif;
         font-size: 14px;
+        color: #172B4D;
     }
 
 
@@ -102,9 +103,10 @@
     }
 
     #boxLeft {
-        width: 15%;
+        width: 21%;
         position: sticky;
-        top: 0
+        top: 0;
+        font-weight: 600;
     }
 
     #content {
@@ -147,13 +149,19 @@
         font-size: 16px;
         font-weight: 700;
         line-height: 24px;
-        margin: 20px 0;
+    }
+
+    .group {
+        margin-top: 20px;
     }
 
     .group_header {
         display: flex;
         justify-content: space-between;
         padding-bottom: 11px;
+    }
+    .group__header-name {
+
     }
 
     .group__header-controls {
@@ -524,12 +532,10 @@
                             </a>
                         </c:if>
                     </c:forEach>
-                </div>
-
-                    <%--       Add table button       --%>
-                <div class="groupContent" onclick="openFormCreateTable(${group.id})">
-                    <div class="table_create">
-                        <span style="font-size: 110px">+</span>
+                    <div class="groupContent" onclick="openFormCreateTable(${group.id})">
+                        <div class="table_create">
+                            <span style="font-size: 110px">+</span>
+                        </div>
                     </div>
                 </div>
 
