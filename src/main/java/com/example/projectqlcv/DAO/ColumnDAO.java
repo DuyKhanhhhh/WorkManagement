@@ -17,8 +17,8 @@ public class ColumnDAO implements IColumDAO{
     private static final String FIND_COMMENT_BY_ID = "SELECT * FROM comment WHERE id = ?";
     private static final String SELECT_COLUMN_ID= "SELECT * FROM columnWork WHERE id=?";
 
-    private static final String ADD_COMMENT_TO_SQL = "INSERT INTO comment (idCard, comment) VALUES(?, ?)";
-    private static final String SELECT_COMMENT_BY_ID_CARD = "select cm.id, u.name, u.avatar, cm.comment from userToCard uc join user u on uc.idUser = u.id join card c on uc.idCard = c.id join comment cm on cm.idCard = c.id where cm.idCard = ?";
+    private static final String ADD_COMMENT_TO_SQL = "INSERT INTO comment (idCard, comment, idUser) VALUES(?, ? ,?)";
+    private static final String SELECT_COMMENT_BY_ID_CARD = "select c.id, u.name, u.avatar, c.comment from user u join comment c on u.id = c.idUser where c.idCard = ?";
     private static final String DELETE_COMMENT_BY_ID= "DELETE FROM comment WHERE id = ?";
     private static final String UPDATE_COMMENT_BY_ID= "UPDATE comment set comment = ? WHERE id = ?";
 
@@ -74,12 +74,13 @@ public class ColumnDAO implements IColumDAO{
     }
 
     @Override
-    public void addComment(Card card) {
+    public void addComment(Card card , int idUser) {
         try {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_COMMENT_TO_SQL);
             preparedStatement.setInt(1, card.getId());
             preparedStatement.setString(2, card.getComment());
+            preparedStatement.setInt(3, idUser);
             preparedStatement.executeUpdate();
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -102,6 +103,7 @@ public class ColumnDAO implements IColumDAO{
                 String name = rs.getString("name");
                 String avatar = rs.getString("avatar");
                 String comment = rs.getString("comment");
+
                 cardList.add(new SelectComment(idComment,name,avatar,comment));
             }
         } catch (SQLException e) {

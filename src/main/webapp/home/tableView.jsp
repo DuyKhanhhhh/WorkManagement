@@ -838,7 +838,7 @@
 
                             </div>
                         </c:forEach>
-                        <form method="post" action="/column?action=addComment&id=${card.id}">
+                        <form method="post" action="/column?action=addComment&idCard=${card.id}&idUser=${user.id}">
                             <div class="mb-3">
                                 <input id="inputComment" type="text" name="comment" class="form-control">
                                 <button type="submit" class="btn btn-primary">Submit</button>

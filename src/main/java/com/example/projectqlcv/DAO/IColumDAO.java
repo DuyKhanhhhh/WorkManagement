@@ -14,7 +14,7 @@ public interface IColumDAO {
     Column selectColumn(int idColumn);
     Card findCardById(int idCard);
 
-    void addComment(Card card);
+    void addComment(Card card, int idUser);
     List<SelectComment> selectCommentByIdCard(int id);
     boolean deleteComment(int id);
     boolean updateComment(String name, int id);

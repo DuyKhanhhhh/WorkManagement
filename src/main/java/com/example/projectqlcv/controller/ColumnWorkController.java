@@ -97,14 +97,15 @@ public class ColumnWorkController extends HttpServlet {
     }
 
     private void createComment(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
+        int idCard = Integer.parseInt(request.getParameter("idCard"));
+        int idUser = Integer.parseInt(request.getParameter("idUser"));
         String comment = request.getParameter("comment");
         Card card = new Card();
-        card.setId(id);
+        card.setId(idCard);
         card.setComment(comment);
-        iColumDAO.addComment(card);
-        card = iColumDAO.findCardById(id);
-        List<SelectComment> listComment = iColumDAO.selectCommentByIdCard(id);
+        iColumDAO.addComment(card,idUser);
+        card = iColumDAO.findCardById(idCard);
+        List<SelectComment> listComment = iColumDAO.selectCommentByIdCard(idCard);
         request.setAttribute("listComment", listComment);
         request.setAttribute("card", card);
         try {
