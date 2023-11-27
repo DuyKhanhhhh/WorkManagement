@@ -43,8 +43,7 @@
         <div class="form-outline mb-4">
             <span class="input-group-text">
                 <i class="fa-solid fa-user" style="color: #000000; font-size: 30px"></i>
-                <input type="text" name="name" class="form-control form-control-lg"
-placeholder="Your Name" required/>
+                <input type="text" name="name" class="form-control form-control-lg" placeholder="Your Name" required/>
             </span>
         </div>
 

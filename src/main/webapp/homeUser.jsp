@@ -384,7 +384,7 @@
                     <div>
                         <a href="javascript:void(0)" class="closebtn" onclick="closeFormGroup()">&times;</a>
                         <div class="title_h2">
-                            <h2>Create Group</h2>
+                            <h2>Create group</h2>
                         </div>
 
                         <div class="form-outline mb-4" id="inputName">
@@ -395,11 +395,10 @@
 
                         <div class="select">
                             <div class="group_type">
-                                <label style="float: left;font-size: 20px">Group Type(<span
+                                <label style="float: left;font-size: 20px">Group type(<span
                                         style="color:red;">*</span>)</label>
                                 <select class="form-select" name="groupType"
                                         style="width: 380px;height: 45px;" required>
-                                    <option></option>
                                     <option>Manage</option>
                                     <option>Accountant</option>
                                     <option>Plan</option>

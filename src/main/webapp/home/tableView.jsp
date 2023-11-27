@@ -585,7 +585,7 @@
                                 <a href="#"><div> Setting</div></a>
                                 <a href="/homeUser?action=editUser&id=${user.id}"><div>Edit</div></a>
                                 <a href="/updatePassword?login=updatePassword&id=${user.id}"><div>Change PassWord</div></a>
-                                <a href="login.jsp"><div>Logout</div></a>
+                                <a href="/loginAndSignUp?login=login"><div>Logout</div></a>
                             </div>
                         </span>
                     </div>
