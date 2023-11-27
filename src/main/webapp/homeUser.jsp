@@ -19,6 +19,7 @@
         box-sizing: border-box;
         font-family: Arial,sans-serif;
         font-size: 14px;
+        color: #172B4D;
     }
 
 
@@ -102,9 +103,10 @@
     }
 
     #boxLeft {
-        width: 15%;
+        width: 21%;
         position: sticky;
-        top: 0
+        top: 0;
+        font-weight: 600;
     }
 
     #content {
@@ -142,12 +144,17 @@
         width: 14px;
     }
 
+
+
     .group-heading h3{
         color: rgb(68, 84, 111);
         font-size: 16px;
         font-weight: 700;
         line-height: 24px;
-        margin: 20px 0;
+    }
+
+    .group {
+        margin-top: 20px;
     }
 
     .group_header {
