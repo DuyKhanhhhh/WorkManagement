@@ -17,7 +17,7 @@
         padding: 0;
         margin: 0;
         box-sizing: border-box;
-        font-family: Arial,sans-serif;
+        font-family: Arial, sans-serif;
         font-size: 14px;
     }
 
@@ -142,7 +142,7 @@
         width: 14px;
     }
 
-    .group-heading h3{
+    .group-heading h3 {
         color: rgb(68, 84, 111);
         font-size: 16px;
         font-weight: 700;
@@ -157,7 +157,7 @@
     }
 
     .group__header-controls {
-           display: flex;
+        display: flex;
     }
 
     .group__header-control {
@@ -176,16 +176,13 @@
         justify-content: center;
     }
 
-    .table_create span{
+    .table_create span {
         font-size: 70px;
     }
 
     .group__tables {
         display: flex;
     }
-
-
-
 
     .icon {
         text-decoration: none;
@@ -263,7 +260,6 @@
     .dropdown:hover .dropdown-content {
         display: block;
     }
-
 
 
     .formAddGroup {
@@ -433,7 +429,6 @@
         </ul>
     </aside>
     <div class="col-10" id="content">
-
         <%--            Form Add Group--%>
         <div id="formAddGroup" class="formAddGroup">
             <form method="post" action="/homeUser?action=addGroup">
@@ -442,25 +437,25 @@
                     <div class="title_h2">
                         <h2>Create Group</h2>
                     </div>
-
                     <div class="form-outline mb-4" id="inputName">
-                        <label style="float: left;font-size: 20px">Name(<span style="color:red;">*</span>)</label>
+                        <label style="float: left;font-size: 20px">Name(<span
+                                style="color:red;">*</span>)</label>
                         <input type="text" name="name" class="form-control form-control-lg"
                                placeholder="Name" required/>
                     </div>
 
                     <div class="select">
                         <div class="group_type">
-                            <label style="float: left;font-size: 20px">Group Type(<span
+                            <label style="float: left;font-size: 20px">Group type(<span
                                     style="color:red;">*</span>)</label>
                             <select class="form-select" name="groupType"
                                     style="width: 380px;height: 45px;" required>
-                                <option></option>
                                 <option>Manage</option>
                                 <option>Accountant</option>
                                 <option>Plan</option>
                             </select>
                         </div>
+
                         <div class="permission">
                             <label style="float: left;margin-left: 15px;font-size: 20px">Permission(<span
                                     style="color:red;">*</span>)</label>
@@ -486,58 +481,8 @@
                 </div>
             </form>
         </div>
-        <%--        INFORMATION--%>
-        <%--                <div id="formIFORMATION" class="formAddGroup">--%>
-        <%--                    <form method="post" action="/homeUser?action=addGroup">--%>
-        <%--                        <div>--%>
-        <%--                            <a href="javascript:void(0)" class="closebtn" onclick="closeFormGroup()">&times;</a>--%>
-        <%--                            <div class="title_h2">--%>
-        <%--                                <h2>Create Group</h2>--%>
-        <%--                            </div>--%>
 
-        <%--                            <div class="form-outline mb-4" id="inputName">--%>
-        <%--                                <label style="float: left;font-size: 20px">Name(<span style="color:red;">*</span>)</label>--%>
-        <%--                                <input type="text" name="name" class="form-control form-control-lg"--%>
-        <%--                                       placeholder="Name" required/>--%>
-        <%--                            </div>--%>
 
-        <%--                            <div class="select">--%>
-        <%--                                <div class="group_type">--%>
-        <%--                                    <label style="float: left;font-size: 20px">Group Type(<span--%>
-        <%--                                            style="color:red;">*</span>)</label>--%>
-        <%--                                    <select class="form-select" name="groupType"--%>
-        <%--                                            style="width: 380px;height: 45px;" required>--%>
-        <%--                                        <option></option>--%>
-        <%--                                        <option>Manage</option>--%>
-        <%--                                        <option>Accountant</option>--%>
-        <%--                                        <option>Plan</option>--%>
-        <%--                                    </select>--%>
-        <%--                                </div>--%>
-        <%--                                <div class="permission">--%>
-        <%--                                    <label style="float: left;margin-left: 15px;font-size: 20px">Permission(<span--%>
-        <%--                                            style="color:red;">*</span>)</label>--%>
-        <%--                                    <select class="form-select" name="permission"--%>
-        <%--                                            style="width: 380px;height: 45px;margin-left: 4%;" required>--%>
-        <%--                                        <option>Public</option>--%>
-        <%--                                        <option>Private</option>--%>
-        <%--                                    </select>--%>
-        <%--                                </div>--%>
-        <%--                            </div>--%>
-        <%--                            <div style="margin-left: 15% ">--%>
-        <%--                                <div class="form-floating">--%>
-        <%--                                <textarea class="form-control" placeholder="Leave a comment here" name="information"--%>
-        <%--                                          style="height: 180px;width: 82%;"></textarea>--%>
-        <%--                                    <label style="font-size: 20px; margin-right: 55rem">Information</label>--%>
-        <%--                                </div>--%>
-        <%--                            </div>--%>
-        <%--                            <div>--%>
-        <%--                                <button style="width: 190px;height: 50px;margin-top: 25px" class="btn btn-light"--%>
-        <%--                                        type="submit">Create--%>
-        <%--                                </button>--%>
-        <%--                            </div>--%>
-        <%--                        </div>--%>
-        <%--                    </form>--%>
-        <%--                </div>--%>
         <div class="group-heading">
             <h3>YOUR GROUPS</h3>
         </div>
@@ -554,7 +499,8 @@
                             <i class="fa-solid fa-table"></i>
                             <span style="font-size: 20px">Table</span>
                         </a>
-                        <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}" class="group__header-control">
+                        <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}"
+                           class="group__header-control">
                             <i class="fa-solid fa-user-group"></i>
                             <span style="font-size: 20px">Member</span>
                         </a>
@@ -564,8 +510,7 @@
                         </a>
                     </div>
                 </div>
-
-                <%--      table      --%>
+                    <%--      table      --%>
                 <div class="group__tables">
                     <c:forEach items="${tables}" var="table">
                         <c:if test="${group.id eq table.idGroup}">
@@ -581,7 +526,7 @@
                     </c:forEach>
                 </div>
 
-                <%--       Add table button       --%>
+                    <%--       Add table button       --%>
                 <div class="groupContent" onclick="openFormCreateTable(${group.id})">
                     <div class="table_create">
                         <span style="font-size: 110px">+</span>
@@ -607,7 +552,8 @@
                                     </select>
                                  </span>
                         </div>
-                        <button type="submit" class="btn btn-success btn-light btn-lg gradient-custom-4 text-body">
+                        <button type="submit"
+                                class="btn btn-success btn-light btn-lg gradient-custom-4 text-body">
                             Add
                         </button>
                     </form>
@@ -616,8 +562,8 @@
         </c:forEach>
     </div>
 </div>
-
-
+</div>
+</div>
 <script>
     function setDisplaySubnav() {
         let subnav = document.getElementById("js-subnav");
