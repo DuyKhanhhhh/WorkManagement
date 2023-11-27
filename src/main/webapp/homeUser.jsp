@@ -155,6 +155,9 @@
         justify-content: space-between;
         padding-bottom: 11px;
     }
+    .group__header-name {
+
+    }
 
     .group__header-controls {
            display: flex;
@@ -579,14 +582,15 @@
                             </a>
                         </c:if>
                     </c:forEach>
+                    <div class="groupContent" onclick="openFormCreateTable(${group.id})">
+                        <div class="table_create">
+                            <span style="font-size: 110px">+</span>
+                        </div>
+                    </div>
                 </div>
 
                 <%--       Add table button       --%>
-                <div class="groupContent" onclick="openFormCreateTable(${group.id})">
-                    <div class="table_create">
-                        <span style="font-size: 110px">+</span>
-                    </div>
-                </div>
+
 
                 <div class="formAddTable" id="formAddTable${group.id}">
                     <a href="javascript:void(0)" class="closebtn"
