@@ -186,23 +186,41 @@
     .nameFloat {
         float: left;
     }
+    .circleMember {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .circleMember img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 </style>
 <body>
 <div class="container-fluid">
     <div class="row">
         <nav class="navbar navbar-expand-lg navbar-dark" id="header">
             <div class="container-fluid">
+                <a href="/homeUser">
                 <div class="headImg">
                     <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
                          width="100" height="50">
                 </div>
-
+                </a>
                 <div class="headRight">
                     <span class="group-text">
                     <div class="collapse navbar-collapse">
                       <i class="fa-solid fa-bell" style="color: #ffffff; margin-right: 15px"></i>
                         <span class="dropdown">
-                            <button style="font-size: 15px" class="btn btn-light"><c:out value="${user.name}"/></button>
+                           <div class="circleMember">
+                                <img src="${user.getAvatar()}" alt="Avatar">
+                            </div>
                             <div class="dropdown-content">
                                 <div><a href="#">Setting</a></div>
                                 <div><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></div>
@@ -238,9 +256,7 @@
             </div>
         </div>
         <div class="main_input">
-            <button type="submit" class="btn btn-secondary" style="margin-top: 10px">
-                <a style="text-decoration: none;color: white" href="/homeUser">Back</a>
-            </button>
+
             <div class="col-10">
                 <form method="post" action="/homeUser?action=updateGroup">
                     <div>
@@ -260,13 +276,20 @@
                         <br>
                         <div class="select">
                             <div class="group_type">
-                                <label style="float: left;margin-left: 24px">Group Type(<span
+                                <label style="float: left;margin-left: 24px">Group type(<span
                                         style="color:red;">*</span>)</label>
                                 <select name="groupType" style="width: 210px; height: 40px;margin-left: 25px" required>
                                     <option><c:out value='${listGroup.groupType}'/></option>
+                                    <c:if test="${listGroup.groupType != 'Manage'}">
                                     <option>Manage</option>
+                                    </c:if>
+                                    <c:if test="${listGroup.groupType != 'Accountant'}">
                                     <option>Accountant</option>
+                                    </c:if>
+                                    <c:if test="${listGroup.groupType != 'Plan'}">
                                     <option>Plan</option>
+                                    </c:if>
+
                                 </select>
                             </div>
                             <div class="permission">

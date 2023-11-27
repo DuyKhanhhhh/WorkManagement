@@ -137,7 +137,7 @@ HomeUserController extends HttpServlet {
     private void updateGroup(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         String name = request.getParameter("name");
-        String group = request.getParameter("group");
+        String group = request.getParameter("groupType");
         String permission = request.getParameter("permission");
         String information = request.getParameter("information");
         Group groups = new Group(name, group, permission, information);
