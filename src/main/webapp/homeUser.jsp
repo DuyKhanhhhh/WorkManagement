@@ -21,6 +21,8 @@
         font-size: 14px;
     }
 
+
+
     body {
         background-color: #fff;
     }
@@ -178,6 +180,9 @@
         font-size: 70px;
     }
 
+    .group__tables {
+        display: flex;
+    }
 
 
 
@@ -202,11 +207,6 @@
         margin-top: 1rem;
     }
 
-    .group {
-        width: 100%;
-        height: 3rem;
-        flex: 1 1 auto;
-    }
 
     .group_name {
         width: 80%;
@@ -566,18 +566,20 @@
                 </div>
 
                 <%--      table      --%>
-                <c:forEach items="${tables}" var="table">
-                    <c:if test="${group.id eq table.idGroup}">
-                        <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
-                           style="text-decoration: none; color: black">
-                            <div class="groupContent">
-                                <div class="table_create">
-                                    <h4 style="padding-top: 26px">${table.name}</h4>
+                <div class="group__tables">
+                    <c:forEach items="${tables}" var="table">
+                        <c:if test="${group.id eq table.idGroup}">
+                            <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
+                               style="text-decoration: none; color: black">
+                                <div class="groupContent">
+                                    <div class="table_create">
+                                        <h4 style="padding-top: 26px">${table.name}</h4>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </c:if>
-                </c:forEach>
+                            </a>
+                        </c:if>
+                    </c:forEach>
+                </div>
 
                 <%--       Add table button       --%>
                 <div class="groupContent" onclick="openFormCreateTable(${group.id})">
