@@ -539,18 +539,6 @@
                     </div>
                 </div>
 
-<<<<<<< HEAD
-                <%--       Add table button       --%>
-
-=======
-                    <%--       Add table button       --%>
-                <div class="groupContent" onclick="openFormCreateTable(${group.id})">
-                    <div class="table_create">
-                        <span style="font-size: 110px">+</span>
-                    </div>
-                </div>
->>>>>>> cfba5adfa28b78bbf2d8728752df467ae4aa6416
-
                 <div class="formAddTable" id="formAddTable${group.id}">
                     <a href="javascript:void(0)" class="closebtn"
                        onclick="closeFormCreateTable(${group.id})">&times;</a>
