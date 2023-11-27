@@ -106,6 +106,8 @@ HomeUserController extends HttpServlet {
     private void searchUser(HttpServletRequest request, HttpServletResponse response) {
         int idGroup = Integer.parseInt(request.getParameter("idGroup"));
         String name = request.getParameter("search");
+        Group group = userDAO.findGroupById(idGroup);
+        request.setAttribute("groups", group);
         List<User> userList = userDAO.searchNameUser(idGroup, name);
         request.setAttribute("list", userList);
 

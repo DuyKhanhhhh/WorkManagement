@@ -62,6 +62,8 @@ public class AddMemberToGroupController extends HttpServlet {
         int idGroup = Integer.parseInt(request.getParameter("idGroup"));
         User user = iUserDAO.selectAllUserId(id);
         iUserDAO.addMemberToGroup(idGroup, user);
+        Group group = iUserDAO.findGroupById(idGroup);
+        request.setAttribute("groups",group);
         request.setAttribute("message", "Add member success");
         try {
             request.getRequestDispatcher("home/addMember.jsp").forward(request, response);
@@ -98,9 +100,7 @@ public class AddMemberToGroupController extends HttpServlet {
             Group group = iUserDAO.findGroupById(id);
             request.setAttribute("groups", group);
             request.getRequestDispatcher("home/addMember.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
