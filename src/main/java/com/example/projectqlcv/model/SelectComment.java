@@ -5,6 +5,7 @@ public class SelectComment {
     private String name;
     private String avatar;
     private String comment;
+    private int idUser;
 
     public SelectComment(String name, String avatar, String comment) {
         this.name = name;
@@ -12,11 +13,27 @@ public class SelectComment {
         this.comment = comment;
     }
 
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
     public SelectComment(int id, String name, String avatar, String comment) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
         this.comment = comment;
+    }
+
+    public SelectComment(int id, String name, String avatar, String comment, int idUser) {
+        this.id = id;
+        this.name = name;
+        this.avatar = avatar;
+        this.comment = comment;
+        this.idUser = idUser;
     }
 
     public int getId() {
