@@ -6,8 +6,13 @@ public class Table {
     private String name;
     private String permission;
     private String status;
+    private int countTable;
 
     public Table() {
+    }
+
+    public Table(int countTable) {
+        this.countTable = countTable;
     }
 
     public Table(int id, int idGroup, String name, String permission , String status) {
@@ -38,6 +43,14 @@ public class Table {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getCountTable() {
+        return countTable;
+    }
+
+    public void setCountTable(int countTable) {
+        this.countTable = countTable;
     }
 
     public int getId() {

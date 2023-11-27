@@ -635,11 +635,7 @@
                     <hr style="color:white;">
                     <a href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
                     <a href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
-                    <a href="/addUserToTable?action=deleteTable&idTable=${tables.id}&groupId=${groups.id}">Delete
-                        table</a>
-
-                    <c:if test="${roleUser.role.equals('Admin') && rolerUser.idTable eq tables.id}">
-
+                    <c:if test="${roleUser.role.equals('Admin') && roleUser.idTable eq tables.id}">
                         <a onclick="showConfirmation()" style="color: white">Delete table</a>
                     </c:if>
                     <c:if test="${roleUser.idUser != memberToGroup.idUser}">
