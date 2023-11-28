@@ -5,6 +5,7 @@
     font-family: Arial, sans-serif;
     font-size: 14px;
     color: #172B4D;
+    transition: all ease 0.1s;
 }
 
 
@@ -87,18 +88,19 @@ body {
 }
 
 #boxLeft {
-    width: 25%;
+    width: 15%;
     height: 90vh;
     min-height: 200px;
     overflow: hidden;
     position: sticky;
-    top: 5%;
+    top: 88px;
 }
 
 #content {
-    max-width: 850px;
+    max-width: 870px;
     width: 60%;
     margin: 0 16px;
+    padding-top: 88px;
 }
 
 /*-----------ASIDE---------*/
@@ -107,6 +109,7 @@ body {
     font-size: 14px;
     list-style-type: none;
     padding: 0 16px;
+    font-weight: 600;
 }
 
 .aside__list-item {
@@ -153,7 +156,7 @@ body {
 }
 
 .group {
-    margin: 20px 0;
+    margin: 25px 0;
 }
 
 .group_header {
@@ -213,8 +216,12 @@ body {
     position: relative;
 }
 
-.group__table:hover {
+.hover-white:hover {
     opacity: 0.8;
+}
+
+.hover-black:hover a {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .group__table a {
@@ -284,7 +291,7 @@ body {
 }
 
 .formGroup-container {
-    padding: 64px 24px 24px 16px;
+    padding: 64px 24px 24px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -398,16 +405,8 @@ body {
     object-fit: cover;
 }
 
-.formAddTable {
-    display: none;
-    position: fixed;
-    border: 3px solid #d8ceff;
-    top: 22%;
-    left: 43%;
-    width: 24%;
-    height: 259px;
-    border-radius: 2%;
-    background-color: #959595;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    text-align: center;
+/*Form add group*/
+
+.w-fit {
+    width: fit-content;
 }
