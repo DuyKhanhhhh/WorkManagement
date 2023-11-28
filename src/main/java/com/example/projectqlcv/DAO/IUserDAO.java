@@ -35,7 +35,6 @@ public interface IUserDAO {
     boolean updateGroup(int id, Group group);
 
     boolean deleteGroup(int id);
-
     Group findGroupById(int id);
 
     Table findTableById(int id);
@@ -85,7 +84,7 @@ public interface IUserDAO {
     boolean editNameColumn(int idColumn, String nameUpdate);
 
     boolean updatePermissionTablePublic(int id);
-
+    Table permissionTable(int idTable);
     boolean updatePermissionTableGroup(int id);
 
     boolean updatePermissionTablePrivate(int id);
@@ -93,4 +92,5 @@ public interface IUserDAO {
     Card findCardById(int idCard);
     List<UserToCard> findMemberToCard(int idCard);
     Table setCountTable(int idGroup);
+    AddUserToTable findRoleUserToTable(int idTable, int idUser);
 }

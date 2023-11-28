@@ -21,7 +21,7 @@ public class UserDAO implements IUserDAO {
     private static final String ADD_TABLE_TO_SQL = "INSERT INTO tableWork(idGroup, name, permission) VALUES( ?, ?, ?) ";
     private static final String SELECT_GROUP_BY_ID = "SELECT * FROM groupWork where id = ?";
     private static final String SELECT_TABLE_BY_ID = "SELECT * FROM tableWork where id = ?";
-    private static final String DELETE_GROUP_SQL = "DELETE groupWork,tableWork, FROM  where id = ?";
+    private static final String DELETE_GROUP_SQL = "DELETE FROM groupWork where id = ?";
     private static final String DELETE_MEMBER_OF_GROUP = "DELETE FROM member where id = ?";
     private static final String SELECT_ALL_TABLE = "SELECT * FROM tableWork";
     private static final String SEARCH_NAME_PRODUCT = "SELECT * FROM user WHERE id NOT IN (select u.id  from member m join user u on m.idUser = u.id where idGroup = ? ) AND (name LIKE ? || email LIKE ?)";
@@ -31,7 +31,7 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_ALL_GROUP_MEMBER = "SELECT member.id,user.name,user.email,role FROM user JOIN member ON user.id = member.idUser JOIN groupWork ON member.idGroup = groupWork.id WHERE groupWork.id = ?";
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
     private static final String UPDATE_PERMISSION_MEMBER = "update member set role = ? where id = ?";
-    private static final String SEARCH_USER_TO_TABLE = "select * from user where id not in (select u.id from userToTable m join user u on  m.idUser = u.id  join tableWork t on m.idTable = t.id where m.status = 'Added' and t.idGroup like ?) and (name like ? || email like ?);";
+    private static final String SEARCH_USER_TO_TABLE = "select * from user where id not in (select u.id from userToTable m join user u on  m.idUser = u.id where m.idTable like ?) and (name like ? || email like ?);";
     private static final String FIND_ROLE_USER_TO_MEMBER = "SELECT role FROM member WHERE idUser = ?";
     private static final String FIND_ROLE_USER_TO_USER_TO_TABLE = "SELECT role,idTable FROM userToTable WHERE idUser = ?";
     private static final String UPDATE_PERMISSION_USER_TO_TABLE = "update userToTable set role = ? where id = ?";
@@ -48,6 +48,7 @@ public class UserDAO implements IUserDAO {
     private static final String UPDATE_PERMISSION_TABLE = "update tableWork set permission = ? where id = ?";
     private static final String COUNT_AVATAR = "select count(id) as avatar from userToTable where idTable = ?";
     private static final String COUNT_TABLE = "select count(id) as countTable from tableWork where idGroup = ?";
+    private static final String PERMISSION_TABLE = "select permission from tableWork where id = ?";
 
     @Override
     public Member findMemberById(int id) {
@@ -62,9 +63,23 @@ public class UserDAO implements IUserDAO {
                 String role = rs.getString("role");
                 member = new Member(id, idGroup, idUser, role);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        }
+        return member;
+    }
+    @Override
+    public Table permissionTable(int idTable){
+        Table member = null;
+        try (Connection connection = DataConnector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(PERMISSION_TABLE)) {
+            preparedStatement.setInt(1, idTable);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()){
+                String permission = rs.getString("permission");
+                member = new Table(idTable,permission);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
         return member;
@@ -209,7 +224,7 @@ public class UserDAO implements IUserDAO {
         try {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PERMISSION_TABLE);
-            preparedStatement.setString(1,"Group");
+            preparedStatement.setString(1,"Workspace");
             preparedStatement.setInt(2,id);
             updateGroup = preparedStatement.executeUpdate() > 0;
         } catch (ClassNotFoundException e) {
@@ -237,7 +252,7 @@ public class UserDAO implements IUserDAO {
     }
 
     private static final String FIND_USER_TO_GROUP = "SELECT * FROM member WHERE idGroup = ? and idUser = ? ";
-    private static final String FIND_TABLE_BY_ID = "SELECT * FROM tableWork WHERE id= ?";
+    private static final String FIND_TABLE_BY_ID = "SELECT * FROM userToTable u join tableWork t on u.idTable = t.id  WHERE idTable = ? and idUser = ?";
 
 
     @Override
@@ -498,7 +513,6 @@ public class UserDAO implements IUserDAO {
         }
         return rowDelete;
     }
-
     @Override
     public boolean deleteMember(int id) {
         boolean rowDelete;
@@ -666,12 +680,12 @@ public class UserDAO implements IUserDAO {
         }
     }
     @Override
-    public List<User> searchUserToTable(int idGroup, String nameUser) {
+    public List<User> searchUserToTable(int idTable, String nameUser) {
         try {
             List<User> list = new ArrayList<>();
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(SEARCH_USER_TO_TABLE);
-            preparedStatement.setInt(1,idGroup);
+            preparedStatement.setInt(1,idTable);
             preparedStatement.setString(2, "%" + nameUser + "%");
             preparedStatement.setString(3, "%" + nameUser + "%");
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -796,6 +810,27 @@ public class UserDAO implements IUserDAO {
                 member = new Member(id, idGroupOb, idUserDb, role);
             }
 
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return member;
+    }
+    @Override
+    public AddUserToTable findRoleUserToTable(int idTable, int idUser) {
+        AddUserToTable member = null;
+        try {
+            Connection connection = DataConnector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_TABLE_BY_ID);
+            preparedStatement.setInt(1, idTable);
+            preparedStatement.setInt(2, idUser);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int idTableDB = resultSet.getInt("idTable");
+                int idUserDb = resultSet.getInt("idUser");
+                String role = resultSet.getString("role");
+                member = new AddUserToTable(id, idTableDB, idUserDb, role);
+            }
         } catch (SQLException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }

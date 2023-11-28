@@ -308,12 +308,14 @@
         color: #818181;
         display: block;
     }
+
     .addCard .closebtn {
         position: absolute;
         top: 22px;
         right: 126px;
         font-size: 40px;
     }
+
     .showCard {
         width: 234px;
         height: auto;
@@ -553,13 +555,14 @@
         border: none;
         background: none;
     }
-.mb-3{
 
-    margin-bottom: 1rem!important;
-    position: relative;
-    top: -30px;
+    .mb-3 {
 
-}
+        margin-bottom: 1rem !important;
+        position: relative;
+        top: -30px;
+
+    }
 </style>
 <body>
 <div class="container-fluid">
@@ -619,10 +622,18 @@
                     </c:if>
                 </c:forEach>
             </div>
-            <div class="nav">
-                <button onclick="openPermission()" class="buttonPermission">${tables.permission}</button>
-            </div>
-
+            <c:choose>
+                <c:when test="${roleUser.role.equals('Admin') }">
+                <div class="nav">
+                    <button onclick="openPermission()" class="buttonPermission">${tables.permission}</button>
+                </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="nav">
+                        <label>${tables.permission}</label>
+                    </div>
+                </c:otherwise>
+            </c:choose>
             <div class="filter" onclick="showSearchCard()">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <button id="buttonSearchCard" style="margin-left: 2px">Filter</button>
@@ -638,7 +649,7 @@
                     <c:if test="${roleUser.role.equals('Admin') && roleUser.idTable eq tables.id}">
                         <a onclick="showConfirmation()" style="color: white">Delete table</a>
                     </c:if>
-                    <c:if test="${roleUser.idUser != memberToGroup.idUser}">
+                    <c:if test="${roleUser.idUser != memberToGroup.idUser && roleUser == null}">
                         <a href="/addUserToTable?action=joinTable&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
                             Join table</a>
                     </c:if>
@@ -648,8 +659,8 @@
                     <form action="/homeUser?action=updatePermissionTablePublic&idTable=${tables.id}" method="post">
                         <input type="submit" value="Public"/>
                     </form>
-                    <form action="/homeUser?action=updatePermissionTableGroup&idTable=${tables.id}" method="post">
-                        <input type="submit" value="Group"/>
+                    <form action="/homeUser?action=updatePermissionTableWorkspace&idTable=${tables.id}" method="post">
+                        <input type="submit" value="Workspace"/>
                     </form>
                     <form action="/homeUser?action=updatePermissionTablePrivate&idTable=${tables.id}" method="post">
                         <input type="submit" value="Private"/>
@@ -788,7 +799,7 @@
                             <%--                        </c:if>--%>
                     </div>
                     <div class="comment">
-                        <span><i class="fa-solid fa-list-ul" style="color: #000000;"></i>  Comment</span>
+                        <span><i class="fa-solid fa-list-ul" style="color: #000000;"></i>Comment</span>
                         <c:forEach var="comment" items="${listComment}">
                             <div class="comment-item">
                                 <img src="${comment.avatar}" alt="Avatar" class="avatar">

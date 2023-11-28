@@ -169,8 +169,9 @@
                 <div class="form-outline mb-4">
                                  <span style="margin: 8px" class="input-group-text">
                                     <select class="form-select" aria-label="Default select example" name="permission">
-                                    <option>Public</option>
                                     <option>Private</option>
+                                    <option>Workspace</option>
+                                    <option>Public</option>
                                     </select>
                                  </span>
                 </div>
