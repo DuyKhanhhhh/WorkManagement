@@ -24,9 +24,7 @@
     </a>
     <ul class="header__nav-right">
         <li onclick="setDisplaySubnav()" class="headRight">
-            <%--            <img class="header__avatar" src="${user.getAvatar()}" alt="Avatar">   Mở cai này sau khi xong giao dien--%>
-            <img class="header__avatar"
-                 src="https://facebookninja.vn/wp-content/uploads/2023/06/anh-dai-dien-mac-dinh-zalo.jpg" alt="Avatar">
+            <img class="header__avatar" src="${user.getAvatar()}" alt="Avatar">
             <ul id="js-subnav" class="header__subnav js-subnav">
                 <li><a href="#"> Setting</a></li>
                 <li><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></li>
@@ -62,7 +60,6 @@
             </c:forEach>
         </ul>
     </aside>
-
     <div id="content">
 
         <%--            Form Add Group         --%>
@@ -75,7 +72,7 @@
                             <h2 class="formGroup__description-title"> Let's create a Group </h2>
                             <p class="formGroup__description-sup-title">Boost your productivity by making it easier for
                                 everyone access boards in one location</p>
-                            <label class="formGroup__form-label-l">Group name </label>
+                            <label class="formGroup__form-label-l">Group name <span class="formGroup__form-span formGroup__form-span-require">*</span> </label>
                             <input class="formGroup__form-input" type="text" name="name" placeholder="Lonely Wolf." required/>
                             <label class="formGroup__form-label-l">Group type </label>
                             <select class="formGroup__form-input" name="groupType" required>
@@ -155,6 +152,7 @@
             </div>
         </div>
 
+        <%--      form create table     --%>
         <div class="formAddTable" id="formAddTable${group.id}">
             <a href="javascript:void(0)" class="closebtn"
                onclick="closeFormCreateTable(${group.id})">&times;</a>
