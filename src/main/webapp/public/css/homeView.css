@@ -94,6 +94,7 @@ body {
     overflow: hidden;
     position: sticky;
     top: 88px;
+    margin-top: 88px;
 }
 
 #content {
