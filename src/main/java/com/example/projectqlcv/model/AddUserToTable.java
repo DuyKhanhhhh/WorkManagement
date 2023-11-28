@@ -14,11 +14,12 @@ public class AddUserToTable {
     private String status;
     private int countAvatar;
 
-    public AddUserToTable(int idUser,int idTable,String role) {
+    public AddUserToTable(int idUser, int idTable, String role) {
         this.role = role;
         this.idUser = idUser;
         this.idTable = idTable;
     }
+
 
     public AddUserToTable(int countAvatar) {
         this.countAvatar = countAvatar;
@@ -32,7 +33,7 @@ public class AddUserToTable {
         this.countAvatar = countAvatar;
     }
 
-    public AddUserToTable(int id, int idTable, int idUser, int idGroup, String role, String avatar, String name, String emailUser , String status) {
+    public AddUserToTable(int id, int idTable, int idUser, int idGroup, String role, String avatar, String name, String emailUser, String status) {
         this.id = id;
         this.idUser = idUser;
         this.idGroup = idGroup;
@@ -127,7 +128,7 @@ public class AddUserToTable {
         this.role = role;
     }
 
-    public AddUserToTable(int id, int idUser, int idTable, String role) {
+    public AddUserToTable(int id, int idTable, int idUser, String role) {
         this.id = id;
         this.idUser = idUser;
         this.idTable = idTable;

@@ -36,6 +36,10 @@ public class Table {
         this.permission = permission;
     }
 
+    public Table(int id,String permission) {
+        this.permission = permission;
+        this.id = id;
+    }
 
     public String getStatus() {
         return status;

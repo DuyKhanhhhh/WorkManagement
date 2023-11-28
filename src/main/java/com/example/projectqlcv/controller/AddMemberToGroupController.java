@@ -46,7 +46,7 @@ public class AddMemberToGroupController extends HttpServlet {
         int idGroup = Integer.parseInt(request.getParameter("idGroup"));
 
         HttpSession session = request.getSession();
-        Member roleMember = iUserDAO.findRoleUserToMember(idUser);
+        Member roleMember = iUserDAO.findRoleUserToMember(idUser,idGroup);
         request.setAttribute("roleMember",roleMember);
         iUserDAO.updatePermissionMember(idMember);
         List<Member> member = iUserDAO.selectGroupMember(idGroup);
@@ -108,7 +108,7 @@ public class AddMemberToGroupController extends HttpServlet {
         int idUser = Integer.parseInt(request.getParameter("idUser"));
         int idMember = Integer.parseInt(request.getParameter("idMember"));
         int idGroup = Integer.parseInt(request.getParameter("groupId"));
-        Member roleMember = iUserDAO.findRoleUserToMember(idUser);
+        Member roleMember = iUserDAO.findRoleUserToMember(idUser,idGroup);
         if ((roleMember.getRole()).equals("Admin")){
             iUserDAO.deleteMember(idMember);
             request.setAttribute("message", "Delete success !");
