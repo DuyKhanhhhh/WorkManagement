@@ -11,383 +11,9 @@
 <head>
     <title>Home</title>
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}public/css/homeView.css"/>
 </head>
-<style>
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
-        font-size: 14px;
-        color: #172B4D;
-    }
 
-
-
-    body {
-        background-color: #fff;
-    }
-
-    /* -----------header------------ */
-
-    #header {
-        background-color: #fff;
-        position: fixed;
-        height: 48px;
-        display: flex;
-        top: 0;
-        right: 0;
-        left: 0;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 10%;
-        border-bottom: 1px solid rgba(23, 43, 77, 0.16);
-    }
-
-    .header__logo {
-        width: 84px;
-    }
-
-    .header__logo-img {
-        width: 100%;
-    }
-
-    .header__nav-right {
-        padding: 0;
-        margin: 0;
-        position: relative;
-        list-style-type: none;
-    }
-
-    .headRight {
-        display: flex;
-        align-items: center;
-    }
-
-    .header__avatar {
-        width: 24px;
-        height: 24px;
-        object-fit: cover;
-        border-radius: 50%;
-    }
-
-
-    .header__subnav {
-        display: none;
-        list-style-type: none;
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background-color: #282e33;
-        color: rgb(182, 194, 207);
-    }
-
-    .header__subnav li > a {
-        color: white;
-        display: block;
-        padding: 12px 32px;
-        text-decoration: none;
-    }
-
-    .header__subnav > li:hover > a {
-        background-color: #A1BDD914;
-    }
-
-    /*     --------body--------     */
-
-    #body {
-        margin-top: 88px;
-        display: flex;
-        justify-content: center;
-        background-color: #ffffff;
-    }
-
-    #boxLeft {
-        width: 21%;
-        position: sticky;
-        top: 0;
-        font-weight: 600;
-    }
-
-    #content {
-        width: 60%;
-        margin: 0 16px;
-    }
-
-    .aside__list {
-        font-size: 14px;
-        list-style-type: none;
-        padding: 0 16px;
-    }
-
-    .aside__list-item {
-        padding: 6px 8px;
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        line-height: 20px;
-        align-items: center;
-    }
-
-    .aside__list-item-icon {
-        margin-right: 8px;
-        width: 15px;
-        height: 15px;
-    }
-
-    .aside__list-item span {
-        flex-grow: 1;
-    }
-
-    .fa-user-friends:before, .fa-user-group:before {
-        height: 14px;
-        width: 14px;
-    }
-
-    .group-heading h3 {
-        color: rgb(68, 84, 111);
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 24px;
-    }
-
-    .group {
-        margin-top: 20px;
-    }
-
-    .group_header {
-        display: flex;
-        justify-content: space-between;
-        padding-bottom: 11px;
-    }
-    .group__header-name {
-
-    }
-
-    .group__header-controls {
-        display: flex;
-    }
-
-    .group__header-control {
-        text-decoration: none;
-        color: black;
-        padding: 6px 12px 6px 6px;
-    }
-
-    .groupContent {
-        width: 200px;
-        height: 96px;
-        border-radius: 4px;
-        border: 1px solid black;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .table_create span {
-        font-size: 70px;
-    }
-
-    .group__tables {
-        display: flex;
-    }
-
-    .icon {
-        text-decoration: none;
-        color: black;
-        margin-right: 30px;
-        padding: 4px 10px 1px 10px;
-        box-shadow: 2px 0 4px rgba(0, 0, 0, 1.5);
-        background-color: #e9ecef;
-        border-radius: 4px
-    }
-
-    #contentTitle {
-        margin-top: 48px;
-    }
-
-    .table {
-        width: 100%;
-        height: 3rem;
-        margin-top: 1rem;
-    }
-
-
-    .group_name {
-        width: 80%;
-        height: 3rem;
-    }
-
-    .group_add {
-        margin-left: 8%;
-    }
-
-    .d_flex_left {
-        width: 50%;
-        height: auto;
-        float: left;
-    }
-
-    .d_flex_right {
-        width: 50%;
-        height: auto;
-        float: left;
-        padding-left: 8.8%;
-        padding-bottom: 20px;
-    }
-
-
-    /* Style for dropdown content */
-    .dropdown-content {
-        display: none; /* Hidden by default */
-        position: absolute;
-        background-color: #000000;
-        min-width: 85px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-
-    .dropdown-content a {
-        font-size: 15px;
-        color: white;
-    }
-
-    /* Style for each content div */
-    .dropdown-content div {
-        padding: 10px 5px;
-        font-size: 16px;
-        text-align: center;
-    }
-
-    /* Highlight dropdown options on hover */
-    .dropdown-content div:hover {
-        background-color: #cecece;
-    }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-
-    .formAddGroup {
-        display: none;
-        position: fixed;
-        border: 3px solid #9b9b9b;
-        width: 67%;
-        height: 608px;
-        top: 45%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 9999;
-        border-radius: 2%;
-        background-color: #e9ecef;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        text-align: center;
-    }
-
-    .formAddGroup a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #000000;
-        display: block;
-    }
-
-    .formAddGroup .closebtn {
-        position: absolute;
-        top: -18px;
-        right: 12px;
-        font-size: 50px;
-    }
-
-    .select {
-        width: 70%;
-        height: 110px;
-        margin: 0 auto;
-    }
-
-    .group_type {
-        width: 50%;
-        height: 40px;
-        float: left;
-    }
-
-    .permission {
-        width: 50%;
-        height: 40px;
-        float: left;
-    }
-
-    .title_h2 {
-        margin-top: 40px;
-    }
-
-    #inputName {
-        padding-left: 15%;
-        padding-right: 15%;
-    }
-
-    .modal-open {
-        overflow: hidden;
-    }
-
-    .modal-open::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.4);
-        z-index: 9998;
-    }
-
-    .formAddTable {
-        display: none;
-        position: fixed;
-        border: 3px solid #d8ceff;
-        top: 22%;
-        left: 43%;
-        width: 24%;
-        height: 259px;
-        border-radius: 2%;
-        background-color: #959595;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-        text-align: center;
-    }
-
-    .formAddTable a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 25px;
-        color: #000000;
-        display: block;
-    }
-
-    .circleMember {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .circleMember img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    .formAddTable .closebtn {
-        position: absolute;
-        top: -20px;
-        right: 2px;
-        font-size: 38px;
-    }
-</style>
 <body>
 
 <%--    -------HEADER------    --%>
@@ -424,7 +50,7 @@
                     <span class="textSpan">Group</span>
                 </div>
                 <div>
-                    <a onclick="openFormGroup()">
+                    <a onclick="openFormGroup()" class="aside__list-item-control">
                         <i class="fa-solid fa-plus aside__list-add"></i>
                     </a>
                 </div>
@@ -436,140 +62,130 @@
             </c:forEach>
         </ul>
     </aside>
-    <div class="col-10" id="content">
-        <%--            Form Add Group--%>
-        <div id="formAddGroup" class="formAddGroup">
-            <form method="post" action="/homeUser?action=addGroup">
-                <div>
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeFormGroup()">&times;</a>
-                    <div class="title_h2">
-                        <h2>Create Group</h2>
-                    </div>
-                    <div class="form-outline mb-4" id="inputName">
-                        <label style="float: left;font-size: 20px">Name(<span
-                                style="color:red;">*</span>)</label>
-                        <input type="text" name="name" class="form-control form-control-lg"
-                               placeholder="Name" required/>
-                    </div>
 
-                    <div class="select">
-                        <div class="group_type">
-                            <label style="float: left;font-size: 20px">Group type(<span
-                                    style="color:red;">*</span>)</label>
-                            <select class="form-select" name="groupType"
-                                    style="width: 380px;height: 45px;" required>
+    <div id="content">
+
+        <%--            Form Add Group         --%>
+        <div id="formAddGroup" class="modal">
+            <div class="modal__content">
+                <a class="modal__btn-close" onclick="closeFormGroup()"><i class="fa-solid fa-x"></i></a>
+                <div class="modal__group-half">
+                    <div class="formGroup-container">
+                        <form class="formGroup__form" method="post" action="/homeUser?action=addGroup">
+                            <h2 class="formGroup__description-title"> Let's create a Group </h2>
+                            <p class="formGroup__description-sup-title">Boost your productivity by making it easier for
+                                everyone access boards in one location</p>
+                            <label class="formGroup__form-label-l">Group name </label>
+                            <input class="formGroup__form-input" type="text" name="name" placeholder="Lonely Wolf." required/>
+                            <label class="formGroup__form-label-l">Group type </label>
+                            <select class="formGroup__form-input" name="groupType" required>
                                 <option>Manage</option>
                                 <option>Accountant</option>
                                 <option>Plan</option>
                             </select>
-                        </div>
-
-                        <div class="permission">
-                            <label style="float: left;margin-left: 15px;font-size: 20px">Permission(<span
-                                    style="color:red;">*</span>)</label>
-                            <select class="form-select" name="permission"
-                                    style="width: 380px;height: 45px;margin-left: 4%;" required>
+                            <label class="formGroup__form-label-l">Permission </label>
+                            <select class="formGroup__form-input" name="permission" required>
                                 <option>Public</option>
                                 <option>Private</option>
                             </select>
-                        </div>
-                    </div>
-                    <div style="margin-left: 15% ">
-                        <div class="form-floating">
-                                <textarea class="form-control" placeholder="Leave a comment here" name="information"
-                                          style="height: 180px;width: 82%;"></textarea>
-                            <label style="font-size: 20px; margin-right: 55rem">Information</label>
-                        </div>
-                    </div>
-                    <div>
-                        <button style="width: 190px;height: 50px;margin-top: 25px" class="btn btn-light"
-                                type="submit">Create
-                        </button>
+                            <label class="formGroup__form-label-l">Information <span class="formGroup__form-span formGroup__form-span-option">Optional</span></label>
+                            <textarea class="formGroup__form-input formGroup__form-area " placeholder="Leave a comment here" name="information"></textarea>
+                            <button class="formGroup__form-submit" type="submit">Create</button>
+                        </form>
                     </div>
                 </div>
-            </form>
+                <div class="modal__group-half modal__group-background">
+                    <div class="modal__group-image ">
+
+                    </div>
+                </div>
+            </div>
         </div>
 
 
-        <div class="group-heading">
-            <h3>YOUR GROUPS</h3>
-        </div>
-        <c:forEach var="group" items="${groups}">
-            <div class="group">
-                <div class="group_header">
-                    <h2 class="group__header-name">${group.name}</h2>
-                    <div class="group__header-controls">
-                        <a href="/homeUser?action=updateGroup&id=${group.id}" class="group__header-control">
-                            <i class="fa-solid fa-table-cells"></i>
-                            <span style="font-size: 20px">Information</span>
-                        </a>
-                        <a href="/homeUser?action=table&idGroup=${group.id}" class="group__header-control">
-                            <i class="fa-solid fa-table"></i>
-                            <span style="font-size: 20px">Table</span>
-                        </a>
-                        <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}"
-                           class="group__header-control">
-                            <i class="fa-solid fa-user-group"></i>
-                            <span style="font-size: 20px">Member</span>
-                        </a>
-                        <a href="#" class="group__header-control">
-                            <i class="fa-solid fa-gear"></i>
-                            <span style="font-size: 20px">Setting</span>
-                        </a>
-                    </div>
-                </div>
-                    <%--      table      --%>
-                <div class="group__tables">
-                    <c:forEach items="${tables}" var="table">
-                        <c:if test="${group.id eq table.idGroup}">
-                            <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
-                               style="text-decoration: none; color: black">
-                                <div class="groupContent">
-                                    <div class="table_create">
-                                        <h4 style="padding-top: 26px">${table.name}</h4>
-                                    </div>
-                                </div>
-                            </a>
-                        </c:if>
-                    </c:forEach>
-                    <div class="groupContent" onclick="openFormCreateTable(${group.id})">
-                        <div class="table_create">
-                            <span style="font-size: 110px">+</span>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="formAddTable" id="formAddTable${group.id}">
-                    <a href="javascript:void(0)" class="closebtn"
-                       onclick="closeFormCreateTable(${group.id})">&times;</a>
-                    <form method="post" action="/homeUser?action=addTable&id=${group.id}">
-                        <h3>Create New Table</h3>
-                        <div class="form-outline mb-3">
+<%--        -----------GROUP---------  --%>
+<div class="group-heading">
+    <h3>YOUR GROUPS</h3>
+</div>
+<c:forEach var="group" items="${groups}">
+    <div class="group">
+        <div class="group_header">
+            <h2 class="group__header-name">${group.name}</h2>
+            <div class="group__header-controls">
+                <a href="/homeUser?action=updateGroup&id=${group.id}" class="group__header-control">
+                    <i class="fa-solid fa-table-cells"></i>
+                    <span>Information</span>
+                </a>
+                <a href="/homeUser?action=table&idGroup=${group.id}" class="group__header-control">
+                    <i class="fa-solid fa-table"></i>
+                    <span>Table</span>
+                </a>
+                <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}"
+                   class="group__header-control">
+                    <i class="fa-solid fa-user-group"></i>
+                    <span>Member</span>
+                </a>
+                <a href="#" class="group__header-control">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Setting</span>
+                </a>
+            </div>
+        </div>
+
+            <%--      table      --%>
+        <div class="group__tables">
+            <c:forEach items="${tables}" var="table" varStatus="count">
+                <c:if test="${group.id eq table.idGroup}">
+                    <div class="group__table"
+                         style="background: url('https://picsum.photos/30${count.count}') no-repeat center">
+                        <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
+                           style="text-decoration: none; color: black">
+                            <div class="group__table-name">
+                                <h4>${table.name}</h4>
+                            </div>
+                        </a>
+                    </div>
+                </c:if>
+            </c:forEach>
+            <div class="group__table group__table-add" onclick="openFormCreateTable(${group.id})">
+                <div class="group__table-btn">
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="formAddTable" id="formAddTable${group.id}">
+            <a href="javascript:void(0)" class="closebtn"
+               onclick="closeFormCreateTable(${group.id})">&times;</a>
+            <form method="post" action="/homeUser?action=addTable&id=${group.id}">
+                <h3>Create New Table</h3>
+                <div class="form-outline mb-3">
                                 <span style="margin: 8px" class="input-group-text">
                                     <input type="text" name="name" class="form-control form-control-lg"
                                            placeholder="Enter Your Name" required/>
                                 </span>
-                        </div>
-                        <div class="form-outline mb-4">
+                </div>
+                <div class="form-outline mb-4">
                                  <span style="margin: 8px" class="input-group-text">
                                     <select class="form-select" aria-label="Default select example" name="permission">
                                     <option>Public</option>
                                     <option>Private</option>
                                     </select>
                                  </span>
-                        </div>
-                        <button type="submit"
-                                class="btn btn-success btn-light btn-lg gradient-custom-4 text-body">
-                            Add
-                        </button>
-                    </form>
                 </div>
-            </div>
-        </c:forEach>
+                <button type="submit"
+                        class="btn btn-success btn-light btn-lg gradient-custom-4 text-body">
+                    Add
+                </button>
+            </form>
+        </div>
     </div>
+</c:forEach>
 </div>
 </div>
-</div>
+
+
 <script>
     function setDisplaySubnav() {
         let subnav = document.getElementById("js-subnav");
@@ -589,13 +205,11 @@
     }
 
     function openFormGroup() {
-        document.getElementById("formAddGroup").style.display = "block";
-        document.body.classList.add("modal-open");
+        document.getElementById("formAddGroup").style.display = "flex";
     }
 
     function closeFormGroup() {
         document.getElementById("formAddGroup").style.display = "none";
-        document.body.classList.remove("modal-open");
     }
 </script>
 </body>
