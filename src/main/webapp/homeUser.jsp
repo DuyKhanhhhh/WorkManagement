@@ -72,8 +72,10 @@
                             <h2 class="formGroup__description-title"> Let's create a Group </h2>
                             <p class="formGroup__description-sup-title">Boost your productivity by making it easier for
                                 everyone access boards in one location</p>
-                            <label class="formGroup__form-label-l">Group name <span class="formGroup__form-span formGroup__form-span-require">*</span> </label>
-                            <input class="formGroup__form-input" type="text" name="name" placeholder="Lonely Wolf." required/>
+                            <label class="formGroup__form-label-l">Group name <span
+                                    class="formGroup__form-span formGroup__form-span-require">*</span> </label>
+                            <input class="formGroup__form-input" type="text" name="name" placeholder="Lonely Wolf."
+                                   required/>
                             <label class="formGroup__form-label-l">Group type </label>
                             <select class="formGroup__form-input" name="groupType" required>
                                 <option>Manage</option>
@@ -85,8 +87,10 @@
                                 <option>Public</option>
                                 <option>Private</option>
                             </select>
-                            <label class="formGroup__form-label-l">Information <span class="formGroup__form-span formGroup__form-span-option">Optional</span></label>
-                            <textarea class="formGroup__form-input formGroup__form-area " placeholder="Leave a comment here" name="information"></textarea>
+                            <label class="formGroup__form-label-l">Information <span
+                                    class="formGroup__form-span formGroup__form-span-option">Optional</span></label>
+                            <textarea class="formGroup__form-input formGroup__form-area "
+                                      placeholder="Leave a comment here" name="information"></textarea>
                             <button class="formGroup__form-submit" type="submit">Create</button>
                         </form>
                     </div>
@@ -100,87 +104,85 @@
         </div>
 
 
-
-<%--        -----------GROUP---------  --%>
-<div class="group-heading">
-    <h3>YOUR GROUPS</h3>
-</div>
-<c:forEach var="group" items="${groups}">
-    <div class="group">
-        <div class="group_header">
-            <h2 class="group__header-name">${group.name}</h2>
-            <div class="group__header-controls">
-                <a href="/homeUser?action=updateGroup&id=${group.id}" class="group__header-control">
-                    <i class="fa-solid fa-table-cells"></i>
-                    <span>Information</span>
-                </a>
-                <a href="/homeUser?action=table&idGroup=${group.id}" class="group__header-control">
-                    <i class="fa-solid fa-table"></i>
-                    <span>Table</span>
-                </a>
-                <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}"
-                   class="group__header-control">
-                    <i class="fa-solid fa-user-group"></i>
-                    <span>Member</span>
-                </a>
-                <a href="#" class="group__header-control">
-                    <i class="fa-solid fa-gear"></i>
-                    <span>Setting</span>
-                </a>
-            </div>
+        <%--        -----------GROUP---------  --%>
+        <div class="group-heading">
+            <h3>YOUR GROUPS</h3>
         </div>
-
-            <%--      table      --%>
-        <div class="group__tables">
-            <c:forEach items="${tables}" var="table" varStatus="count">
-                <c:if test="${group.id eq table.idGroup}">
-                    <div class="group__table"
-                         style="background: url('https://picsum.photos/30${count.count}') no-repeat center">
-                        <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
-                           style="text-decoration: none; color: black">
-                            <div class="group__table-name">
-                                <h4>${table.name}</h4>
-                            </div>
+        <c:forEach var="group" items="${groups}">
+            <div class="group">
+                <div class="group_header">
+                    <h2 class="group__header-name">${group.name}</h2>
+                    <div class="group__header-controls">
+                        <a href="/homeUser?action=updateGroup&id=${group.id}" class="group__header-control">
+                            <i class="fa-solid fa-table-cells"></i>
+                            <span>Information</span>
+                        </a>
+                        <a href="/homeUser?action=table&idGroup=${group.id}" class="group__header-control">
+                            <i class="fa-solid fa-table"></i>
+                            <span>Table</span>
+                        </a>
+                        <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}"
+                           class="group__header-control">
+                            <i class="fa-solid fa-user-group"></i>
+                            <span>Member</span>
+                        </a>
+                        <a href="#" class="group__header-control">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>Setting</span>
                         </a>
                     </div>
-                </c:if>
-            </c:forEach>
-            <div class="group__table group__table-add" onclick="openFormCreateTable(${group.id})">
-                <div class="group__table-btn">
-                    <i class="fa-solid fa-plus"></i>
+                </div>
+
+                    <%--      table      --%>
+                <div class="group__tables">
+                    <c:forEach items="${tables}" var="table" varStatus="count">
+                        <c:if test="${group.id eq table.idGroup}">
+                            <div class="group__table hover-black"
+                                 style="background: url('https://picsum.photos/200/10${count.count}') no-repeat center">
+                                <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
+                                   style="text-decoration: none; color: black">
+                                    <div class="group__table-name">
+                                        <h4>${table.name}</h4>
+                                    </div>
+                                </a>
+                            </div>
+                        </c:if>
+                    </c:forEach>
+                    <div class="group__table hover-white group__table-add" onclick="openFormCreateTable(${group.id})">
+                        <div class="group__table-btn">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </div>
+                </div>
+
+                    <%--      form create table     --%>
+                <div class="modal" id="formAddTable${group.id}">
+                    <div class="modal__content w-fit">
+                        <a href="javascript:void(0)" class="modal__btn-close"
+                           onclick="closeFormCreateTable(${group.id})">&times;</a>
+                            <div class="formGroup-container">
+                                <form class="formGroup__form" method="post"
+                                      action="/homeUser?action=addTable&id=${group.id}">
+                                    <h2 class="formGroup__description-title"> Create table </h2>
+                                    <label class="formGroup__form-label-l">Table name <span
+                                            class="formGroup__form-span formGroup__form-span-require">*</span> </label>
+                                    <input class="formGroup__form-input" type="text" name="name"
+                                           placeholder="Lonely Wolf."
+                                           required/>
+                                    <label class="formGroup__form-label-l">Permission </label>
+                                    <select class="formGroup__form-input" name="permission" required>
+                                        <option>Public</option>
+                                        <option>Private</option>
+                                    </select>
+                                    <button class="formGroup__form-submit" type="submit">Create</button>
+                                </form>
+                            </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <%--      form create table     --%>
-        <div class="formAddTable" id="formAddTable${group.id}">
-            <a href="javascript:void(0)" class="closebtn"
-               onclick="closeFormCreateTable(${group.id})">&times;</a>
-            <form method="post" action="/homeUser?action=addTable&id=${group.id}">
-                <h3>Create New Table</h3>
-                <div class="form-outline mb-3">
-                                <span style="margin: 8px" class="input-group-text">
-                                    <input type="text" name="name" class="form-control form-control-lg"
-                                           placeholder="Enter Your Name" required/>
-                                </span>
-                </div>
-                <div class="form-outline mb-4">
-                                 <span style="margin: 8px" class="input-group-text">
-                                    <select class="form-select" aria-label="Default select example" name="permission">
-                                    <option>Public</option>
-                                    <option>Private</option>
-                                    </select>
-                                 </span>
-                </div>
-                <button type="submit"
-                        class="btn btn-success btn-light btn-lg gradient-custom-4 text-body">
-                    Add
-                </button>
-            </form>
-        </div>
+        </c:forEach>
     </div>
-</c:forEach>
-</div>
 </div>
 
 
@@ -195,7 +197,7 @@
     }
 
     function openFormCreateTable(id) {
-        document.getElementById("formAddTable" + id).style.display = "block";
+        document.getElementById("formAddTable" + id).style.display = "flex";
     }
 
     function closeFormCreateTable(id) {
