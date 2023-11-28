@@ -92,5 +92,5 @@ public interface IUserDAO {
     void addUserInCard(int idUser, int idCard);
     Card findCardById(int idCard);
     List<UserToCard> findMemberToCard(int idCard);
-
+    Table setCountTable(int idGroup);
 }
