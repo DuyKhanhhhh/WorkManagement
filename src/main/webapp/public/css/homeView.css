@@ -25,6 +25,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 10%;
+    z-index: 1;
     border-bottom: 1px solid rgba(23, 43, 77, 0.16);
 }
 
@@ -80,25 +81,27 @@ body {
 /*     --------body--------     */
 
 #body {
-    margin-top: 88px;
     display: flex;
     justify-content: center;
     background-color: #ffffff;
 }
 
 #boxLeft {
-    width: 20%;
+    width: 25%;
+    height: 90vh;
+    min-height: 200px;
+    overflow: hidden;
     position: sticky;
-    top: 0;
-    font-weight: 600;
+    top: 5%;
 }
 
 #content {
+    max-width: 850px;
     width: 60%;
     margin: 0 16px;
 }
 
-    /*-----------ASIDE---------*/
+/*-----------ASIDE---------*/
 
 .aside__list {
     font-size: 14px;
@@ -140,7 +143,7 @@ body {
     width: 14px;
 }
 
-    /*     ------GROUP--------   */
+/*     ------GROUP--------   */
 
 .group-heading h3 {
     color: rgb(68, 84, 111);
@@ -156,7 +159,7 @@ body {
 .group_header {
     display: flex;
     justify-content: space-between;
-    padding-bottom: 11px;
+    padding-bottom: 19px;
 }
 
 .group__header-name {
@@ -170,16 +173,16 @@ body {
 
 .group__header-control {
     text-decoration: none;
-    color: black;
-    padding: 6px 12px 6px 6px;
-    border-radius: 2px;
-}
-
-.group__header-control {
+    border-radius: 3px;
     padding: 6px 12px;
     line-height: 20px;
     background-color: #f1f2f4;
     margin-right: 8px;
+    font-weight: 600;
+}
+
+.group__header-control span {
+    color: rgba(23, 43, 77, 0.8);
 }
 
 .group__header-control:hover {
@@ -196,6 +199,7 @@ body {
 
 .group__tables {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .group__table {
@@ -252,116 +256,7 @@ body {
     font-weight: 700;
 }
 
- /* -------modal form add group--------- */
-.formGroup-container {
-    padding: 64px 24px 24px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-}
-
-.modal__btn-close {
-    position: absolute;
-    font-size: 40px;
-    right: 20px;
-    top: 20px;
-    text-decoration: none;
-    color: #172B4D;
-}
-.modal__btn-close i {
-    font-size: 18px;
-}
-
-.formGroup__form {
-    width: 388px;
-    display: flex;
-    flex-direction: column;
-}
-.formGroup__description-title{
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.formGroup__description-sup-title{
-    font-weight: lighter;
-    line-height: 1.2;
-    font-size: 18px;
-    color: #626F86;
-}
-
-.formGroup__form-label-l {
-    margin: 15px 0 5px;
-    font-size: 13px;
-    font-weight: 600;
-}
-
-.formGroup__form-input {
-    border: 2px solid #dcdfe4 ;
-    border-radius: 4px;
-    margin-bottom: 6px;
-    padding: 14px 12px;
-}
-.formGroup__form-area {
-    height: 100px;
-    resize: none;
-}
-.formGroup__form-span{
-    margin-left: 5px;
-}
-.formGroup__form-span-option {
-    color: #44546f;
-}
-.formGroup__form-span-require {
-    color: #a10000;
-}
-.formGroup__form-submit {
-    color: white;
-    background: #0c66e4;
-    padding: 18px;
-    text-align: center;
-    font-size: 16px;
-    font-weight: 500;
-    margin-top: 13px;
-    border-radius: 4px;
-    border: none;
-    letter-spacing: 1px;
-}
-
-.modal__group-background {
-    background-image: url("https://trello.com/assets/df0d81969c6394b61c0d.svg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    flex: 1;
-    justify-content: end;
-}
-.modal__group-image {
-    margin-top: 112px;
-    background: url("https://trello.com/assets/d1f066971350650d3346.svg");
-    width: 342px;
-    height: 256px;
-    object-fit: cover;
-}
-
-
-/* Style for each content div */
-.dropdown-content div {
-    padding: 10px 5px;
-    font-size: 16px;
-    text-align: center;
-}
-
-/* Highlight dropdown options on hover */
-.dropdown-content div:hover {
-    background-color: #cecece;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {
-    display: block;
-}
+/* -------modal form add group--------- */
 
 .modal {
     display: none;
@@ -383,8 +278,124 @@ body {
     transform: translateY(-15%);
     display: flex;
 }
+
 .modal__group-half {
     width: 50%;
+}
+
+.formGroup-container {
+    padding: 64px 24px 24px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.modal__btn-close {
+    position: absolute;
+    font-size: 40px;
+    right: 10px;
+    top: 10px;
+    text-decoration: none;
+    color: rgba(23, 43, 77, 0.5);
+    cursor: pointer;
+    padding: 15px;
+}
+
+.modal__btn-close:hover {
+    color: rgba(23, 43, 77, 1);
+}
+
+.modal__btn-close i {
+    font-size: 18px;
+}
+
+.formGroup__form {
+    width: 388px;
+    display: flex;
+    flex-direction: column;
+}
+
+.formGroup__description-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.formGroup__description-sup-title {
+    font-weight: lighter;
+    line-height: 1.2;
+    font-size: 18px;
+    color: #626F86;
+}
+
+.formGroup__form-label-l {
+    margin: 15px 0 5px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.formGroup__form-input {
+    border: 2px solid #dcdfe4;
+    border-radius: 4px;
+    margin-bottom: 6px;
+    padding: 14px 12px;
+}
+
+.formGroup__form-area {
+    height: 100px;
+    resize: none;
+}
+
+.formGroup__form-span {
+    margin-left: 5px;
+}
+
+.formGroup__form-span-option {
+    font-weight: 100;
+    color: #44546fad;
+}
+
+.formGroup__form-span-require {
+    color: #c50000;
+    font-size: 17px;
+    line-height: 5px;
+    font-weight: 800;
+}
+
+.formGroup__form-submit {
+    color: white;
+    background: #0c66e4;
+    padding: 15px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 13px;
+    border-radius: 4px;
+    border: none;
+    letter-spacing: 1px;
+}
+
+.formGroup__form-submit:hover {
+    cursor: pointer;
+    background: rgba(12, 102, 228, 0.8);
+}
+
+.modal__group-background {
+    background-image: url("https://trello.com/assets/df0d81969c6394b61c0d.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex: 1;
+    justify-content: end;
+}
+
+.modal__group-image {
+    margin-top: 112px;
+    background: url("https://trello.com/assets/d1f066971350650d3346.svg");
+    width: 342px;
+    height: 256px;
+    object-fit: cover;
 }
 
 .formAddTable {
