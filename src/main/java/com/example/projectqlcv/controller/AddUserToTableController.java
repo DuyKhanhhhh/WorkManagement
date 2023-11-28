@@ -124,9 +124,9 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
         session.setAttribute("groups", group);
-        AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(idUser);
+        AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(idUser,idTable);
         session.setAttribute("roleUser",userToTable);
-        Member member = userDAO.findRoleUserToMember(idUser);
+        Member member = userDAO.findRoleUserToMember(idUser,idGroup);
         session.setAttribute("memberToGroup",member);
         List<Column> listColumn= columnDAO.selectAllColumn();
         List<Card> listCard = columnDAO.selectAllCard();
@@ -211,9 +211,9 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
         session.setAttribute("groups", group);
-        AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(user.getId());
+        AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(user.getId(),idTable);
         session.setAttribute("roleUser",userToTable);
-        Member member = userDAO.findRoleUserToMember(user.getId());
+        Member member = userDAO.findRoleUserToMember(user.getId(),idGroup);
         session.setAttribute("memberToGroup",member);
         List<Column> listColumn= columnDAO.selectAllColumn();
         List<Card> listCard = columnDAO.selectAllCard();
@@ -266,7 +266,7 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("userToTable", addUserToTables);
         Table table = userDAO.findTableById(idTable);
         session.setAttribute("tables", table);
-        AddUserToTable addUserToTable = userDAO.findRoleUserToUserToTable(idUser);
+        AddUserToTable addUserToTable = userDAO.findRoleUserToUserToTable(idUser,idTable);
         session.setAttribute("member",addUserToTable);
         try {
             request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);

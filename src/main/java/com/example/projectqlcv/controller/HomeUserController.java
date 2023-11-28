@@ -251,7 +251,7 @@ HomeUserController extends HttpServlet {
             session.setAttribute("groups", group);
             List<Member> member = userDAO.selectGroupMember(idGroup);
             session.setAttribute("member", member);
-            Member roleMember = userDAO.findRoleUserToMember(idUser);
+            Member roleMember = userDAO.findRoleUserToMember(idUser,idGroup);
             session.setAttribute("roleMember", roleMember);
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
 

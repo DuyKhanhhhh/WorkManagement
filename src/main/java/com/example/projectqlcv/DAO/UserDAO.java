@@ -32,8 +32,8 @@ public class UserDAO implements IUserDAO {
     private static final String SELECT_TABLE_IN_GROUP = "SELECT t.id ,t.name ,t.permission FROM tableWork t JOIN groupWork g ON t.idGroup=g.id WHERE g.id = ?";
     private static final String UPDATE_PERMISSION_MEMBER = "update member set role = ? where id = ?";
     private static final String SEARCH_USER_TO_TABLE = "select * from user where id not in (select u.id from userToTable m join user u on  m.idUser = u.id where m.idTable like ?) and (name like ? || email like ?);";
-    private static final String FIND_ROLE_USER_TO_MEMBER = "SELECT role FROM member WHERE idUser = ?";
-    private static final String FIND_ROLE_USER_TO_USER_TO_TABLE = "SELECT role,idTable FROM userToTable WHERE idUser = ?";
+    private static final String FIND_ROLE_USER_TO_MEMBER = "SELECT role FROM member WHERE idUser = ? AND idGroup = ?";
+    private static final String FIND_ROLE_USER_TO_USER_TO_TABLE = "SELECT role,idTable FROM userToTable WHERE idUser = ? AND idTable = ?";
     private static final String UPDATE_PERMISSION_USER_TO_TABLE = "update userToTable set role = ? where id = ?";
     private static final String SELECT_ALL_MEMBER = "select * from member where id =?";
     private static final String SELECT_TABLE_CARD = "select * from card where id = ?";
@@ -838,12 +838,13 @@ public class UserDAO implements IUserDAO {
     }
 
     @Override
-    public Member findRoleUserToMember(int idUser) {
+    public Member findRoleUserToMember(int idUser, int idGroup) {
         Member member = null;
         try {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ROLE_USER_TO_MEMBER);
             preparedStatement.setInt(1,idUser);
+            preparedStatement.setInt(2,idGroup);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
                 String role = resultSet.getString("role");
@@ -876,15 +877,15 @@ public class UserDAO implements IUserDAO {
         return card;
     }
     @Override
-    public AddUserToTable findRoleUserToUserToTable(int idUser) {
+    public AddUserToTable findRoleUserToUserToTable(int idUser,int idTable) {
         AddUserToTable addUserToTable = null;
         try {
             Connection connection = DataConnector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ROLE_USER_TO_USER_TO_TABLE);
             preparedStatement.setInt(1,idUser);
+            preparedStatement.setInt(2,idTable);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                int idTable = resultSet.getInt("idTable");
                 String role = resultSet.getString("role");
                 addUserToTable = new AddUserToTable(idUser,idTable,role);
             }

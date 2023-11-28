@@ -65,7 +65,7 @@ public interface IUserDAO {
 
     Member findUserToGroup(int idGroup, int idUser);
 
-    Member findRoleUserToMember(int idUser);
+    Member findRoleUserToMember(int idUser,int idGroup);
 
     boolean deleteUserToTable(int id);
 
@@ -77,7 +77,7 @@ public interface IUserDAO {
 
     AddUserToTable findUserToTableById(int idTable);
 
-    AddUserToTable findRoleUserToUserToTable(int idUser);
+    AddUserToTable findRoleUserToUserToTable(int idUser,int idTable);
 
     boolean deleteColumnToTable(int id);
 
