@@ -401,21 +401,12 @@ h4 {
 
 .addCard {
     display: none;
-    width: 260px;
-    position: fixed;
+    position: relative;
     border-radius: 7px;
     background-color: #e9ecef;
     overflow-x: hidden;
-    padding-top: 30px;
 }
 
-.addCard a {
-    padding: 8px 1px 10px 0px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-}
 
 .addCard .closebtn {
     position: absolute;
@@ -506,17 +497,26 @@ h4 {
 }
 .form__add__control {
     display: flex;
+    justify-content: space-between;
     padding: 12px 9px;
 }
 .button-add {
-    padding: 8px;
+    border-radius: 7px;
+    padding: 0 20px;
     background-color: #0c66e4;
     border: none;
     color: white;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
+    max-height: 40px;
+    cursor: pointer;
 }
+
 .button-return {
+    border-radius: 7px;
+    text-align: center;
+    width: 100px;
+    text-decoration: none;
     padding: 8px;
     background-color: white;
     border: none;
@@ -524,7 +524,6 @@ h4 {
     font-size: 14px;
     font-weight: 700;
 }
-
 
 .form-floating {
     height: 100px;

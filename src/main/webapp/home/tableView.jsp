@@ -118,8 +118,8 @@
                         <form class="form__add" method="post" action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
                             <input type="text" class="column__card" name="name" placeholder="Enter a list title">
                             <div class="form__add__control">
-                                <button type="submit"> Add Card</button>
-                                <a href="javascript:void(0)" onmousedown="closeFormCard(${listColumn.id})">&times;</a>
+                                <button class="button-add" type="submit"> Add Card</button>
+                                <a class="button-return" href="javascript:void(0)" onmousedown="closeFormCard(${listColumn.id})">Return</a>
                             </div>
                         </form>
                     </div>
@@ -134,12 +134,12 @@
                 <span class="titleColumn">+ Add list</span>
             </div>
             <div id="formAdd" class="formAdd">
-                <form method="post" action="/column?action=addColumn&idTable=${tables.id}">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" name="name" placeholder="Enter a list title">
-                        <button type="submit" class="btn btn-primary">Add Column</button>
-                        <a href="javascript:void(0)" class="closebtn" onclick="closeForm()">&times;</a>
-                    </div>
+                <form class="form__add" method="post" action="/column?action=addColumn&idTable=${tables.id}">
+                        <input type="text" class="column__card" name="name" placeholder="Enter a list title">
+                       <div class="form__add__control">
+                           <button type="submit" class="button-add">Add Column</button>
+                           <a href="javascript:void(0)" class="button-return" onclick="closeForm()">Cancel</a>
+                       </div>
                 </form>
             </div>
         </div>
