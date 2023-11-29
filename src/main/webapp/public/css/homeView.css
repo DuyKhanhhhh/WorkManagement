@@ -51,8 +51,8 @@ body {
 }
 
 .header__avatar {
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     object-fit: cover;
     border-radius: 50%;
 }
@@ -263,6 +263,59 @@ body {
     font-size: 16px;
     font-weight: 700;
 }
+/* -------modal form add group--------- */
+.modals {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.75);
+    justify-content: center;
+    align-items: center;
+}
+.modal__information{
+    width: 600px;
+    height: 650px;
+    background-color: white;
+    margin: 4% auto;
+    display: flex;
+}
+.modal__information-half {
+    width: 100%;
+}
+.modals__group-half {
+    width: 50%;
+}
+.modal__btnIn-formation-close {
+    position: absolute;
+    font-size: 40px;
+    right: 34.2%;
+    top: 74px;
+    text-decoration: none;
+    color: rgba(23, 43, 77, 0.5);
+    cursor: pointer;
+    padding: 15px;
+}
+
+.modals__btn-close {
+    position: absolute;
+    font-size: 40px;
+    right: 10px;
+    top: 10px;
+    text-decoration: none;
+    color: rgba(23, 43, 77, 0.5);
+    cursor: pointer;
+    padding: 15px;
+}
+.modals__btn-close:hover {
+    color: rgba(23, 43, 77, 1);
+}
+.modals__btn-close i {
+    font-size: 18px;
+}
+
 
 /* -------modal form add group--------- */
 
