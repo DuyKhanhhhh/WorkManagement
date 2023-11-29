@@ -18,23 +18,24 @@
 
 <body>
 <div class="container-fluid">
-    < <nav id="header">
-    <a class="header__logo" href="/homeUser">
-        <img class="header__logo-img js-subnavToggle"
-             src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png">
-    </a>
-    <ul class="header__nav-right">
-        <li onclick="setDisplaySubnav()" class="headRight">
-            <img class="header__avatar" src="${user.getAvatar()}" alt="Avatar">
-            <ul id="js-subnav" class="header__subnav js-subnav">
-                <li><a href="#"> Setting</a></li>
-                <li><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></li>
-                <li><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></li>
-                <li><a href="/loginAndSignUp?login=logout">Logout</a></li>
-            </ul>
-        </li>
-    </ul>
-</nav>
+    <
+    <nav id="header">
+        <a class="header__logo" href="/homeUser">
+            <img class="header__logo-img js-subnavToggle"
+                 src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png">
+        </a>
+        <ul class="header__nav-right">
+            <li onclick="setDisplaySubnav()" class="headRight">
+                <img class="header__avatar" src="${user.getAvatar()}" alt="Avatar">
+                <ul id="js-subnav" class="header__subnav js-subnav">
+                    <li><a href="#"> Setting</a></li>
+                    <li><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></li>
+                    <li><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></li>
+                    <li><a href="/loginAndSignUp?login=logout">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
     <div class="row">
         <div class="col-10">
             <div id="member">
@@ -42,7 +43,8 @@
             </div>
 
             <div id="search">
-                <form class="d-flex" method="post" action="/addUserToTable?action=searchUser&id=${groups.id}&idTable=${tables.id}">
+                <form class="d-flex" method="post"
+                      action="/addUserToTable?action=searchUser&id=${groups.id}&idTable=${tables.id}">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
                            name="search">
                     <button class="btn btn-outline-success" type="submit" name="search">Search</button>
@@ -51,16 +53,18 @@
             <div class="table_all">
                 <table class="table table-bordered">
                     <c:forEach var="user" items="${list}">
-                        <tr>
-                            <td><img width="80px" height="80px" src="${user.avatar}"></td>
-                            <td>${user.name}</td>
-                            <td>${user.email}</td>
-                            <td>
-                                <a href="/addUserToTable?action=addUser&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
-                                    <button type="button" class="btn btn-danger">Add</button>
-                                </a>
-                            </td>
-                        </tr>
+                        <c:if test="${user.name != 'Admin'}">
+                            <tr>
+                                <td><img width="80px" height="80px" src="${user.avatar}"></td>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>
+                                    <a href="/addUserToTable?action=addUser&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
+                                        <button type="button" class="btn btn-success">Add</button>
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:if>
                     </c:forEach>
                 </table>
             </div>

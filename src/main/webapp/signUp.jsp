@@ -32,8 +32,13 @@
                             <h2 class="text-center text-center mb-5">Sign Up</h2>
 
                             <c:if test="${message != null}">
-                                <div class="alert alert-success" role="alert">
+                                <div class="alert alert-danger" role="alert">
                                         ${message}
+                                </div>
+                            </c:if>
+                            <c:if test="${message1 != null}">
+                                <div class="alert alert-danger" role="alert">
+                                        ${message1}
                                 </div>
                             </c:if>
                             <script>

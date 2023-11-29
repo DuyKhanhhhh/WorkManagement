@@ -88,7 +88,7 @@
                                 <td>
                                     <c:if test="${userToTable.role.equals('User')}">
                                         <div class="">
-                                            <a onclick="showConfirmation()" style="font-size: 20px;color: black">
+                                            <a onclick="showConfirmation(${userToTable.id})" style="font-size: 20px;color: black">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </div>
@@ -106,10 +106,10 @@
                                 subnav.style.display = "none"
                             }
                         }
-                        function showConfirmation() {
+                        function showConfirmation(idTable) {
                             var result = confirm("Are you sure you want to remove this user from the table?");
                             if (result) {
-                                window.location.href = "/addUserToTable?action=deleteUserToTable&id=${userToTable.id}&idTable=${tables.id}";
+                                window.location.href = "/addUserToTable?action=deleteUserToTable&idTable=${tables.id}&id="+idTable;
                             }
                         }
                     </script>

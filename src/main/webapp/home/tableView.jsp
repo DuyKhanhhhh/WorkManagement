@@ -49,8 +49,10 @@
                                 <input name="idTable" value="${tables.id}" type="hidden">
                             </form>
                         </c:if>
-                        <c:if test="${(roleUser.role).equals('User') || (roleUser.role).equals(null)}">
-                            <label class="header__nav-table-name ">${listTable.name}</label>
+                        <c:if test="${!(roleUser.role).equals('Admin')}">
+                            <div class="header__nav-table-name" style="margin-top: 3px; margin-right: 7rem">
+                            <label style="font-size: 20px" >${listTable.name}</label>
+                            </div>
                         </c:if>
                     </div>
                 </c:if>
@@ -59,7 +61,17 @@
                 <button>${tables.permission}</button>
             </div>
         </div>
-
+        <div id="my-div" style="display: none;">
+            <form action="/homeUser?action=updatePermissionTablePublic&idTable=${tables.id}" method="post">
+                <input type="submit" value="Public"/>
+            </form>
+            <form action="/homeUser?action=updatePermissionTableGroup&idTable=${tables.id}" method="post">
+                <input type="submit" value="Group"/>
+            </form>
+            <form action="/homeUser?action=updatePermissionTablePrivate&idTable=${tables.id}" method="post">
+                <input type="submit" value="Private"/>
+            </form>
+        </div>
 
         <div class="nav-right">
             <div class="nav__search">
@@ -78,7 +90,11 @@
                 </c:forEach>
                 <c:if test="${toTable.countAvatar > 3}">
                     <div class="circleMember">
-                        <span style="font-size: 20px; color:  #0000008a">+${toTable.countAvatar - 3 }</span>
+                        <span style="    font-size: 20px;
+    color: #0000008a;
+    display: flex;
+    justify-content: center;
+    margin-top: 9px;">+${toTable.countAvatar - 3 }</span>
                     </div>
                 </c:if>
             </div>
@@ -86,7 +102,13 @@
                href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
             <a class="header__nav-item"
                href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
-
+            <c:if test="${roleUser.role.equals('Admin') && roleUser.idTable eq tables.id}">
+                <a onclick="showConfirmation()" class="header__nav-item">Delete table</a>
+            </c:if>
+            <c:if test="${roleUser.idUser != memberToGroup.idUser}">
+                <a class="header__nav-item" href="/addUserToTable?action=joinTable&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
+                    Join table</a>
+            </c:if>
         </div>
     </nav>
 
@@ -118,7 +140,7 @@
                         <form class="form__add" method="post" action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
                             <input type="text" class="column__card" name="name" placeholder="Enter a list title">
                             <div class="form__add__control">
-                                <button class="button-add" type="submit"> Add Card</button>
+                                <button class="button-add" type="submit">Add Card</button>
                                 <a class="button-return" href="javascript:void(0)" onmousedown="closeFormCard(${listColumn.id})">Return</a>
                             </div>
                         </form>
@@ -184,7 +206,6 @@
                                 </div>
                             </div>
                             <div class="iconComment">
-
                                 <span onclick="openFormEdit()" class="textIcon"><u>Edit</u></span>
                                 <a href="/column?action=deleteComment&idCard=${comment.id}">
                                     <span class="textIcon"><u>Delete</u></span>
@@ -373,11 +394,12 @@
     }
 
     function openPermission() {
-        document.getElementById("my-div").style.display = "block";
-    }
-
-    function closePermission() {
-        document.getElementById("my-div").style.display = "none";
+        var button = document.getElementById("my-div");
+        if (button.style.display === "none") {
+            button.style.display = "block";
+        } else {
+            button.style.display = "none";
+        }
     }
 
     const inputElement = document.getElementById("title");

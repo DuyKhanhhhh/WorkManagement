@@ -54,12 +54,10 @@ public class LoginAndSignUpController extends HttpServlet {
                 }
 
             } else {
-                request.setAttribute("message", "Wrong email or password!");
+                request.setAttribute("message1", "Wrong password!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -87,9 +85,7 @@ public class LoginAndSignUpController extends HttpServlet {
                 request.getRequestDispatcher("signUp.jsp").forward(request, response);
             }
 
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }

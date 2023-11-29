@@ -42,6 +42,7 @@
             <div class="table_all">
                 <table class="table table-bordered">
                     <c:forEach var="user" items="${list}">
+                        <c:if test="${user.name != 'Admin'}">
                         <tr>
                             <td><img width="80px" height="80px" src="${user.avatar}"></td>
                             <td>${user.name}</td>
@@ -52,6 +53,7 @@
                                 </a>
                             </td>
                         </tr>
+                        </c:if>
                     </c:forEach>
                 </table>
             </div>
