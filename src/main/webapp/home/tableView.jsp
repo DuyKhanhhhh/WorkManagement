@@ -167,7 +167,7 @@
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
                                       name="newContent"
                             >${card.getContent()}</textarea>
-                                <label for="floatingTextarea1">Content</label>
+
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>
@@ -178,7 +178,7 @@
                         <c:forEach var="comment" items="${listComment}">
                             <div class="comment-item">
                                 <img src="${comment.avatar}" alt="Avatar" class="avatar">
-                                <div class="comment-content">1
+                                <div class="comment-content">
                                     <span class="comment-name">${comment.name}</span>
                                     <span class="comment-text">${comment.comment}</span>
                                 </div>
