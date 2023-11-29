@@ -297,7 +297,7 @@ public class AddUserToTableController extends HttpServlet {
         request.setAttribute("tables", table);
         request.setAttribute("message", "Add member success !");
         try {
-            request.getRequestDispatcher("home/addUserToTable.jsp").forward(request, response);
+            request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }

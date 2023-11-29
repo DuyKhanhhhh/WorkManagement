@@ -116,7 +116,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark" id="header">
             <div class="container-fluid">
                 <div class="headImg">
-                    <a href="/homeUser">
+                    <a href="/column">
                         <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
                              width="100" height="50">
                     </a>

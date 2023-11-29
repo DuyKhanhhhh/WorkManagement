@@ -15,25 +15,22 @@
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
 
 </head>
+<style>
+
+</style>
 <body>
 <form method="post">
-    <fieldset>
-        <c:if test="${message != null}">
-            <div class="alert alert-success" role="alert">
-                    ${message}
-            </div>
-        </c:if>
-        <script>
-            setTimeout(function () {
-                document.querySelector(".alert").remove();
-            }, 3000);
-        </script>
+    <fieldset style="    border: 0;
+    margin-top: 120px;
+    margin-left: 35rem;
+    margin-right: 35rem;">
+
         <caption>
             <h2 style="text-align: center">Add New User</h2>
         </caption>
         <div class="form-outline mb-4">
             <span class="input-group-text">
-                <i class="fa-solid fa-envelope" style="color: #000000;font-size: 30px"></i>
+                <i class="fa-solid fa-envelope" style="color: #000000;font-size: 30px; margin-right: 1rem"></i>
                 <input type="email" name="email" class="form-control form-control-lg"
                        placeholder="Your Email"
                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required/>
@@ -42,14 +39,14 @@
 
         <div class="form-outline mb-4">
             <span class="input-group-text">
-                <i class="fa-solid fa-user" style="color: #000000; font-size: 30px"></i>
+                <i class="fa-solid fa-user" style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
                 <input type="text" name="name" class="form-control form-control-lg" placeholder="Your Name" required/>
             </span>
         </div>
 
         <div class="form-outline mb-4">
             <span class="input-group-text">
-                <i class="fa-solid fa-phone" style="color: #000000; font-size: 30px"></i>
+                <i class="fa-solid fa-phone" style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
                 <input type="text" name="phoneNumber" class="form-control form-control-lg"
                        placeholder="Your Phone" pattern="^\d{10}$" required/>
             </span>
@@ -57,14 +54,14 @@
 
         <div class="form-outline mb-4">
             <span class="input-group-text">
-                <i class="fa-solid fa-lock" style="color: #000000; font-size: 30px"></i>
+                <i class="fa-solid fa-lock" style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
                 <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" required/>
             </span>
         </div>
 
         <div class="form-outline mb-4">
             <span class="input-group-text">
-                <i class="fa-solid fa-key" style="color: #000000; font-size: 30px"></i>
+                <i class="fa-solid fa-key" style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
                 <input type="password" name="confirmPassword"
                        class="form-control form-control-lg"
                        placeholder="Repeat Your Password"
