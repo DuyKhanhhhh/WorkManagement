@@ -296,7 +296,7 @@ HomeUserController extends HttpServlet {
         Group group = userDAO.findGroupById(id);
         request.setAttribute("listGroup", group);
         try {
-            request.getRequestDispatcher("home/updateGroup.jsp").forward(request, response);
+            request.getRequestDispatcher("homeUser.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

@@ -74,7 +74,7 @@
                                 everyone access boards in one location</p>
                             <label class="formGroup__form-label-l">Group name <span
                                     class="formGroup__form-span formGroup__form-span-require">*</span> </label>
-                            <input class="formGroup__form-input" type="text" name="name" placeholder="Lonely Wolf."
+                            <input class="formGroup__form-input" type="text" name="name" placeholder="Name group..."
                                    required/>
                             <label class="formGroup__form-label-l">Group type </label>
                             <select class="formGroup__form-input" name="groupType" required>
@@ -102,7 +102,51 @@
                 </div>
             </div>
         </div>
-
+                <%--            INFORMATION         --%>
+            <c:if test="${listGroup != null}">
+                <div id="formInformation" class="modals">
+                    <div class="modal__information">
+                        <a class="modal__btnIn-formation-close" onclick="closeFormInformation()"><i class="fa-solid fa-x"></i></a>
+                        <div class="modal__information-half">
+                            <div class="formGroup-container">
+                                <form class="formGroup__form" method="post" action="/homeUser?action=updateGroup">
+                                    <input type="hidden" name="id" value="<c:out value='${listGroup.id}' />"/>
+                                    <h2 class="formGroup__description-title">Group Information</h2>
+                                    <label class="formGroup__form-label-l">Group name <span
+                                            class="formGroup__form-span formGroup__form-span-require">*</span> </label>
+                                    <input class="formGroup__form-input" type="text" name="name"  value="<c:out value='${listGroup.name}'/>"
+                                           required/>
+                                    <label class="formGroup__form-label-l">Group type </label>
+                                    <select class="formGroup__form-input" name="groupType" required>
+                                        <option><c:out value='${listGroup.groupType}'/></option>
+                                        <c:if test="${listGroup.groupType != 'Manage'}">
+                                            <option>Manage</option>
+                                        </c:if>
+                                        <c:if test="${listGroup.groupType != 'Accountant'}">
+                                            <option>Accountant</option>
+                                        </c:if>
+                                        <c:if test="${listGroup.groupType != 'Plan'}">
+                                            <option>Plan</option>
+                                        </c:if>
+                                    </select>
+                                    <label class="formGroup__form-label-l">Permission </label>
+                                    <select class="formGroup__form-input" name="permission" required>
+                                        <option><c:out value='${listGroup.permission}'/></option>
+                                        <option>Public</option>
+                                        <option>Private</option>
+                                    </select>
+                                    <label class="formGroup__form-label-l">Information <span
+                                            class="formGroup__form-span formGroup__form-span-option">Optional</span></label>
+                                    <textarea class="formGroup__form-input formGroup__form-area "
+                                              name="information" value="<c:out value='${listGroup.information}'/>">
+                                    </textarea>
+                                    <button class="formGroup__form-submit" type="submit">Edit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
 
         <%--        -----------GROUP---------  --%>
         <div class="group-heading">
@@ -187,6 +231,13 @@
 
 
     <script>
+        function showConfirmation() {
+            var result = confirm("Are you sure you want to remove this member from the group?");
+            if (result) {
+                window.location.href = "/homeUser?action=deleteGroup&id=${group.id}";
+            } else {
+            }
+        }
         function setDisplaySubnav() {
             let subnav = document.getElementById("js-subnav");
             if (subnav.style.display === "none") {
@@ -194,6 +245,9 @@
             } else {
                 subnav.style.display = "none"
             }
+        }
+        function closeFormInformation(){
+            document.getElementById("formInformation").style.display = "none"
         }
 
         function openFormCreateTable(id) {

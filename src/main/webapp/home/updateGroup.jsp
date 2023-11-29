@@ -318,13 +318,7 @@
                                    href="/homeUser?action=deleteGroup&id=${listGroup.id}">Delete</a>
                             </button>
                             <script>
-                                function showConfirmation() {
-                                    var result = confirm("Are you sure you want to remove this member from the group?");
-                                    if (result) {
-                                        window.location.href = "/homeUser?action=deleteGroup&id=${group.id}";
-                                    } else {
-                                    }
-                                }
+
                             </script>
                         </div>
                     </div>
