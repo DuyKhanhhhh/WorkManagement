@@ -18,7 +18,7 @@
 
 <%--    -------HEADER------    --%>
 <nav id="header">
-    <a class="header__logo">
+    <a href="/homeUser" class="header__logo">
         <img class="header__logo-img js-subnavToggle"
              src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png">
     </a>
