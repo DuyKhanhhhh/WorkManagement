@@ -170,13 +170,12 @@
                         <i class="fa-solid fa-user-group"></i>
                         <span>Member</span>
                     </a>
-                    <a href="#" class="group__header-control">
-                        <i class="fa-solid fa-gear"></i>
-                        <span>Setting</span>
+                    <a onclick="showConfirmation(${group.id})" class="group__header-control">
+                        <i class="fa-solid fa-trash"></i>
+                        <span>Delete</span>
                     </a>
                 </div>
             </div>
-
                 <%--      table      --%>
             <div class="group__tables">
                 <c:forEach items="${tables}" var="table" varStatus="count">
@@ -229,12 +228,11 @@
         </div>
     </div>
 
-
     <script>
-        function showConfirmation() {
-            var result = confirm("Are you sure you want to remove this member from the group?");
+        function showConfirmation(idGroup) {
+            var result = confirm("Are you sure you want to remove this group ?");
             if (result) {
-                window.location.href = "/homeUser?action=deleteGroup&id=${group.id}";
+                window.location.href = "/homeUser?action=deleteGroup&id=" + idGroup;
             } else {
             }
         }

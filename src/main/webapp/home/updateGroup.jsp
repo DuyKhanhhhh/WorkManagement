@@ -313,13 +313,8 @@
                         <br>
                         <div>
                             <button type="submit" class="btn btn-secondary" style="width: 200px">Edit</button>
-                            <button onclick="showConfirmation()" class="btn btn-secondary" style="width: 200px">
-                                <a style="text-decoration: none;color: white"
-                                   href="/homeUser?action=deleteGroup&id=${listGroup.id}">Delete</a>
-                            </button>
-                            <script>
 
-                            </script>
+
                         </div>
                     </div>
                 </form>
@@ -329,6 +324,6 @@
         </div>
     </div>
 </div>
-</div>
+
 </body>
 </html>

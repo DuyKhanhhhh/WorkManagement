@@ -144,7 +144,7 @@
     <div class="row">
         <div class="col-10">
             <div id="member">
-                <h2 style="text-align: center; margin-top: 40px">Search member </h2>
+                <h2 style="text-align: center; margin-top: 40px">Search member</h2>
             </div>
 
             <div id="search">
