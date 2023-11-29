@@ -13,148 +13,28 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}public/css/editUser.css"/>
 </head>
-<style>
-    body {
-        background-color: #f8f9fa;
-    }
 
-    #header {
-        position: fixed;
-        background-color: #2f2f2f;
-        height: 50px;
-    }
-
-    .headImg {
-        margin-right: 20px;
-    }
-
-    .headRight {
-        text-align: right;
-        padding-right: 10px;
-    }
-
-    #footer {
-        bottom: 0;
-        left: 0;
-        right: 0;
-        position: fixed;
-    }
-    a {
-        text-decoration: none;
-        color: black;
-    }
-
-    span {
-        font-size: 23px;
-    }
-
-    /* Style for dropdown content */
-    .dropdown-content {
-        display: none; /* Hidden by default */
-        position: absolute;
-        background-color: #000000;
-        min-width: 85px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-
-    .dropdown-content a {
-        font-size: 15px;
-        color: white;
-    }
-
-    /* Style for each content div */
-    .dropdown-content div {
-        padding: 10px 5px;
-        font-size: 16px;
-        text-align: center;
-    }
-
-    /* Highlight dropdown options on hover */
-    .dropdown-content div:hover {
-        background-color: #cecece;
-    }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-    .circle {
-        width: 460px;
-        height: 460px;
-        border-radius: 50%;
-        margin-top: 30%;
-        margin-left: 10%;
-        overflow: hidden;
-        position: relative;
-    }
-    .circle img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .content{
-        margin-top: 14%;
-        margin-right: 9%;
-        border: 1px solid black;
-        background-color: #d1d1d1;
-        height: 82%;
-        border-radius: 2%;
-        box-shadow: 0 2px 4px rgba(0, 1, 0, 2);
-    }
-    .form-control-lg{
-        margin-left: 225px;
-        width: 60%;
-    }
-    .titleInput{
-        margin-left: 20%;
-        font-size: 30px;
-    }
-    .caption{
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 10px;
-        margin: 0;
-        font-size: 20px;
-    }
-</style>
 <body>
 <div class="container-fluid">
-    <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-dark" id="header">
-            <div class="container-fluid">
-                <div class="headImg">
-                    <a href="/homeUser">
-                        <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
-                             width="100" height="50">
-                    </a>
-                </div>
-
-                <div class="headRight">
-                    <span class="group-text">
-                    <div class="collapse navbar-collapse">
-                      <i class="fa-solid fa-bell" style="color: #ffffff; margin-right: 15px"></i>
-                        <span class="dropdown">
-                            <button style="font-size: 15px" class="btn btn-light"><c:out value="${user.name}"/></button>
-                            <div class="dropdown-content">
-                                <div><a href="#">Setting</a></div>
-                                <div><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></div>
-                                <div><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></div>
-                                <div><a href="login.jsp">Logout</a></div>
-                            </div>
-                        </span>
-                    </div>
-                    </span>
-                </div>
-            </div>
-        </nav>
-    </div>
+    <nav id="header">
+        <a class="header__logo" href="/homeUser">
+            <img class="header__logo-img js-subnavToggle"
+                 src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png">
+        </a>
+        <ul class="header__nav-right">
+            <li onclick="setDisplaySubnav()" class="headRight">
+                <img class="header__avatar" src="${user.getAvatar()}" alt="Avatar">
+                <ul id="js-subnav" class="header__subnav js-subnav">
+                    <li><a href="#"> Setting</a></li>
+                    <li><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></li>
+                    <li><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></li>
+                    <li><a href="/loginAndSignUp?login=logout">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
     <div class="row">
         <div class="col-4">
             <figure class="circle">
@@ -218,11 +98,16 @@
             </div>
         </div>
     </div>
-    <div class="bg-light py-2" id="footer">
-        <div class="container text-center">
-            <p class="text-muted mb-0 py-1">© 2023 Trello Group 7</p>
-        </div>
-    </div>
 </div>
+<script>
+    function setDisplaySubnav() {
+        let subnav = document.getElementById("js-subnav");
+        if (subnav.style.display === "none") {
+            subnav.style.display = "block"
+        } else {
+            subnav.style.display = "none"
+        }
+    }
+</script>
 </body>
 </html>

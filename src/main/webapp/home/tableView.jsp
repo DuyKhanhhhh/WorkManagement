@@ -10,15 +10,15 @@
 <html>
 <head>
     <title>Home</title>
-<%--        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"--%>
-<%--              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">--%>
+    <%--        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"--%>
+    <%--              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">--%>
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="../public/css/tableView.css"/>
 </head>
 <body>
 
 <nav id="header">
-    <a class="header__logo">
+    <a href="/homeUser" class="header__logo">
         <img class="header__logo-img js-subnavToggle"
              src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png">
     </a>
@@ -100,8 +100,6 @@
                                    value="${listColumn.name}">
                             <input name="action" value="editNameColumn" type="hidden">
                             <input name="idColumn" value="${listColumn.id}" type="hidden">
-                            <input type="submit" class="button" id="buttonColumn" style="display: none ; border: none "
-                                   hidden="hidden">
                         </form>
                         <a class="icon-l" href="/column?action=delete&id=${listColumn.id}">
                             <i class="fa-solid fa-xmark "></i>
@@ -117,15 +115,11 @@
                         </c:forEach>
                     </div>
                     <div id="formAddCard${listColumn.id}" class="addCard">
-                        <form method="post"
-                              action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" name="name"
-                                       placeholder="Enter a list title">
-                                <button type="submit" class="btn btn-primary" style="margin-top: 5px">Add Card
-                                </button>
-                                <a href="javascript:void(0)" class="closebtn"
-                                   onmousedown="closeFormCard(${listColumn.id})">&times;</a>
+                        <form class="form__add" method="post" action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
+                            <input type="text" class="column__card" name="name" placeholder="Enter a list title">
+                            <div class="form__add__control">
+                                <button class="button-add" type="submit"> Add Card</button>
+                                <a class="button-return" href="javascript:void(0)" onmousedown="closeFormCard(${listColumn.id})">Return</a>
                             </div>
                         </form>
                     </div>
@@ -140,12 +134,12 @@
                 <span class="titleColumn">+ Add list</span>
             </div>
             <div id="formAdd" class="formAdd">
-                <form method="post" action="/column?action=addColumn&idTable=${tables.id}">
-                    <div class="mb-3">
-                        <input type="text" class="form-control" name="name" placeholder="Enter a list title">
-                        <button type="submit" class="btn btn-primary" >Add Column</button>
-                        <a href="javascript:void(0)" class="closebtn" onclick="closeForm()">&times;</a>
-                    </div>
+                <form class="form__add" method="post" action="/column?action=addColumn&idTable=${tables.id}">
+                        <input type="text" class="column__card" name="name" placeholder="Enter a list title">
+                       <div class="form__add__control">
+                           <button type="submit" class="button-add">Add Column</button>
+                           <a href="javascript:void(0)" class="button-return" onclick="closeForm()">Cancel</a>
+                       </div>
                 </form>
             </div>
         </div>
@@ -172,8 +166,8 @@
                             <div class="form-floating">
                             <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
                                       name="newContent"
-                                      style="height: 200px">${card.getContent()}</textarea>
-                                <label for="floatingTextarea1">Content</label>
+                            >${card.getContent()}</textarea>
+
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>
                         </form>
@@ -184,7 +178,7 @@
                         <c:forEach var="comment" items="${listComment}">
                             <div class="comment-item">
                                 <img src="${comment.avatar}" alt="Avatar" class="avatar">
-                                <div class="comment-content">1
+                                <div class="comment-content">
                                     <span class="comment-name">${comment.name}</span>
                                     <span class="comment-text">${comment.comment}</span>
                                 </div>
