@@ -410,4 +410,5 @@ body {
 
 .w-fit {
     width: fit-content;
+    border-radius: 5px;
 }
