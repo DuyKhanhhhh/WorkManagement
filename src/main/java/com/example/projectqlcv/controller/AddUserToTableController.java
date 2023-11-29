@@ -92,9 +92,7 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("userToTable", addUserToTables);
         try {
             request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -108,9 +106,7 @@ public class AddUserToTableController extends HttpServlet {
         request.setAttribute("tables", table);
         try {
             request.getRequestDispatcher("home/addUserToTable.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -128,23 +124,23 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
         session.setAttribute("groups", group);
-        AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(idUser);
+        AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(idUser,idTable);
         session.setAttribute("roleUser",userToTable);
-        Member member = userDAO.findRoleUserToMember(idUser);
+        Member member = userDAO.findRoleUserToMember(idUser,idGroup);
         session.setAttribute("memberToGroup",member);
         List<Column> listColumn= columnDAO.selectAllColumn();
         List<Card> listCard = columnDAO.selectAllCard();
         List<AddUserToTable> memberToTable = userDAO.findUserToTable(idTable);
         session.setAttribute("listMember",memberToTable);
         AddUserToTable toTable = userDAO.setCountAvatar(idTable);
+        Table permissionTable = userDAO.permissionTable(idTable);
+        request.setAttribute("permissionTable",permissionTable);
         try {
             request.setAttribute("toTable",toTable);
             session.setAttribute("listCard",listCard);
             session.setAttribute("listColumn", listColumn);
             request.getRequestDispatcher("/column").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -155,15 +151,12 @@ public class AddUserToTableController extends HttpServlet {
         Table table = userDAO.findTableById(idTable);
         request.setAttribute("tables", table);
         String name = request.getParameter("search");
-        List<User> userList = userDAO.searchUserToTable(idGroup, name);
+        List<User> userList = userDAO.searchUserToTable(idTable, name);
         request.setAttribute("list", userList);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("home/addUserToTable.jsp");
         try {
             dispatcher.forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -218,9 +211,9 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("tables", table);
         Group group = userDAO.findGroupById(idGroup);
         session.setAttribute("groups", group);
-        AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(user.getId());
+        AddUserToTable userToTable = userDAO.findRoleUserToUserToTable(user.getId(),idTable);
         session.setAttribute("roleUser",userToTable);
-        Member member = userDAO.findRoleUserToMember(user.getId());
+        Member member = userDAO.findRoleUserToMember(user.getId(),idGroup);
         session.setAttribute("memberToGroup",member);
         List<Column> listColumn= columnDAO.selectAllColumn();
         List<Card> listCard = columnDAO.selectAllCard();
@@ -230,9 +223,7 @@ public class AddUserToTableController extends HttpServlet {
             session.setAttribute("listCard",listCard);
             session.setAttribute("listColumn", listColumn);
             request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -262,9 +253,7 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("tables", table);
         try {
             request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -277,13 +266,11 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("userToTable", addUserToTables);
         Table table = userDAO.findTableById(idTable);
         session.setAttribute("tables", table);
-        AddUserToTable addUserToTable = userDAO.findRoleUserToUserToTable(idUser);
+        AddUserToTable addUserToTable = userDAO.findRoleUserToUserToTable(idUser,idTable);
         session.setAttribute("member",addUserToTable);
         try {
             request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -295,9 +282,7 @@ public class AddUserToTableController extends HttpServlet {
         session.setAttribute("userToTable", addUserToTable);
         try {
             request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -312,10 +297,8 @@ public class AddUserToTableController extends HttpServlet {
         request.setAttribute("tables", table);
         request.setAttribute("message", "Add member success !");
         try {
-            request.getRequestDispatcher("home/addUserToTable.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+            request.getRequestDispatcher("home/showUserToTable.jsp").forward(request, response);
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }

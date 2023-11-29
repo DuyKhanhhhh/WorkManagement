@@ -74,7 +74,7 @@
                                 everyone access boards in one location</p>
                             <label class="formGroup__form-label-l">Group name <span
                                     class="formGroup__form-span formGroup__form-span-require">*</span> </label>
-                            <input class="formGroup__form-input" type="text" name="name" placeholder="Lonely Wolf."
+                            <input class="formGroup__form-input" type="text" name="name" placeholder="Name group..."
                                    required/>
                             <label class="formGroup__form-label-l">Group type </label>
                             <select class="formGroup__form-input" name="groupType" required>
@@ -102,59 +102,102 @@
                 </div>
             </div>
         </div>
-
+                <%--            INFORMATION         --%>
+            <c:if test="${listGroup != null}">
+                <div id="formInformation" class="modals">
+                    <div class="modal__information">
+                        <a class="modal__btnIn-formation-close" onclick="closeFormInformation()"><i class="fa-solid fa-x"></i></a>
+                        <div class="modal__information-half">
+                            <div class="formGroup-container">
+                                <form class="formGroup__form" method="post" action="/homeUser?action=updateGroup">
+                                    <input type="hidden" name="id" value="<c:out value='${listGroup.id}' />"/>
+                                    <h2 class="formGroup__description-title">Group Information</h2>
+                                    <label class="formGroup__form-label-l">Group name <span
+                                            class="formGroup__form-span formGroup__form-span-require">*</span> </label>
+                                    <input class="formGroup__form-input" type="text" name="name"  value="<c:out value='${listGroup.name}'/>"
+                                           required/>
+                                    <label class="formGroup__form-label-l">Group type </label>
+                                    <select class="formGroup__form-input" name="groupType" required>
+                                        <option><c:out value='${listGroup.groupType}'/></option>
+                                        <c:if test="${listGroup.groupType != 'Manage'}">
+                                            <option>Manage</option>
+                                        </c:if>
+                                        <c:if test="${listGroup.groupType != 'Accountant'}">
+                                            <option>Accountant</option>
+                                        </c:if>
+                                        <c:if test="${listGroup.groupType != 'Plan'}">
+                                            <option>Plan</option>
+                                        </c:if>
+                                    </select>
+                                    <label class="formGroup__form-label-l">Permission </label>
+                                    <select class="formGroup__form-input" name="permission" required>
+                                        <option><c:out value='${listGroup.permission}'/></option>
+                                        <option>Public</option>
+                                        <option>Private</option>
+                                    </select>
+                                    <label class="formGroup__form-label-l">Information <span
+                                            class="formGroup__form-span formGroup__form-span-option">Optional</span></label>
+                                    <textarea class="formGroup__form-input formGroup__form-area "
+                                              name="information" value="<c:out value='${listGroup.information}'/>">
+                                    </textarea>
+                                    <button class="formGroup__form-submit" type="submit">Edit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </c:if>
 
         <%--        -----------GROUP---------  --%>
         <div class="group-heading">
             <h3>YOUR GROUPS</h3>
         </div>
         <c:forEach var="group" items="${groups}">
-            <div class="group">
-                <div class="group_header">
-                    <h2 class="group__header-name">${group.name}</h2>
-                    <div class="group__header-controls">
-                        <a href="/homeUser?action=updateGroup&id=${group.id}" class="group__header-control">
-                            <i class="fa-solid fa-table-cells"></i>
-                            <span>Information</span>
-                        </a>
-                        <a href="/homeUser?action=table&idGroup=${group.id}" class="group__header-control">
-                            <i class="fa-solid fa-table"></i>
-                            <span>Table</span>
-                        </a>
-                        <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}"
-                           class="group__header-control">
-                            <i class="fa-solid fa-user-group"></i>
-                            <span>Member</span>
-                        </a>
-                        <a href="#" class="group__header-control">
-                            <i class="fa-solid fa-gear"></i>
-                            <span>Setting</span>
-                        </a>
-                    </div>
+        <div class="group">
+            <div class="group_header">
+                <h2 class="group__header-name">${group.name}</h2>
+                <div class="group__header-controls">
+                    <a href="/homeUser?action=updateGroup&id=${group.id}" class="group__header-control">
+                        <i class="fa-solid fa-table-cells"></i>
+                        <span>Information</span>
+                    </a>
+                    <a href="/homeUser?action=table&idGroup=${group.id}" class="group__header-control">
+                        <i class="fa-solid fa-table"></i>
+                        <span>Table</span>
+                    </a>
+                    <a href="/homeUser?action=member&idGroup=${group.id}&idUser=${user.id}"
+                       class="group__header-control">
+                        <i class="fa-solid fa-user-group"></i>
+                        <span>Member</span>
+                    </a>
+                    <a href="#" class="group__header-control">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Setting</span>
+                    </a>
                 </div>
+            </div>
 
-                    <%--      table      --%>
-                <div class="group__tables">
-                    <c:forEach items="${tables}" var="table" varStatus="count">
-                        <c:if test="${group.id eq table.idGroup}">
-                            <div class="group__table hover-black"
-                                 style="background: url('https://picsum.photos/200/10${count.count}') no-repeat center">
-                                <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
-                                   style="text-decoration: none; color: black">
-                                    <div class="group__table-name">
-                                        <h4>${table.name}</h4>
-                                    </div>
-                                </a>
-                            </div>
-                        </c:if>
-                    </c:forEach>
-                    <div class="group__table hover-white group__table-add" onclick="openFormCreateTable(${group.id})">
-                        <div class="group__table-btn">
-                            <i class="fa-solid fa-plus"></i>
+                <%--      table      --%>
+            <div class="group__tables">
+                <c:forEach items="${tables}" var="table" varStatus="count">
+                    <c:if test="${group.id eq table.idGroup}">
+                        <div class="group__table hover-black"
+                             style="background: url('https://picsum.photos/200/10${count.count}') no-repeat center">
+                            <a href="/addUserToTable?action=showTable&id=${group.id}&idTable=${table.id}&idUser=${user.id}"
+                               style="text-decoration: none; color: black">
+                                <div class="group__table-name">
+                                    <h4>${table.name}</h4>
+                                </div>
+                            </a>
                         </div>
+                    </c:if>
+                </c:forEach>
+                <div class="group__table hover-white group__table-add" onclick="openFormCreateTable(${group.id})">
+                    <div class="group__table-btn">
+                        <i class="fa-solid fa-plus"></i>
                     </div>
                 </div>
-
+            </div>
                     <%--      form create table     --%>
                 <div class="modal" id="formAddTable${group.id}">
                     <div class="modal__content w-fit">
@@ -171,8 +214,9 @@
                                            required/>
                                     <label class="formGroup__form-label-l">Permission </label>
                                     <select class="formGroup__form-input" name="permission" required>
-                                        <option>Public</option>
-                                        <option>Private</option>
+                                       <option>Private</option>
+                                    <option>Workspace</option>
+                                    <option>Public</option>
                                     </select>
                                     <button class="formGroup__form-submit" type="submit">Create</button>
                                 </form>
@@ -181,36 +225,46 @@
                     </div>
                 </div>
             </div>
-        </c:forEach>
+            </c:forEach>
+        </div>
     </div>
-</div>
 
 
-<script>
-    function setDisplaySubnav() {
-        let subnav = document.getElementById("js-subnav");
-        if (subnav.style.display === "none") {
-            subnav.style.display = "block"
-        } else {
-            subnav.style.display = "none"
+    <script>
+        function showConfirmation() {
+            var result = confirm("Are you sure you want to remove this member from the group?");
+            if (result) {
+                window.location.href = "/homeUser?action=deleteGroup&id=${group.id}";
+            } else {
+            }
         }
-    }
+        function setDisplaySubnav() {
+            let subnav = document.getElementById("js-subnav");
+            if (subnav.style.display === "none") {
+                subnav.style.display = "block"
+            } else {
+                subnav.style.display = "none"
+            }
+        }
+        function closeFormInformation(){
+            document.getElementById("formInformation").style.display = "none"
+        }
 
-    function openFormCreateTable(id) {
-        document.getElementById("formAddTable" + id).style.display = "flex";
-    }
+        function openFormCreateTable(id) {
+            document.getElementById("formAddTable" + id).style.display = "flex";
+        }
 
-    function closeFormCreateTable(id) {
-        document.getElementById("formAddTable" + id).style.display = "none";
-    }
+        function closeFormCreateTable(id) {
+            document.getElementById("formAddTable" + id).style.display = "none";
+        }
 
-    function openFormGroup() {
-        document.getElementById("formAddGroup").style.display = "flex";
-    }
+        function openFormGroup() {
+            document.getElementById("formAddGroup").style.display = "flex";
+        }
 
-    function closeFormGroup() {
-        document.getElementById("formAddGroup").style.display = "none";
-    }
-</script>
+        function closeFormGroup() {
+            document.getElementById("formAddGroup").style.display = "none";
+        }
+    </script>
 </body>
 </html>

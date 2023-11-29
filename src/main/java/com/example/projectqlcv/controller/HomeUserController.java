@@ -2,10 +2,7 @@ package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.IUserDAO;
 import com.example.projectqlcv.DAO.UserDAO;
-import com.example.projectqlcv.model.Group;
-import com.example.projectqlcv.model.Member;
-import com.example.projectqlcv.model.Table;
-import com.example.projectqlcv.model.User;
+import com.example.projectqlcv.model.*;
 import sun.tools.jconsole.Tab;
 
 import javax.servlet.RequestDispatcher;
@@ -54,37 +51,37 @@ HomeUserController extends HttpServlet {
             case "updatePermissionTablePublic":
                 updatePermissionTablePublic(request, response);
                 break;
-            case "updatePermissionTableGroup":
-                updatePermissionTableGroup(request, response);
+            case "updatePermissionTableWorkspace":
+                updatePermissionTableWorkspace(request, response);
                 break;
             case "updatePermissionTablePrivate":
                 updatePermissionTablePrivate(request, response);
                 break;
 
         }
-        }
+    }
 
     private void updatePermissionTablePublic(HttpServletRequest request, HttpServletResponse response) {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         userDAO.updatePermissionTablePublic(idTable);
         Table table = userDAO.findTableById(idTable);
         HttpSession session = request.getSession();
-        session.setAttribute("tables",table);
+        session.setAttribute("tables", table);
         try {
-            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+            request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
         } catch (IOException | ServletException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void updatePermissionTableGroup(HttpServletRequest request, HttpServletResponse response) {
+    private void updatePermissionTableWorkspace(HttpServletRequest request, HttpServletResponse response) {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         userDAO.updatePermissionTableGroup(idTable);
         Table table = userDAO.findTableById(idTable);
         HttpSession session = request.getSession();
-        session.setAttribute("tables",table);
+        session.setAttribute("tables", table);
         try {
-            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+            request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
         } catch (IOException | ServletException e) {
             throw new RuntimeException(e);
         }
@@ -95,9 +92,9 @@ HomeUserController extends HttpServlet {
         userDAO.updatePermissionTablePrivate(idTable);
         Table table = userDAO.findTableById(idTable);
         HttpSession session = request.getSession();
-        session.setAttribute("tables",table);
+        session.setAttribute("tables", table);
         try {
-            request.getRequestDispatcher("home/tableView.jsp").forward(request,response);
+            request.getRequestDispatcher("home/tableView.jsp").forward(request, response);
         } catch (IOException | ServletException e) {
             throw new RuntimeException(e);
         }
@@ -254,7 +251,7 @@ HomeUserController extends HttpServlet {
             session.setAttribute("groups", group);
             List<Member> member = userDAO.selectGroupMember(idGroup);
             session.setAttribute("member", member);
-            Member roleMember = userDAO.findRoleUserToMember(idUser);
+            Member roleMember = userDAO.findRoleUserToMember(idUser,idGroup);
             session.setAttribute("roleMember", roleMember);
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
 
@@ -299,7 +296,7 @@ HomeUserController extends HttpServlet {
         Group group = userDAO.findGroupById(id);
         request.setAttribute("listGroup", group);
         try {
-            request.getRequestDispatcher("home/updateGroup.jsp").forward(request, response);
+            request.getRequestDispatcher("homeUser.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -343,15 +340,29 @@ HomeUserController extends HttpServlet {
                 }
             }
         }
-        session.setAttribute("tables", tables);
+        List<Table> tableFromUser = new ArrayList<>();
+        for (Table item : tables) {
+            AddUserToTable member = userDAO.findRoleUserToTable(item.getId(), id);
+            Member member1 = userDAO.findUserToGroup(item.getIdGroup(), id);
+            if (member != null) {
+                tableFromUser.add(item);
+            } else if (item.getPermission().equals("Public")) {
+                tableFromUser.add(item);
+            } else {
+                if (member1 != null) {
+                    if (item.getPermission().equals("Workspace")) {
+                        tableFromUser.add(item);
+                    }
+                }
+            }
+        }
+        session.setAttribute("tables", tableFromUser);
         session.setAttribute("groups", groupFromUser);
         session.setAttribute("user", user);
         RequestDispatcher dispatcher = request.getRequestDispatcher("homeUser.jsp");
         try {
             dispatcher.forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }

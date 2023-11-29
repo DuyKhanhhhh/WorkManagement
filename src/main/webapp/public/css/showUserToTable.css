@@ -1,0 +1,226 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #172B4D;
+    transition: all ease 0.1s;
+}
+
+body {
+    background-color: #fff;
+}
+
+/* -----------header------------ */
+
+#header {
+    background-color: #fff;
+    position: fixed;
+    height: 48px;
+    display: flex;
+    top: 0;
+    right: 0;
+    left: 0;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+    z-index: 1;
+    border-bottom: 1px solid rgba(23, 43, 77, 0.16);
+}
+
+.header__logo {
+    width: 84px;
+}
+
+.header__logo-img {
+    width: 100%;
+}
+
+.header__nav-right {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    list-style-type: none;
+}
+
+.headRight {
+    display: flex;
+    align-items: center;
+}
+
+.header__avatar {
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+.header__subnav {
+    display: none;
+    list-style-type: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #282e33;
+    color: rgb(182, 194, 207);
+}
+
+.header__subnav li > a {
+    color: white;
+    display: block;
+    padding: 12px 32px;
+    text-decoration: none;
+}
+
+.header__subnav > li:hover > a {
+    background-color: #A1BDD914;
+}
+
+
+
+
+#member {
+    width: 100%;
+    height: 120px;
+    border-bottom: solid black 1px;
+}
+
+.table_all {
+    width: 90%;
+    margin: 90px auto;
+}
+
+.name_member {
+    float: left;
+    width: 60%;
+    height: 80px;
+    margin-bottom: 35px;
+}
+
+.add_member {
+    width: 40%;
+    height: 80px;
+    float: left;
+    margin-top: 45px;
+    margin-bottom: 35px;
+}
+
+/* menu */
+.menu-wrapper, .menu a {
+    width: 100%;
+}
+
+.menu::after {
+    content: '';
+    clear: both;
+    display: block;
+}
+
+.menu a {
+    display: block;
+    padding: 4px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.menu li {
+    position: relative;
+}
+
+.menu > li {
+    float: left;
+}
+
+.menu, .menu ul {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    background: white;
+}
+
+.menu ul li + li {
+    border-top: 1px solid #fff;
+}
+
+.menu ul {
+    position: absolute;
+    box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.menu > li ul, .menu ul ul {
+    opacity: 0;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+    z-index: -1;
+    visibility: hidden;
+}
+
+.menu > li ul {
+    top: 130%;
+    left: 0;
+}
+
+.menu ul ul {
+    left: 130%;
+    top: 0;
+}
+
+.menu ul a {
+    width: 100px;
+}
+
+.menu > li:hover > ul {
+    top: 100%;
+    opacity: 1;
+    z-index: 1;
+    visibility: visible;
+}
+
+.menu ul > li:hover > ul {
+    left: 100%;
+    opacity: 1;
+    z-index: 1;
+    visibility: visible;
+}
+
+.menu-gold, .menu-gold a {
+    color: #000;
+}
+
+.menu-gold a:hover {
+    background-color: white;
+    color: #000;
+}
+
+body {
+    background-image: url("http://recruit.framgia.vn/wp-content/themes/framgia-vn/css/images/bg/banner.jpg");
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: #fff;
+    font-size: 40px;
+}
+.circleMember {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.circleMember img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
