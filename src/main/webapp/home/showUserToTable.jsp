@@ -14,265 +14,42 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
 </head>
-<style>
-    body {
-        background-color: #f8f9fa;
-    }
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}public/css/showUserToTable.css"/>
 
-    #header {
-        position: fixed;
-        background-color: #2f2f2f;
-        height: 50px;
-    }
-
-    .headImg {
-        margin-right: 20px;
-    }
-
-    .headRight {
-        text-align: right;
-        padding-right: 10px;
-    }
-
-    #content {
-        margin-top: 3%;
-        margin-left: 8%;
-        margin-bottom: 10%;
-    }
-
-    .table {
-        width: 100%;
-        height: 3rem;
-        margin-top: 1rem;
-    }
-
-    a {
-        text-decoration: none;
-        color: black;
-    }
-
-    span {
-        font-size: 23px;
-    }
-
-    /* Style for dropdown content */
-    .dropdown-content {
-        display: none; /* Hidden by default */
-        position: absolute;
-        background-color: #000000;
-        min-width: 85px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-
-    .dropdown-content a {
-        font-size: 15px;
-        color: white;
-    }
-
-    /* Style for each content div */
-    .dropdown-content div {
-        padding: 10px 5px;
-        font-size: 16px;
-        text-align: center;
-    }
-
-    /* Highlight dropdown options on hover */
-    .dropdown-content div:hover {
-        background-color: #cecece;
-    }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-
-    #member {
-        width: 100%;
-        height: 120px;
-        border-bottom: solid black 1px;
-    }
-
-    .table_all {
-        width: 90%;
-        margin: 90px auto;
-    }
-
-    .name_member {
-        float: left;
-        width: 60%;
-        height: 80px;
-        margin-bottom: 35px;
-    }
-
-    .add_member {
-        width: 40%;
-        height: 80px;
-        float: left;
-        margin-top: 45px;
-        margin-bottom: 35px;
-    }
-
-    /* menu */
-    .menu-wrapper, .menu a {
-        width: 100%;
-    }
-
-    .menu::after {
-        content: '';
-        clear: both;
-        display: block;
-    }
-
-    .menu a {
-        display: block;
-        padding: 4px;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        text-decoration: none;
-        font-size: 17px;
-    }
-
-    .menu li {
-        position: relative;
-    }
-
-    .menu > li {
-        float: left;
-    }
-
-    .menu, .menu ul {
-        display: inline-block;
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
-        background: white;
-    }
-
-    .menu ul li + li {
-        border-top: 1px solid #fff;
-    }
-
-    .menu ul {
-        position: absolute;
-        box-shadow: 5px 5px 10px 0 rgba(0, 0, 0, 0.5);
-    }
-
-    .menu > li ul, .menu ul ul {
-        opacity: 0;
-        -webkit-transition: all 0.2s ease-in;
-        -moz-transition: all 0.2s ease-in;
-        transition: all 0.2s ease-in;
-        z-index: -1;
-        visibility: hidden;
-    }
-
-    .menu > li ul {
-        top: 130%;
-        left: 0;
-    }
-
-    .menu ul ul {
-        left: 130%;
-        top: 0;
-    }
-
-    .menu ul a {
-        width: 100px;
-    }
-
-    .menu > li:hover > ul {
-        top: 100%;
-        opacity: 1;
-        z-index: 1;
-        visibility: visible;
-    }
-
-    .menu ul > li:hover > ul {
-        left: 100%;
-        opacity: 1;
-        z-index: 1;
-        visibility: visible;
-    }
-
-    .menu-gold, .menu-gold a {
-        color: #000;
-    }
-
-    .menu-gold a:hover {
-        background-color: white;
-        color: #000;
-    }
-
-    body {
-        background-image: url("http://recruit.framgia.vn/wp-content/themes/framgia-vn/css/images/bg/banner.jpg");
-        text-align: center;
-    }
-
-    h1 {
-        text-align: center;
-        margin-top: 20px;
-        color: #fff;
-        font-size: 40px;
-    }
-    .circleMember {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .circleMember img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    /* ends */
-
-</style>
 <body>
+<%--    -------HEADER------    --%>
+<nav id="header">
+    <a class="header__logo">
+        <img class="header__logo-img js-subnavToggle"
+             src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png">
+    </a>
+    <ul class="header__nav-right">
+        <li onclick="setDisplaySubnav()" class="headRight">
+            <img class="header__avatar" src="${user.getAvatar()}" alt="Avatar">
+            <ul id="js-subnav" class="header__subnav js-subnav">
+                <li><a href="#"> Setting</a></li>
+                <li><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></li>
+                <li><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></li>
+                <li><a href="/loginAndSignUp?login=logout">Logout</a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
 <div class="container-fluid">
-    <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-dark" id="header">
-            <div class="container-fluid">
-                <div class="headImg">
-                    <a href="/column">
-                        <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
-                             width="100" height="50">
-                    </a>
-                </div>
-                <div class="headRight">
-                    <span class="group-text">
-                    <div class="collapse navbar-collapse">
-                      <i class="fa-solid fa-bell" style="color: #ffffff; margin-right: 15px"></i>
-                        <span class="dropdown">
-                            <div class="circleMember">
-                                <img src="${user.getAvatar()}" alt="Avatar">
-                            </div>
-                            <div class="dropdown-content">
-                                <div><a href="#">Setting</a></div>
-                                <div><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></div>
-                                <div><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></div>
-                                <div><a href="login.jsp">Logout</a></div>
-                            </div>
-                        </span>
-                    </div>
-                    </span>
-                </div>
-            </div>
-        </nav>
-    </div>
+
     <div class="col-10" id="content">
         <div id="member">
             <div class="name_member">
                 <h2 style=" margin-top: 50px ; margin-left: 60%"><c:out value="${tables.name}"></c:out></h2>
             </div>
         </div>
-
+        <div id="search">
+            <form class="d-flex" method="post" action="/addUserToTable?action=searchUser&id=${groups.id}&idTable=${tables.id}">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                       name="search">
+                <button class="btn btn-outline-success" type="submit" name="search">Search</button>
+            </form>
+        </div>
         <div class="table_all">
             <table class="table table-hover">
                 <tr>
@@ -328,7 +105,14 @@
                         </c:choose>
                     </tr>
                     <script>
-
+                        function setDisplaySubnav() {
+                            let subnav = document.getElementById("js-subnav");
+                            if (subnav.style.display === "none") {
+                                subnav.style.display = "block"
+                            } else {
+                                subnav.style.display = "none"
+                            }
+                        }
                         function showConfirmation() {
                             var result = confirm("Are you sure you want to remove this user from the table?");
                             if (result) {
