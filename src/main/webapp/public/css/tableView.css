@@ -123,6 +123,8 @@
     padding: 6px 12px;
     font-weight: 700;
     cursor: pointer;
+    border-radius: 5px;
+
 }
 
 
@@ -246,6 +248,7 @@
 }
 .circleMember {
     margin-left: 3px;
+    background-color: #dee9f7;
 }
 
 .circleMember img {
@@ -644,8 +647,8 @@ h4 {
 
 #my-div {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 9px;
+    left: 60px;
     width: 200px;
     height: 200px;
     background-color: #fff;

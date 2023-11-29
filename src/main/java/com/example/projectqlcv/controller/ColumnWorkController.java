@@ -138,7 +138,10 @@ public class ColumnWorkController extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("idTable"));
             String name = request.getParameter("name");
-            iColumDAO.addColumnWork(id, name);
+            if (name != "") {
+                iColumDAO.addColumnWork(id, name);
+
+            }
             response.sendRedirect("/column");
         } catch (IOException e) {
             throw new RuntimeException(e);

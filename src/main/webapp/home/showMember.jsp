@@ -111,7 +111,7 @@
                                 <td>
                                     <c:if test="${member.role.equals('Member')}">
                                         <div class="">
-                                            <a onclick="showConfirmation()" style="font-size: 20px;color: black">
+                                            <a onclick="showConfirmation(${member.idMember})" style="font-size: 20px;color: black">
                                                 <i class="fa-solid fa-trash"></i>
                                             </a>
                                         </div>
@@ -122,10 +122,10 @@
 
                     </tr>
                     <script>
-                        function showConfirmation() {
+                        function showConfirmation(idMember) {
                             var result = confirm("Are you sure you want to remove this member from the group?");
                             if (result) {
-                                window.location.href = "/addMembers?action=deleteMember&idMember=${member.idMember}&groupId=${groups.id}&idUser=${user.id}";
+                                window.location.href = "/addMembers?action=deleteMember&groupId=${groups.id}&idUser=${user.id}&idMember="+idMember;
                             }
                         }
 
