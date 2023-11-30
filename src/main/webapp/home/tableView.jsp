@@ -217,7 +217,6 @@
                                 <a href="/column?action=deleteComment&id=${comment.id}&idCard=${card.id}">
                                     <span class="textIcon"><u>Delete</u></span>
                                 </a>
-
                             </div>
                         </c:forEach>
                     </div>

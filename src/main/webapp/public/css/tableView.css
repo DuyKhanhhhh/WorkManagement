@@ -7,6 +7,7 @@
     color: #172B4D;
     transition: all ease 0.1s;
 }
+
 .w-100 {
     width: 100%;
 }
@@ -781,7 +782,7 @@ h4 {
 }
 
 .modal__content-left {
-    width: 70%;
+    width: 100%;
     float: left;
 }
 
@@ -811,6 +812,7 @@ h4 {
     flex: 1;
 
 }
+
 .card__description-text-title {
     display: flex;
     align-items: center;
@@ -824,6 +826,7 @@ h4 {
     padding: 30px;
     resize: none;
 }
+
 .card__description-text:focus-visible {
     background-color: white;
 }
@@ -844,17 +847,21 @@ h4 {
 .comment {
     padding: 0 25px;
 }
+
 .card__comment {
     margin: 12px 16px
 }
-.card__comment input{
-    width: 86%
+
+.card__comment input {
+    width: 95%
 }
-.card__comment .btn{
+
+.card__comment .btn {
     border: none;
     background-color: transparent;
     cursor: pointer;
 }
-.card__comment .btn:hover i{
+
+.card__comment .btn:hover i {
     color: #0c66e4;
 }
