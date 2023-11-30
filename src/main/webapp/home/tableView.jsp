@@ -151,7 +151,7 @@
     <div id="modal">
         <div class="modal-card">
             <span class="modal__btn-close" onclick="closeFormContent()"><i class="fa-solid fa-xmark"></i></span>
-            <span class="modal__btn-close" onclick="openMember()" style="right: 50px"><i class="fa-solid fa-ellipsis"></i></span>
+            <span class="modal__btn-close" onclick="openMember()" style="right: 50px"><i class="fa-solid fa-user-plus"></i></span>
 
             <%--        modal header     --%>
             <div class="card__header">
