@@ -1,9 +1,9 @@
 package com.example.projectqlcv.controller;
 
+import com.example.projectqlcv.DAO.AdminDAO;
 import com.example.projectqlcv.DAO.ColumnDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.*;
-import sun.tools.jconsole.Tab;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -102,6 +102,9 @@ public class AddUserToTableController extends HttpServlet {
         int idTable = Integer.parseInt(request.getParameter("idTable"));
         Table table = userDAO.findTableById(idTable);
         Group group = userDAO.findGroupById(id);
+        AdminDAO adminDAO = new AdminDAO();
+        List<User> userList = adminDAO.selectAllUser();
+        request.setAttribute("list",userList);
         request.setAttribute("groups", group);
         request.setAttribute("tables", table);
         try {

@@ -5,7 +5,6 @@ import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.Group;
 import com.example.projectqlcv.model.Member;
 import com.example.projectqlcv.model.User;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -61,12 +60,15 @@ public class AddMemberToGroupController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         int idGroup = Integer.parseInt(request.getParameter("idGroup"));
         User user = iUserDAO.selectAllUserId(id);
+       HttpSession session = request.getSession();
         iUserDAO.addMemberToGroup(idGroup, user);
         Group group = iUserDAO.findGroupById(idGroup);
         request.setAttribute("groups",group);
         request.setAttribute("message", "Add member success");
+        List<Member> member = iUserDAO.selectGroupMember(idGroup);
+        session.setAttribute("member", member);
         try {
-            request.getRequestDispatcher("home/addMember.jsp").forward(request, response);
+            request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
         } catch (ServletException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

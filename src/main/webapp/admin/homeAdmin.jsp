@@ -9,7 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Home admin</title>
+    <title>Home Admin</title>
+    <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -17,8 +18,8 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}public/css/homeAdmin.css"/>
 </head>
-<body>
 <style>
     body {
         color: #566787;
@@ -145,35 +146,6 @@
         margin-right: 10px;
     }
 
-    .status {
-        font-size: 30px;
-        margin: 2px 2px 0 0;
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 10px;
-    }
-
-    .text-success {
-        color: #10c469;
-    }
-
-    .text-info {
-        color: #62c9e8;
-    }
-
-    .text-warning {
-        color: #FFC107;
-    }
-
-    .text-danger {
-        color: #ff5b5b;
-    }
-
-    .pagination {
-        float: right;
-        margin: 0 0 5px;
-    }
-
     .pagination li a {
         border: none;
         font-size: 13px;
@@ -213,14 +185,75 @@
         margin-top: 10px;
         font-size: 13px;
     }
+
+    /*--------Form Add--------------*/
+    .formAddUser {
+        display: none;
+        width: 600px;
+        height: 545px;
+        background-color: white;
+        margin: 1% auto;
+        text-align: center;
+    }
+
+    .modals__btn-close {
+        position: absolute;
+        font-size: 40px;
+        right: 32%;
+        top: 105px;
+        cursor: pointer;
+        padding: 15px;
+    }
+
+    .modals__btn-close:hover {
+        color: rgba(23, 43, 77, 1);
+    }
+
+    .modals__btn-close i {
+        font-size: 18px;
+    }
+
+    .formAdd {
+        width: 550px;
+        height: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    /*-------------FormUpdate-------------*/
+    .formUpdateUser {
+        width: 600px;
+        height: 615px;
+        background-color: white;
+        margin: 1% auto;
+        text-align: center;
+    }
+
+    .formUpdate {
+        width: 550px;
+        height: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .modals__btn-close {
+        position: absolute;
+        font-size: 40px;
+        right: 32%;
+        top: 105px;
+        cursor: pointer;
+        padding: 15px;
+    }
+
+    .modals__btn-close:hover {
+        color: rgba(23, 43, 77, 1);
+    }
+
+    .modals__btn-close i {
+        font-size: 18px;
+    }
 </style>
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
-<%--</head>--%>
-<%--<body>--%>
+<body>
 <div class="container-xl">
     <div class="table-responsive">
         <div class="table-wrapper">
@@ -230,11 +263,141 @@
                         <h2>User <b>Management</b></h2>
                     </div>
                     <div class="col-sm-7">
-                        <a href="/homeAdmin?user=create" class="btn btn-secondary"><i class="material-icons">&#xE147;</i>
+                        <a onclick="openFormAdd()" class="btn btn-secondary">
+                            <i class="material-icons">&#xE147;</i>
                             <span>Add New User</span></a>
                     </div>
                 </div>
             </div>
+            <%--            ---------Admin Add User------------------%>
+            <div id="formAddUser" class="formAddUser">
+                <a class="modals__btn-close" onclick="closeFormAdd()"><i class="fa-solid fa-x"></i></a>
+                <form class="formAdd" method="post" action="/homeAdmin?user=create">
+                    <h2>Add User</h2>
+                    <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-envelope"
+                               style="color: #000000;font-size: 30px; margin-right: 1rem"></i>
+                            <input type="email" name="email" class="form-control form-control-lg"
+                                   placeholder="Your email"
+                                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required/>
+                        </span>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-user" style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
+                            <input type="text" name="name" class="form-control form-control-lg"
+                                   placeholder="Your name" required/>
+                        </span>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-phone"
+                               style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
+                            <input type="text" name="phoneNumber" class="form-control form-control-lg"
+                                   placeholder="Your phone" pattern="^\d{10}$" required/>
+                        </span>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-lock"
+                               style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
+                            <input type="password" name="password" class="form-control form-control-lg"
+                                   placeholder="Password" required/>
+                        </span>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-key"
+                               style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
+                            <input type="password" name="confirmPassword"
+                                   class="form-control form-control-lg"
+                                   placeholder="Repeat Your Password" pattern="^.{6,32}$" required/>
+                        </span>
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button style="width: 100px;height: 46px;"
+                                type="submit" class="btn btn-dark">Create
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <%--            ---------Admin Edit User------------------%>
+            <c:if test="${user != null}">
+                <div id="formUpdateUser" class="formUpdateUser">
+                    <h2>Edit Product</h2>
+                    <a class="modals__btn-close" onclick="closeFormUpdate()"><i class="fa-solid fa-x"></i></a>
+                    <form method="post" class="formUpdate" action="/homeAdmin?user=update">
+                        <input type="hidden" name="idUd" value="${user.id}">
+                        <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-envelope"
+                               style="color: #000000;font-size: 30px; margin-right: 1rem"></i>
+                            <input type="email" name="emailUd" class="form-control form-control-lg"
+                                   value="${user.email}"
+                                   pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required/>
+                        </span>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-user" style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
+                            <input type="text" name="nameUd" class="form-control form-control-lg" value="${user.name}"
+                                   placeholder="Your name" required/>
+                        </span>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-phone"
+                               style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
+                            <input type="text" name="phoneNumberUd" class="form-control form-control-lg"
+                                   value="${user.phoneNumber}" pattern="^\d{10}$" required/>
+                        </span>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-lock"
+                               style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
+                            <input type="text" name="passwordUd" class="form-control form-control-lg"
+                                   value="${user.password}" pattern="^.{6,32}$" required/>
+                        </span>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-location-dot"
+                               style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
+                            <input type="text" name="addressUd"
+                                   class="form-control form-control-lg"
+                                   value="${user.address}" required/>
+                        </span>
+                        </div>
+                        <div class="form-outline mb-4">
+                        <span class="input-group-text">
+                            <i class="fa-solid fa-image"
+                               style="color: #000000; font-size: 30px; margin-right: 1rem"></i>
+                            <input type="text" name="avatarUd"
+                                   class="form-control form-control-lg"
+                                   value="${user.avatar}" required/>
+                        </span>
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <button style="width: 100px;height: 46px;"
+                                    type="submit" class="btn btn-dark">Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </c:if>
+            <%--            ------------ShowMember----------------%>
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
@@ -247,25 +410,45 @@
                 </tr>
                 </thead>
                 <c:forEach var="list" items="${listUser}">
-                    <c:if test="${list.email != 'Admin'}">
-                <tbody>
-                <tr>
-                    <td>${list.id}</td>
-                    <td><img src="${list.avatar}" width="80px" height="80px" class="avatar" alt="Avatar"> </td>
-                    <td>${list.email}</td>
-                    <td>${list.name}</td>
-                    <td>${list.password}</td>
-                    <td>
-                        <a href="/homeAdmin?user=update&id=${list.id}" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-                        <a href="/homeAdmin?user=delete&id=${list.id}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+                    <c:if test="${list.email != 'admin'}">
+                        <tbody>
+                        <tr>
+                            <td>${list.id}</td>
+                            <td><img src="${list.avatar}" width="80px" height="80px" class="avatar" alt="Avatar"></td>
+                            <td>${list.email}</td>
+                            <td>${list.name}</td>
+                            <td>${list.password}</td>
+                            <td>
+                                <a href="/homeAdmin?user=update&id=${list.id}" class="settings" title="Settings"
+                                   data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                                <a href="/homeAdmin?user=delete&id=${list.id}" class="delete" title="Delete"
+                                   data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
                     </td>
                 </tr>
-                </tbody
+                        </tbody>
                     </c:if>
                 </c:forEach>
             </table>
         </div>
     </div>
 </div>
+<script>
+    function closeFormUpdate() {
+        document.getElementById("formUpdateUser").style.display = "none";
+    }
+
+    function openFormAdd() {
+        document.getElementById("formAddUser").style.display = "flex";
+    }
+
+    function closeFormAdd() {
+        document.getElementById("formAddUser").style.display = "none";
+    }
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+</script>
 </body>
 </html>

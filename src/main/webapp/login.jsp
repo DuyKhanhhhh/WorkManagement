@@ -36,6 +36,11 @@
                                         ${message}
                                 </div>
                             </c:if>
+                            <c:if test="${message1 != null}">
+                                <div class="alert alert-danger" role="alert">
+                                        ${message1}
+                                </div>
+                            </c:if>
                             <script>
                                 setTimeout(function () {
                                     document.querySelector(".alert").remove();

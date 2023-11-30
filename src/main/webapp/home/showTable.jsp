@@ -13,159 +13,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/892d14366e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}public/css/showTable.css"/>
 </head>
-<style>
-    body {
-        background-color: #f8f9fa;
-    }
-
-    #header {
-        position: fixed;
-        background-color: #2f2f2f;
-        height: 50px;
-    }
-
-    .headImg {
-        margin-right: 20px;
-    }
-
-    .headRight {
-        text-align: right;
-        padding-right: 10px;
-    }
-
-    #fullLeft {
-        display: flex;
-    }
-
-    #content {
-        padding-top: 5%;
-        margin-top: 1%;
-        margin-left: -2%;
-        padding-left: 3.5%;
-        margin-bottom: 9%;
-    }
-
-    i {
-        font-size: 25px;
-    }
-
-    a {
-        text-decoration: none;
-        color: black;
-    }
-
-    span {
-        font-size: 23px;
-    }
-
-    /* Style for dropdown content */
-    .dropdown-content {
-        display: none; /* Hidden by default */
-        position: absolute;
-        background-color: #000000;
-        min-width: 85px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        z-index: 1;
-    }
-
-    .dropdown-content a {
-        font-size: 15px;
-        color: white;
-    }
-
-    /* Style for each content div */
-    .dropdown-content div {
-        padding: 10px 5px;
-        font-size: 16px;
-        text-align: center;
-    }
-
-    /* Highlight dropdown options on hover */
-    .dropdown-content div:hover {
-        background-color: #cecece;
-    }
-
-    /* Show the dropdown menu on hover */
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    #member {
-        width: 90%;
-        height: 110px;
-        border-bottom: solid #d4d0d0 1px;
-        margin: 0 auto;
-    }
-
-    #table_all {
-        width: 80%;
-        margin: 80px 230px;
-    }
-
-    .name_member {
-        float: left;
-        width: 60%;
-        height: 80px;
-        margin-bottom: 35px;
-    }
-
-    .add_member {
-        width: 40%;
-        height: 80px;
-        float: left;
-        margin-top: 17px;
-        margin-bottom: 35px;
-    }
-
-    #table {
-
-        width: 22%;
-        height: 110px;
-        border-radius: 3px;
-        background-image: linear-gradient(to right, #DECBA4, #3E5151);
-        margin-left: 25px;
-        float: left;
-        margin-bottom: 20px;
-    }
-
-    #permission {
-        margin-left: 120px;
-    }
-
-
-</style>
 <body>
 <div class="container-fluid">
-    <div class="row">
-        <nav class="navbar navbar-expand-lg navbar-dark" id="header">
-            <div class="container-fluid">
-                <div class="headImg">
-                    <a href="/homeUser">
-                        <img src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png"
-                             width="100" height="50">
-                    </a>
-                </div>
-
-                <div class="headRight">
-                    <span class="group-text">
-                    <div class="collapse navbar-collapse">
-                      <i class="fa-solid fa-bell" style="color: #ffffff; margin-right: 15px"></i>
-                        <span class="dropdown">
-                            <button style="font-size: 15px" class="btn btn-light"><c:out value="${user.name}"/></button>
-                            <div class="dropdown-content">
-                                <div><a href="#">Setting</a></div>
-                                <div><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></div>
-                                <div><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></div>
-                                <div><a href="login.jsp">Logout</a></div>
-                            </div>
-                        </span>
-                    </div>
-                    </span>
-                </div>
-            </div>
-        </nav>
-    </div>
+    <nav id="header">
+        <a class="header__logo" href="/homeUser">
+            <img class="header__logo-img js-subnavToggle"
+                 src="https://logos-world.net/wp-content/uploads/2021/02/Trello-Logo.png">
+        </a>
+        <ul class="header__nav-right">
+            <li onclick="setDisplaySubnav()" class="headRight">
+                <img class="header__avatar" src="${user.getAvatar()}" alt="Avatar">
+                <ul id="js-subnav" class="header__subnav js-subnav">
+                    <li><a href="#"> Setting</a></li>
+                    <li><a href="/homeUser?action=editUser&id=${user.id}">Edit</a></li>
+                    <li><a href="/updatePassword?login=updatePassword&id=${user.id}">Change PassWord</a></li>
+                    <li><a href="/loginAndSignUp?login=logout">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
     <div class="row" id="fullLeft">
         <div id="content">
             <div id="member">
@@ -178,12 +46,12 @@
                                 <c:choose>
                                     <c:when test="${groups.permission.equals('Public')}">
                                         <div style="float:left; margin-bottom: 100px;">
-                                                <small><i style="font-size: small"
-                                                          class="fa-solid fa-earth-asia"></i></small>
+                                            <small><i style="font-size: small"
+                                                      class="fa-solid fa-earth-asia"></i></small>
                                         </div>
                                     </c:when>
                                     <c:otherwise>
-                                             <div style="float:left; margin-bottom: 100px;">
+                                        <div style="float:left; margin-bottom: 100px;">
                                             <small><i style="font-size: small" class="fa-solid fa-lock"></i></small>
                                         </div>
 
@@ -199,19 +67,46 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="add_member">
-                    <a href="/addMembers?action=addMember&groupId=<c:out value="${groups.id}"></c:out>">
-                        <button style="margin-left: 60% ; height: 40px; border-radius: 5px; background: #268aeb ; color: white; border: none"
-                                type="submit"><i style="margin-left: 7px ; margin-right: 6px ; font-size: initial"
-                                                 class="fa-solid fa-user-plus"></i>
-                            Share
-                        </button>
-                    </a>
+                    <button onclick="showSearchMember()" style="margin-left: 40% ; height: 40px; width: 130px; border-radius: 5px; background: #268aeb ; color: white ; border: none"
+                            type="submit"><i style="margin-left: 4px ; margin-right: 6px ; font-size: initial"
+                                             class="fa-solid fa-user-plus"></i>
+                        Share
+                    </button>
                 </div>
+                <div id="searchMember">
+                    <div id="text">
+                        <label>Search user</label>
+                    </div>
+                    <div id="search">
+                        <form class="d-flex" method="post"
+                              action="/homeUser?action=search&idGroup=<c:out value="${groups.id}"></c:out>">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
+                                   name="search">
+                            <button class="btn btn-secondary" type="submit" name="search">Search</button>
+                        </form>
+                    </div>
+                </div>
+                <c:if test="${list != null}">
+                    <div id="tableSearch">
+                        <table class="table">
+                            <c:forEach var="user" items="${list}">
+                                <tr>
+                                    <td><img width="80px" height="80px" src="${user.avatar}"></td>
+                                    <td>${user.name}</td>
+                                    <td>${user.email}</td>
+                                    <td>
+                                        <a href="/addMembers?action=addUser&id=${user.id}&idGroup=<c:out value="${groups.id}"></c:out>">
+                                            <button type="button" class="btn btn-danger">Add</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </c:forEach>
+                        </table>
+                    </div>
+                </c:if>
             </div>
-            <br>
-            <br>
-            <br>
             <h3 style="margin-left: 260px; "><b>Table</b></h3>
             <c:forEach var="table" items="${tables}">
                 <a href="/addUserToTable?action=showTable&id=${groups.id}&idTable=${table.id}&idUser=${user.id}">
@@ -224,6 +119,24 @@
             </c:forEach>
         </div>
     </div>
+    <script>
+        function showSearchMember() {
+            var button = document.getElementById("searchMember");
+            if (button.style.display === "none") {
+                button.style.display = "block";
+            } else {
+                button.style.display = "none";
+            }
+        }
+        function setDisplaySubnav() {
+            let subnav = document.getElementById("js-subnav");
+            if (subnav.style.display === "none") {
+                subnav.style.display = "block"
+            } else {
+                subnav.style.display = "none"
+            }
+        }
+    </script>
 </div>
 </body>
 </html>
