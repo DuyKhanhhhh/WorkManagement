@@ -151,7 +151,7 @@
     <div id="modal">
         <div class="modal-card">
             <span class="modal__btn-close" onclick="closeFormContent()"><i class="fa-solid fa-xmark"></i></span>
-            <span class="modal__btn-close" onclick="openMember()" style="right: 30px"><i class="fa-solid fa-ellipsis"></i></span>
+            <span class="modal__btn-close" onclick="openMember()" style="right: 50px"><i class="fa-solid fa-ellipsis"></i></span>
 
             <%--        modal header     --%>
             <div class="card__header">
@@ -163,7 +163,7 @@
                     <div class="card__description-text-title">
                         <i class="fa-solid fa-bars card__desc-icon"></i>
                         <h2 class="card__description-h2">Description</h2>
-<%--                        <a class="button-return">Edit</a>--%>
+            <%--        <a class="button-return">Edit</a>--%>
                     </div>
                     <form class="card__description-form" method="post" action="/column?action=editContent&idCard=${card.getId()}">
                             <textarea class="card__description-text" placeholder="Leave a comment here" id="floatingTextarea1"
