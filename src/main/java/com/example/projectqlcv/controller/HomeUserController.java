@@ -1,9 +1,7 @@
 package com.example.projectqlcv.controller;
 
-import com.example.projectqlcv.DAO.IUserDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.*;
-import sun.tools.jconsole.Tab;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 @WebServlet(name = "AddGroupController", value = "/homeUser")
 public class

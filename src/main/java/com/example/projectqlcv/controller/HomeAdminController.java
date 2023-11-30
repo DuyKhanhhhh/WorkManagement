@@ -1,12 +1,7 @@
 package com.example.projectqlcv.controller;
 
 import com.example.projectqlcv.DAO.AdminDAO;
-
 import com.example.projectqlcv.DAO.IAdminDAO;
-import com.example.projectqlcv.DAO.IUserDAO;
-import com.example.projectqlcv.DAO.UserDAO;
-
-import com.example.projectqlcv.model.Group;
 import com.example.projectqlcv.model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -18,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.ArrayList;
 
 @WebServlet(name = "HomeAdminController", value = "/homeAdmin")
 public class HomeAdminController extends HttpServlet {
@@ -29,17 +23,38 @@ public class HomeAdminController extends HttpServlet {
         adminDAO = new AdminDAO();
     }
 
-    private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        adminDAO.deleteUser(id);
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+        String user = request.getParameter("user");
+        if (user == null) {
+            user = "";
+        }
+        switch (user) {
+            case "create":
+                createUser(request, response);
+                break;
+            case "update":
+                updateUser(request, response);
+                break;
+        }
+
+    }
+    private void updateUser(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("idUd"));
+        String name = request.getParameter("nameUd");
+        String email = request.getParameter("emailUd");
+        String phoneNumber = request.getParameter("phoneNumberUd");
+        String password = request.getParameter("passwordUd");
+        String address = request.getParameter("addressUd");
+        String avatar = request.getParameter("avatarUd");
+        User user = new User(name, email, phoneNumber, password, address, avatar);
+        adminDAO.updateUser(id, user);
         List<User> list = adminDAO.selectAllUser();
-        request.setAttribute("message", "Delete success !");
         request.setAttribute("listUser", list);
+
         try {
-            request.getRequestDispatcher("admin/homeAdmin.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+          request.getRequestDispatcher("/admin/homeAdmin.jsp").forward(request,response);
+        } catch (IOException | ServletException e) {
             throw new RuntimeException(e);
         }
     }
@@ -68,43 +83,7 @@ public class HomeAdminController extends HttpServlet {
                 response.sendRedirect("/homeAdmin");
             }
 
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-        String user = request.getParameter("user");
-        if (user == null) {
-            user = "";
-        }
-        switch (user) {
-            case "create":
-                createUser(request, response);
-                break;
-            case "update":
-                updateUser(request, response);
-                break;
-        }
-
-    }
-
-    private void updateUser(HttpServletRequest request, HttpServletResponse response) {
-        int id = Integer.parseInt(request.getParameter("idUd"));
-        String name = request.getParameter("nameUd");
-        String email = request.getParameter("emailUd");
-        String phoneNumber = request.getParameter("phoneNumberUd");
-        String password = request.getParameter("passwordUd");
-        String address = request.getParameter("addressUd");
-        String avatar = request.getParameter("avatarUd");
-        User user = new User(name, email, phoneNumber, password, address, avatar);
-        adminDAO.updateUser(id, user);
-        try {
-            response.sendRedirect("/homeAdmin");
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -131,14 +110,26 @@ public class HomeAdminController extends HttpServlet {
 
     }
 
+    private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        adminDAO.deleteUser(id);
+        List<User> list = adminDAO.selectAllUser();
+        request.setAttribute("message", "Delete success !");
+        request.setAttribute("listUser", list);
+        try {
+            request.getRequestDispatcher("admin/homeAdmin.jsp").forward(request, response);
+        } catch (ServletException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     private void showAllUser(HttpServletRequest request, HttpServletResponse response) {
         List<User> userList = adminDAO.selectAllUser();
         request.setAttribute("listUser", userList);
         try {
             request.getRequestDispatcher("admin/homeAdmin.jsp").forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -147,12 +138,12 @@ public class HomeAdminController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         User user = adminDAO.findById(id);
         request.setAttribute("user", user);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("admin/update.jsp");
+        List<User> list = adminDAO.selectAllUser();
+        request.setAttribute("listUser", list);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/admin/homeAdmin.jsp");
         try {
             dispatcher.forward(request, response);
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             throw new RuntimeException(e);
         }
     }

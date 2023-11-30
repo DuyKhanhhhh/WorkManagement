@@ -3,7 +3,6 @@ package com.example.projectqlcv.controller;
 import com.example.projectqlcv.DAO.ColumnDAO;
 import com.example.projectqlcv.DAO.UserDAO;
 import com.example.projectqlcv.model.*;
-import sun.tools.jconsole.Tab;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
