@@ -51,6 +51,7 @@ public class AddMemberToGroupController extends HttpServlet {
         iUserDAO.updatePermissionMember(idMember);
         List<Member> member = iUserDAO.selectGroupMember(idGroup);
         session.setAttribute("member", member);
+        request.setAttribute("message1","Update permission success !");
         try {
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
@@ -114,12 +115,13 @@ public class AddMemberToGroupController extends HttpServlet {
         Member roleMember = iUserDAO.findRoleUserToMember(idUser,idGroup);
         if ((roleMember.getRole()).equals("Admin")){
             iUserDAO.deleteMember(idMember);
-            request.setAttribute("message", "Delete success !");
             Group group = iUserDAO.findGroupById(idGroup);
             HttpSession session = request.getSession();
             session.setAttribute("groups", group);
             List<Member> member = iUserDAO.selectGroupMember(idGroup);
             session.setAttribute("member", member);
+            request.setAttribute("message1", "Delete member success !");
+
         }
         try {
             request.getRequestDispatcher("home/showMember.jsp").forward(request, response);

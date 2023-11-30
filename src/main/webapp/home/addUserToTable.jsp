@@ -36,41 +36,54 @@
             </li>
         </ul>
     </nav>
-    <div class="row">
-        <div class="col-10">
-            <div id="member">
-                <h2 style="text-align: center; margin-top: 40px">Search member</h2>
-            </div>
 
-            <div id="search">
-                <form class="d-flex" method="post"
-                      action="/addUserToTable?action=searchUser&id=${groups.id}&idTable=${tables.id}">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                           name="search">
-                    <button class="btn btn-outline-success" type="submit" name="search">Search</button>
-                </form>
-            </div>
-            <div class="table_all">
-                <table class="table table-bordered">
-                    <c:forEach var="user" items="${list}">
-                        <c:if test="${user.name != 'Admin'}">
-                            <tr>
-                                <td><img width="80px" height="80px" src="${user.avatar}"></td>
-                                <td>${user.name}</td>
-                                <td>${user.email}</td>
-                                <td>
-                                    <a href="/addUserToTable?action=addUser&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
-                                        <button type="button" class="btn btn-success">Add</button>
-                                    </a>
-                                </td>
-                            </tr>
-                        </c:if>
-                    </c:forEach>
-                </table>
-            </div>
+
+    <div class="table-responsive" style="    position: relative;
+    top: 5rem;    margin-left: 20rem;
+    margin-right: 20rem;">
+        <div class="table-wrapper">
+            <table class="table table-striped table-hover table-bordered">
+                <c:forEach var="user" items="${list}">
+                    <c:if test="${user.name != 'Admin'}">
+                        <tr>
+                            <td><img width="80px" height="80px" src="${user.avatar}"></td>
+                            <td>${user.name}</td>
+                            <td>${user.email}</td>
+                            <td>
+                                <a href="/addUserToTable?action=addUser&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">
+                                    <button type="button" class="btn btn-success">Add</button>
+                                </a>
+                            </td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
+            </table>
         </div>
     </div>
-</div>
+<%--    <div class="row">--%>
+<%--        <div class="col-10">--%>
+<%--            --%>
+<%--            <div class="table_all">--%>
+<%--                <table class="table table-bordered">--%>
+<%--                    <c:forEach var="user" items="${list}">--%>
+<%--                        <c:if test="${user.name != 'Admin'}">--%>
+<%--                            <tr>--%>
+<%--                                <td><img width="80px" height="80px" src="${user.avatar}"></td>--%>
+<%--                                <td>${user.name}</td>--%>
+<%--                                <td>${user.email}</td>--%>
+<%--                                <td>--%>
+<%--                                    <a href="/addUserToTable?action=addUser&id=${user.id}&idGroup=${groups.id}&idTable=${tables.id}">--%>
+<%--                                        <button type="button" class="btn btn-success">Add</button>--%>
+<%--                                    </a>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
+<%--                        </c:if>--%>
+<%--                    </c:forEach>--%>
+<%--                </table>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 <script>
     function setDisplaySubnav() {
         let subnav = document.getElementById("js-subnav");

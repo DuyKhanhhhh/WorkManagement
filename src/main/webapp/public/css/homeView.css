@@ -263,6 +263,7 @@ body {
     font-size: 16px;
     font-weight: 700;
 }
+
 /* -------modal form add group--------- */
 .modals {
     position: fixed;
@@ -275,19 +276,23 @@ body {
     justify-content: center;
     align-items: center;
 }
-.modal__information{
+
+.modal__information {
     width: 600px;
     height: 650px;
     background-color: white;
     margin: 4% auto;
     display: flex;
 }
+
 .modal__information-half {
     width: 100%;
 }
+
 .modals__group-half {
     width: 50%;
 }
+
 .modal__btnIn-formation-close {
     position: absolute;
     font-size: 40px;
@@ -309,9 +314,11 @@ body {
     cursor: pointer;
     padding: 15px;
 }
+
 .modals__btn-close:hover {
     color: rgba(23, 43, 77, 1);
 }
+
 .modals__btn-close i {
     font-size: 18px;
 }
@@ -465,3 +472,37 @@ body {
     width: fit-content;
     border-radius: 5px;
 }
+
+/*.wrapper {*/
+/*    margin: 1em auto;*/
+/*}*/
+
+/*.notification {*/
+/*    position: relative;*/
+/*    margin: 1em auto;*/
+/*    width: 600px*/
+/*}*/
+
+/*.notification .notification-description .fa {*/
+/*    color: #fff;*/
+/*    margin-right: .5em*/
+/*}*/
+
+.notification .notification-description p {
+    /*margin: 0;*/
+    /*padding: 1em 1.3em;*/
+    /*color: #ecf0f1*/
+}
+
+.notification .notification-description p strong {
+    /*margin-right: 1em;*/
+    /*font-size: 20px;*/
+}
+
+.notification.success .notification-description p {
+    /*background: #27ae60;*/
+    /*background: linear-gradient(*/
+    /*        25deg, rgba(39, 174, 96, .8) 0%, rgba(46, 204, 113, .8) 15%, rgba(39, 174, 96, 1) 15%, #27ae60 100%*/
+    /*)*/
+}
+

@@ -35,6 +35,36 @@
             </li>
         </ul>
     </nav>
+    <c:if test="${message1 != null}">
+        <div class="alert" style=" position: absolute;
+    z-index: 10; margin-left: 47%;margin-top: 3rem; border-radius: 5px">
+            <div class="notification success" style="
+    background: #6ff5a6;
+    background: linear-gradient(
+            25deg, rgb(111,245,166) 0%, rgb(111,245,166) 15%, rgb(116 231 165) 15%, #1f894c 100%
+    );margin-left: -7rem;    margin-top: -120px;
+    ">
+                <div class="notification-description">
+                    <p style=" margin: 0;
+               padding: 1em 1.3em;
+               color: #ecf0f1;
+               margin-left: 2rem;
+               margin-right: 2rem;
+               display: flex;
+               align-items: center;">
+                        <i class="fa fa-check fa-fw fa-2x"></i>
+                        <strong style="margin-right: 1em;
+    font-size: 20px;">Success!</strong> ${message1}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </c:if>
+    <script>
+        setTimeout(function () {
+            document.querySelector(".alert").remove();
+        }, 3000);
+    </script>
     <div class="col-10" id="content">
         <div id="member">
             <div class="name_member">
@@ -61,6 +91,7 @@
                 </form>
             </div>
         </div>
+
         <div id="table_all">
             <table class="table">
                 <tr>

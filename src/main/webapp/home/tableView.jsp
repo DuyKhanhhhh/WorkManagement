@@ -99,8 +99,6 @@
                 </c:if>
             </div>
             <a class="header__nav-item"
-               href="/addUserToTable?action=addUserToTable&id=${groups.id}&idTable=${tables.id}">Add member</a>
-            <a class="header__nav-item"
                href="/addUserToTable?action=showUserToTable&idTable=${tables.id}&idUser=${user.id}">Member</a>
             <c:if test="${roleUser.role.equals('Admin') && roleUser.idTable eq tables.id}">
                 <a onclick="showConfirmation()" class="header__nav-item">Delete table</a>

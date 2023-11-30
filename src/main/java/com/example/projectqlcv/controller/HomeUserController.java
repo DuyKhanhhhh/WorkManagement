@@ -126,9 +126,10 @@ HomeUserController extends HttpServlet {
         String avatar = request.getParameter("avatarUd");
         User user = new User(name, phoneNumber, address, avatar);
         userDAO.editInformationUser(id, user);
+        request.setAttribute("message1","Update user success!");
         try {
-            response.sendRedirect("/homeUser");
-        } catch (IOException e) {
+            request.getRequestDispatcher("/homeUser.jsp").forward(request,response);
+        } catch (IOException | ServletException e) {
             throw new RuntimeException(e);
         }
     }
@@ -161,6 +162,7 @@ HomeUserController extends HttpServlet {
         table.setIdGroup(idGroup);
         userDAO.addTable(table);
         userDAO.addAdminToTable(table.getId(), user);
+
         try {
             response.sendRedirect("/homeUser");
         } catch (IOException e) {
@@ -170,9 +172,11 @@ HomeUserController extends HttpServlet {
 
     private void addGroup(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+
+            User user = (User) session.getAttribute("user");
+            int id = user.getId();
+            user = userDAO.selectAllUserId(id);
         User newUser = userDAO.selectAllUserId(user.getId());
-        int id = user.getId();
 
         String name = request.getParameter("name");
         String groupType = request.getParameter("groupType");
@@ -184,9 +188,47 @@ HomeUserController extends HttpServlet {
         group.setPermission(permission);
         group.setInformation(information);
         userDAO.addGroup(group);
+        List<Group> groups = userDAO.selectGroupFromSQL();
+        List<Table> tables = userDAO.selectAllTable();
+        Collections.sort(groups, new Comparator<Group>() {
+            @Override
+            public int compare(Group group1, Group group2) {
+                return group1.getName().compareToIgnoreCase(group2.getName());
+            }
+        });
+            List<Group> groupFromUser = new ArrayList<>();
+            for (Group item : groups) {
+                Member member = userDAO.findUserToGroup(item.getId(), id);
+                if (member != null) {
+                    groupFromUser.add(item);
+                } else {
+                    if (item.getPermission().equals("Public")) {
+                        groupFromUser.add(item);
+                    }
+                }
+            }
+            List<Table> tableFromUser = new ArrayList<>();
+            for (Table item : tables) {
+                AddUserToTable member = userDAO.findRoleUserToTable(item.getId(), id);
+                Member member1 = userDAO.findUserToGroup(item.getIdGroup(), id);
+                if (member != null) {
+                    tableFromUser.add(item);
+                } else if (item.getPermission().equals("Public")) {
+                    tableFromUser.add(item);
+                } else {
+                    if (member1 != null) {
+                        if (item.getPermission().equals("Workspace")) {
+                            tableFromUser.add(item);
+                        }
+                    }
+                }
+            }
         userDAO.addAdminToGroup(group.getId(), newUser);
+        session.setAttribute("tables", tableFromUser);
+        session.setAttribute("groups", groupFromUser);
+        session.setAttribute("user", user);
         try {
-            response.sendRedirect("/homeUser");
+           response.sendRedirect("/homeUser");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -280,7 +322,7 @@ HomeUserController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         userDAO.deleteGroup(id);
         List<Group> list = userDAO.selectGroupFromSQL();
-        request.setAttribute("message", "Delete success !");
+        request.setAttribute("message1", "Delete group success !");
         request.setAttribute("groups", list);
         try {
             request.getRequestDispatcher("homeUser.jsp").forward(request, response);
@@ -295,6 +337,7 @@ HomeUserController extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Group group = userDAO.findGroupById(id);
         request.setAttribute("listGroup", group);
+        request.setAttribute("message1","Update group success !");
         try {
             request.getRequestDispatcher("homeUser.jsp").forward(request, response);
         } catch (ServletException e) {
