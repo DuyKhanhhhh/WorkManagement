@@ -7,8 +7,9 @@
     color: #172B4D;
     transition: all ease 0.1s;
 }
-
-
+.w-100 {
+    width: 100%;
+}
 
 /* -----------header------------ */
 
@@ -26,6 +27,7 @@
     z-index: 1;
     border-bottom: 1px solid rgba(23, 43, 77, 0.16);
 }
+
 .icon-l i {
     font-size: 18px;
 }
@@ -78,7 +80,8 @@
 .header__subnav > li:hover > a {
     background-color: #A1BDD914;
 }
- /*  ------------navigation------------  */
+
+/*  ------------navigation------------  */
 
 .header__nav-second {
     margin-top: 48px;
@@ -244,6 +247,7 @@
     align-items: center;
     margin-left: 8px;
 }
+
 .circleMember {
     margin-left: 3px;
 }
@@ -310,16 +314,19 @@
     overflow: auto;
     box-shadow: 0px 1px 1px #091e4240, 0px 0px 1px #091e424f;
 }
+
 .column__head {
     display: flex;
     justify-content: space-between;
     padding: 8px;
     align-items: center;
 }
+
 .column__head a {
     padding: 6px 8px;
     border-radius: 5px;
 }
+
 .column__head a:hover {
     background-color: #091E4224;
 }
@@ -339,6 +346,7 @@
     flex-direction: column;
 
 }
+
 .column__card {
     text-decoration: none;
     background-color: white;
@@ -349,6 +357,7 @@
     margin: 0 8px 8px 8px;
     border: 2px solid transparent;
 }
+
 .column__card:hover {
     border: 2px solid black;
 }
@@ -391,6 +400,7 @@ h4 {
     background-color: transparent;
     cursor: pointer;
 }
+
 .boxAddCart:hover {
     background-color: #d0d4db;
 }
@@ -446,6 +456,7 @@ h4 {
     right: 16px;
     font-size: 50px;
 }
+
 .nameColumnUpdate {
     background-color: transparent;
 }
@@ -491,15 +502,18 @@ h4 {
     float: right;
     padding-top: 45px;
 }
+
 .form__add {
     display: flex;
     flex-flow: column;
 }
+
 .form__add__control {
     display: flex;
     justify-content: space-between;
     padding: 12px 9px;
 }
+
 .button-add {
     border-radius: 7px;
     padding: 0 20px;
@@ -530,7 +544,8 @@ h4 {
     width: 430px;
     margin-left: 14px;
 }
-.form-floating textarea{
+
+.form-floating textarea {
     height: 200px;
     width: 100%;
     resize: none;
@@ -578,11 +593,9 @@ h4 {
 .comment-item {
     display: flex;
     align-items: center;
-    background-color: #dfdfdf;
     border-radius: 4px;
     margin-bottom: 4px;
-    margin-top: 2px;
-    width: 666px;
+    margin-top: 12px;
 }
 
 .avatar {
@@ -596,22 +609,18 @@ h4 {
 .comment-content {
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .comment-name {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 16px;
+    padding: 8px 0 8px 10px;
 }
 
 .comment-text {
     margin-top: 5px;
     font-size: 18px;
-}
-
-#inputComment {
-    width: 120%;
-    margin-left: 30px;
-    margin-top: 8px;
 }
 
 .formEdit {
@@ -702,4 +711,150 @@ h4 {
     position: relative;
     top: -30px;
 
+}
+
+
+#modal {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.75);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-card {
+    width: 768px;
+    height: 900px;
+    background-color: #f1f2f4;
+    position: relative;
+}
+
+.modal__group-half {
+    width: 50%;
+}
+
+.formGroup-container {
+    padding: 64px 24px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.modal__btn-close {
+    position: absolute;
+    font-size: 40px;
+    right: 10px;
+    top: 10px;
+    text-decoration: none;
+    color: rgba(23, 43, 77, 0.5);
+    cursor: pointer;
+    padding: 15px;
+}
+
+.modal__btn-close i {
+    font-size: 18px;
+}
+
+.card__header {
+    margin-bottom: 35px;
+    padding: 20px 64px 14px 56px;
+}
+
+.card__header-icon {
+    position: absolute;
+    left: 25px;
+    top: 18px;
+}
+
+.card__header-icon i {
+    font-size: 20px;
+}
+
+.card__header-title {
+    font-size: 18px;
+}
+
+.modal__content-left {
+    width: 70%;
+    float: left;
+}
+
+.modal__content-right {
+    float: right;
+    width: 23%;
+}
+
+.card__description {
+    display: flex;
+    flex-direction: column;
+    padding: 0 25px;
+}
+
+.card__description-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.card__desc-icon {
+    font-size: 22px;
+    margin-right: 12px;
+}
+
+.card__description-h2 {
+    flex: 1;
+
+}
+.card__description-text-title {
+    display: flex;
+    align-items: center;
+}
+
+.card__description-text {
+    width: 100%;
+    height: 300px;
+    border: none;
+    background-color: transparent;
+    padding: 30px;
+    resize: none;
+}
+.card__description-text:focus-visible {
+    background-color: white;
+}
+
+.card__description-save {
+    margin-top: 8px;
+    width: 20%;
+    height: 35px;
+    border-radius: 5px;
+}
+
+.card__description-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 12px;
+}
+
+.comment {
+    padding: 0 25px;
+}
+.card__comment {
+    margin: 12px 16px
+}
+.card__comment input{
+    width: 86%
+}
+.card__comment .btn{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.card__comment .btn:hover i{
+    color: #0c66e4;
 }

@@ -115,11 +115,13 @@
                         </c:forEach>
                     </div>
                     <div id="formAddCard${listColumn.id}" class="addCard">
-                        <form class="form__add" method="post" action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
+                        <form class="form__add" method="post"
+                              action="/column?action=addCart&idColumn=${listColumn.id}&idUser=${user.id}">
                             <input type="text" class="column__card" name="name" placeholder="Enter a list title">
                             <div class="form__add__control">
                                 <button class="button-add" type="submit"> Add Card</button>
-                                <a class="button-return" href="javascript:void(0)" onmousedown="closeFormCard(${listColumn.id})">Return</a>
+                                <a class="button-return" href="javascript:void(0)"
+                                   onmousedown="closeFormCard(${listColumn.id})">Return</a>
                             </div>
                         </form>
                     </div>
@@ -135,56 +137,55 @@
             </div>
             <div id="formAdd" class="formAdd">
                 <form class="form__add" method="post" action="/column?action=addColumn&idTable=${tables.id}">
-                        <input type="text" class="column__card" name="name" placeholder="Enter a list title">
-                       <div class="form__add__control">
-                           <button type="submit" class="button-add">Add Column</button>
-                           <a href="javascript:void(0)" class="button-return" onclick="closeForm()">Cancel</a>
-                       </div>
+                    <input type="text" class="column__card" name="name" placeholder="Enter a list title">
+                    <div class="form__add__control">
+                        <button type="submit" class="button-add">Add Column</button>
+                        <a href="javascript:void(0)" class="button-return" onclick="closeForm()">Cancel</a>
+                    </div>
                 </form>
             </div>
         </div>
-        <c:if test="${card != null}">
-            <div id="formShowCard" class="formContent">
-                <div class=cardLeft>
-                    <span class="closebtn" onclick="closeFormContent()">&times;</span>
-                    <div class="contentHead">
-                        <i class="fa-solid fa-window-maximize" style="color: #000000; font-size: 26px"></i>
-                        <br>
-                        <div class="contentTitle">
-                            <h2>${card.name}</h2>
-                        </div>
-                        <c:forEach items="${userToCard}" var="userToCard">
-                            <div class="circleMember">
-                                <img src="${userToCard.avatar}" alt="Avatar">
-                            </div>
-                        </c:forEach>
+    </div>
+</div>
+<c:if test="${card != null}">
+    <div id="modal">
+        <div class="modal-card">
+            <span class="modal__btn-close" onclick="closeFormContent()"><i class="fa-solid fa-xmark"></i></span>
+            <span class="modal__btn-close" onclick="openMember()" style="right: 30px"><i class="fa-solid fa-ellipsis"></i></span>
+
+            <%--        modal header     --%>
+            <div class="card__header">
+                <span class="card__header-icon"><i class="fa-solid fa-window-maximize"></i></span>
+                <h2 class="card__header-title">${card.name}</h2>
+            </div>
+            <div class="modal__content-left">
+                <div class="card__description">
+                    <div class="card__description-text-title">
+                        <i class="fa-solid fa-bars card__desc-icon"></i>
+                        <h2 class="card__description-h2">Description</h2>
+<%--                        <a class="button-return">Edit</a>--%>
                     </div>
-                    <div class="content">
-                        <i class="fa-solid fa-bars" style="color: #000000;"></i>
-                            <%--                        <c:if test="${(roleUser.role).equals('Admin') || (roleUser.role).equals('User')}">--%>
-                        <form id="myForm" method="post" action="/column?action=editContent&idCard=${card.getId()}">
-                            <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea1"
-                                      name="newContent"
-                            >${card.getContent()}</textarea>
-                                <label for="floatingTextarea1">Content</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </form>
-                            <%--                        </c:if>--%>
-                    </div>
-                    <div class="comment">
-                        <span><i class="fa-solid fa-list-ul" style="color: #000000;"></i>  Comment</span>
+                    <form class="card__description-form" method="post" action="/column?action=editContent&idCard=${card.getId()}">
+                            <textarea class="card__description-text" placeholder="Leave a comment here" id="floatingTextarea1"
+                                      name="newContent">${card.getContent()}</textarea>
+                        <button type="submit" class="button-add card__description-save hover-white">Save</button>
+                    </form>
+                </div>
+                <div class="comment">
+                    <span class="card__description-text-title">
+                        <i class="fa-solid fa-list-ul card__desc-icon"></i>
+                        <h2 class="card__description-h2">Comment</h2>
+                    </span>
+                    <div style="height: 300px; overflow: auto">
                         <c:forEach var="comment" items="${listComment}">
                             <div class="comment-item">
                                 <img src="${comment.avatar}" alt="Avatar" class="avatar">
-                                <div class="comment-content">1
+                                <div class="comment-content ">
                                     <span class="comment-name">${comment.name}</span>
-                                    <span class="comment-text">${comment.comment}</span>
+                                    <span class="column__card">${comment.comment}</span>
                                 </div>
                             </div>
                             <div class="iconComment">
-
                                 <span onclick="openFormEdit()" class="textIcon"><u>Edit</u></span>
                                 <a href="/column?action=deleteComment&idCard=${comment.id}">
                                     <span class="textIcon"><u>Delete</u></span>
@@ -200,17 +201,16 @@
                                     </div>
                                 </form>
 
-                                    <%--                                Edit Comment--%>
+                                    <%--      Edit Comment   --%>
                                 <a onclick="openFormEdit()" class="textIcon"><u>Edit</u></a>
                                 <div id="formEdit" class="formEdit">
                                     <span class="closebtn" onclick="closeFormEdit()">&times;</span>
                                     <form method="post"
                                           action="/column?action=updateComment&id=${comment.id}&idCard=${card.id}">
-                                        <div class="mb-3">
-                                            <input type="text" name="comment" value="${comment.comment}"
-                                                   class="form-control">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
-                                        </div>
+                                        <input type="text" name="comment" value="${comment.comment}"
+                                               class="form-control">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+
                                     </form>
                                 </div>
                                     <%--                                Delete comment--%>
@@ -220,64 +220,30 @@
 
                             </div>
                         </c:forEach>
-                        <form method="post" action="/column?action=addComment&idCard=${card.id}&idUser=${user.id}">
-                            <div class="mb-3">
-                                <input id="inputComment" type="text" name="comment" class="form-control">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
                     </div>
                 </div>
-                <div class="cardRight">
-                    <h2>Option</h2>
-                    <hr>
-                    <div onclick="openMember()" class="boxIconCard">
-                        <a>
-                            <i class="fa-solid fa-user" style="color: #000000;"></i>
-                            <span>Member</span>
-                        </a>
-                    </div>
-                    <div class="boxIconCard">
-                        <i class="fa-solid fa-tag" style="color: #000000;"></i>
-                        <span>Label</span>
-                    </div>
-                    <form method="POST" action="FileUploadServlet" enctype="multipart/form-data" id="uploadForm">
-                        <div class="boxIconCard">
-                            <label for="fileInput">
-                                <i class="fa-solid fa-paperclip" style="color: #000000;"></i>
-                                <span>Attach</span>
-                            </label>
-                            <input type="file" name="file" id="fileInput" style="display:none;"
-                                   onchange="displayFileName()"/>
-                        </div>
-
-                        <div id="fileNameContainer" style="display: none;">
-                            <p>File Name:</p>
-                            <span id="fileName"></span>
-                        </div>
-
-                        <!-- Thêm nút để kích hoạt sự kiện submit của form -->
-                        <input type="button" value="Upload" onclick="uploadFile()"/>
-                    </form>
-                </div>
-                <div id="member" style="display: none;">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
-                    <c:forEach var="userToTable" items="${userToTable}">
-
-                        <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}"
-                           onclick="closeFormContent()">
-                            <div class="circleMember">
-                                <img src="${userToTable.avatar}" alt="Avatar">
-                            </div>
-                            <p>${userToTable.nameUser}</p>
-                        </a>
-                    </c:forEach>
-                </div>
+                <form class="card__comment" method="post" action="/column?action=addComment&idCard=${card.id}&idUser=${user.id}">
+                    <input placeholder="Type your comment here..." class="column__card" id="inputComment" type="text" name="comment" >
+                    <button type="submit" class="btn"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
             </div>
-        </c:if>
+            <div style="clear: both"></div>
+            <div id="member" style="display: none;">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeMember()">×</a>
+                <c:forEach var="userToTable" items="${userToTable}">
 
+                    <a href="/column?action=addMemberToCard&idUser=${userToTable.idUser}&idCard=${card.id}&idTable=${tables.id}"
+                       onclick="closeFormContent()">
+                        <div class="circleMember">
+                            <img src="${userToTable.avatar}" alt="Avatar">
+                        </div>
+                        <p>${userToTable.nameUser}</p>
+                    </a>
+                </c:forEach>
+            </div>
+        </div>
     </div>
-</div>
+</c:if>
 <script>
     function setDisplaySubnav() {
         let subnav = document.getElementById("js-subnav");
@@ -317,7 +283,7 @@
     }
 
     function closeFormContent() {
-        document.getElementById("formShowCard").style.display = "none";
+        document.getElementById("modal").style.display = "none";
     }
 
     function openFormCard(idColum) {
