@@ -664,12 +664,12 @@ h4 {
 }
 
 #member {
+    right: 60px;
     position: absolute;
-    top: 0;
-    left: 0;
     width: 200px;
     height: 200px;
     background-color: #fff;
+    top: 53px;
 }
 
 /*#clickContent{*/
